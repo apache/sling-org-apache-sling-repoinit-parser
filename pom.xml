@@ -34,7 +34,7 @@
   <description>Parser for the Repository Initialization language used in Sling</description>
 
   <scm>
-    <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</conncetion>
+    <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</connection>
     <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</developerConnection>
     <url>https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-repoinit-parser.git</url>
   </scm>
