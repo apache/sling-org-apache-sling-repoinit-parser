@@ -22,4 +22,6 @@ set ACL for user1,u2
     allow jcr:addChildNodes on /apps,/content restriction(rep:glob,/cat,/cat/,cat)
     allow jcr:addChildNodes on /apps,/content restriction(rep:glob,cat/,*,*cat)
     allow jcr:addChildNodes on /apps,/content restriction(rep:glob,/cat/*,*/cat,*cat/*)
+
+    allow jcr:something on / restriction(rep:glob)
 end

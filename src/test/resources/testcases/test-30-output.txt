@@ -10,3 +10,4 @@ SetAclPrincipals for user1 u2
   AclLine ALLOW {paths=[/apps, /content], privileges=[jcr:addChildNodes]} restrictions=[rep:glob=[/cat, /cat/, cat]]
   AclLine ALLOW {paths=[/apps, /content], privileges=[jcr:addChildNodes]} restrictions=[rep:glob=[cat/, *, *cat]]
   AclLine ALLOW {paths=[/apps, /content], privileges=[jcr:addChildNodes]} restrictions=[rep:glob=[/cat/*, */cat, *cat/*]]
+  AclLine ALLOW {paths=[/], privileges=[jcr:something]} restrictions=[rep:glob=[]]
