@@ -291,7 +291,7 @@ void userPrivilegesLine(List<AclLine> lines) :
     tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
     <FOR>
     tmp = principalsList() { line.setProperty(AclLine.PROP_PRINCIPALS, tmp); }
-    restrictions = parseRestrictions()  { line.setRestrictions(restrictions); }
+    restrictions = restrictions()  { line.setRestrictions(restrictions); }
     <EOL>
 
     {   
@@ -299,9 +299,9 @@ void userPrivilegesLine(List<AclLine> lines) :
     }
 }
 /**
- * Parses a single restriction value
+ * A single restriction value
  */
-void parseRestrictionValue(List<String> values) :
+void restrictionValue(List<String> values) :
 {
    Token t;
 }
@@ -313,14 +313,14 @@ void parseRestrictionValue(List<String> values) :
 }
 
 /**
- * parses list of restriction values
+ * A list of restriction values
  */
-List<String> parseRestrictionValues() :
+List<String> restrictionValues() :
 {
     List<String> values = new ArrayList<String>();
 }
 {
-    ( parseRestrictionValue(values) ) *
+    ( restrictionValue(values) ) *
 
     {
         return values;
@@ -330,16 +330,16 @@ List<String> parseRestrictionValues() :
 
 
 /**
- * parses a single restriction
+ * A single restriction
  */
-void parseRestriction(List<RestrictionClause> restrictions) :
+void restriction(List<RestrictionClause> restrictions) :
 {
   Token restrictionProp;
   List<String> values;
 }
 {
   <RESTRICTION>
-  <LPAREN> restrictionProp=<NAMESPACED_ITEM> values=parseRestrictionValues()  <RPAREN>
+  <LPAREN> restrictionProp=<NAMESPACED_ITEM> values=restrictionValues()  <RPAREN>
 
   {
       restrictions.add(new RestrictionClause(restrictionProp.image,values));
@@ -347,14 +347,14 @@ void parseRestriction(List<RestrictionClause> restrictions) :
 }
 
 /**
- * parses list of restrictions
+ * A list of restrictions
  */
-List<RestrictionClause> parseRestrictions() :
+List<RestrictionClause> restrictions() :
 {
     List<RestrictionClause> restrictions = new ArrayList<RestrictionClause>();
 }
 {
-   ( parseRestriction(restrictions) )*
+   ( restriction(restrictions) )*
 
    {
        return restrictions;
@@ -372,7 +372,7 @@ void pathPrivilegesLine(List<AclLine> lines) :
     tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); } 
     <ON> tmp = pathsList() { line.setProperty(AclLine.PROP_PATHS, tmp); }
     ( <NODETYPES> tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_NODETYPES, tmp); }) ?
-     restrictions = parseRestrictions()  { line.setRestrictions(restrictions); }
+     restrictions = restrictions()  { line.setRestrictions(restrictions); }
     <EOL>
     
     {    
