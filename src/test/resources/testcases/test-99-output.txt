@@ -21,6 +21,7 @@ SetAclPrincipals for restrictions_examples
   AclLine ALLOW {paths=[/apps], privileges=[jcr:addChildNodes]} restrictions=[rep:ntNames=[sling:Folder, nt:unstructured]]
   AclLine ALLOW {paths=[/apps], privileges=[jcr:modifyProperties]} restrictions=[rep:ntNames=[sling:Folder, nt:unstructured], rep:itemNames=[prop1, prop2]]
   AclLine ALLOW {paths=[/apps, /content], privileges=[jcr:addChildNodes]} restrictions=[rep:glob=[/cat/*, */cat, *cat/*]]
+  AclLine ALLOW {paths=[/], privileges=[jcr:something]} restrictions=[rep:glob=[]]
 RegisterNamespace (NSprefix) uri:someURI/v1.42
 RegisterNodetypes:
     <slingevent='http://sling.apache.org/jcr/event/1.0'>
