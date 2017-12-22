@@ -48,6 +48,8 @@ public class RepoInitParserService implements RepoInitParser {
             }
             try (final StringReader sr = new StringReader(sw.toString().concat("\n")) ){
                 return new RepoInitParserImpl(sr).parse();
+            } catch (TokenMgrError tme) {
+                throw new RepoInitParsingException(tme.getMessage(), tme);
             } catch (ParseException pe) {
                 throw new RepoInitParsingException(pe.getMessage(), pe);
             }
