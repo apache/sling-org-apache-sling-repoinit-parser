@@ -2,3 +2,4 @@ CreateServiceUser bob
 CreateServiceUser alice
 CreateServiceUser tom21
 CreateServiceUser lonesome
+CreateServiceUser pathA with path /some/test/path

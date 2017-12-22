@@ -82,6 +82,8 @@ public class ParsingErrorsTest {
             // SLING-7061
             add(new Object[] { "set repository ACL for principal1\nallow jcr:somePermission on /\nend", ParseException.class });
 
+            // path must come before password if used
+            add(new Object[] { "create user E with password PWD with path P", ParseException.class });
         }};
         return result;
     }

@@ -159,21 +159,32 @@ List<String> principalsList() :
     { return principals; }
 }
 
+String withPathStatement() :
+{
+    Token t = null;
+}
+{
+    <WITH> <PATH> t=<PATH_STRING>
+    { return t.image; }
+}
+
 void serviceUserStatement(List<Operation> result) :
 {
     Token t;
     List<String> principals;
+    String path = null;
 }
 {
     (t=<CREATE> | t=<DELETE>) 
     <SERVICE> <USER> 
     principals = principalsList() 
+    ( path = withPathStatement() ) ?
     (<EOL> | <EOF>)
     
     {
         for(String principal : principals) {
             if(CREATE == t.kind) {
-                result.add(new CreateServiceUser(principal));
+                result.add(new CreateServiceUser(principal, path));
             } else {
                 result.add(new DeleteServiceUser(principal));
             }
@@ -496,16 +507,19 @@ void createUserStatement(List<Operation> result) :
     Token user = null;
     Token encoding = null;
     Token password = null;
+    String path = null;
 }
 {
     <CREATE> <USER> 
     ( user = <STRING> )
+    ( path = withPathStatement() ) ?
     ( <WITH> <PASSWORD> ( <LCURLY> encoding = <STRING> <RCURLY> )? password = <STRING> )?
-    
+
     {
         result.add(new CreateUser(user.image, 
             (encoding == null ? null : encoding.image), 
-            (password == null ? null : password.image)
+            (password == null ? null : password.image),
+            path
         ));
     }
 }

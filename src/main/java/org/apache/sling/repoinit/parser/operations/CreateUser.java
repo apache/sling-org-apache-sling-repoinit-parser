@@ -21,16 +21,18 @@ public class CreateUser extends Operation {
     private final String username;
     private final String passwordEncoding;
     private final String password;
+    private final String path;
 
     /** Operation that creates a user.
      * @param username the name of the user to create
      * @param passwordEncoding optional encoding for the supplied password
      * @param password optional password
      */
-    public CreateUser(String username, String passwordEncoding, String password) {
+    public CreateUser(String username, String passwordEncoding, String password, String path) {
         this.username = username;
         this.passwordEncoding = passwordEncoding;
         this.password = password;
+        this.path = path;
     }
 
     @Override
@@ -41,6 +43,9 @@ public class CreateUser extends Operation {
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder(username);
+        if(path != null) {
+            sb.append(" with path ").append(path);
+        }
         if(password != null) {
             if(passwordEncoding == null) {
                 sb.append(" (with password)");
@@ -61,5 +66,9 @@ public class CreateUser extends Operation {
     
     public String getPasswordEncoding() {
         return passwordEncoding;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

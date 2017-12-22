@@ -18,12 +18,31 @@
 package org.apache.sling.repoinit.parser.operations;
 
 public class CreateServiceUser extends ServiceUserOperation {
-    public CreateServiceUser(String username) {
+    private final String path;
+
+    public CreateServiceUser(String username, String path) {
         super(username);
+        this.path = path;
     }
 
     @Override
     public void accept(OperationVisitor v) {
         v.visitCreateServiceUser(this);
+    }
+
+    @Override
+    protected String getParametersDescription() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(super.getParametersDescription());
+
+        if(path != null) {
+            sb.append(" with path ").append(path);
+        }
+
+        return sb.toString();
+    }
+
+    public String getPath() {
+        return path;
     }
 }
