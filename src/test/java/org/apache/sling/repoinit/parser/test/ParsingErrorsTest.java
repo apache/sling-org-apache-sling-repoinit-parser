@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.apache.sling.repoinit.parser.impl.ParseException;
 import org.apache.sling.repoinit.parser.impl.RepoInitParserImpl;
+import org.apache.sling.repoinit.parser.impl.TokenMgrError;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -61,7 +62,7 @@ public class ParsingErrorsTest {
             add(new Object[] { "create service user bob/221", null  });
             
             add(new Object[] { "create service user bob,/alice, tom21", ParseException.class  });
-            add(new Object[] { "create service user bob,alice,tom21 # comment not allowed here", ParseException.class });
+            add(new Object[] { "create service user bob,alice,tom21 # comment not allowed here", TokenMgrError.class });
             add(new Object[] { "CREATE service user bob, alice, tom21", ParseException.class });
             add(new Object[] { "create SERVICE user bob, alice, tom21", ParseException.class });
             
