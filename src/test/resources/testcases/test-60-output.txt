@@ -6,3 +6,5 @@ CreateUser userE (with encoded password), password=afdgwdsdf, passwordEncoding=s
 CreateUser one_with-more-chars.ok:/123456 (with encoded password), password=pw-with.ok-:/13456, passwordEncoding=encoding_with.ok-:/12345
 CreateUser userF with path /thePathF
 CreateUser userG with path /thePathG (with encoded password), password=userGpwd, passwordEncoding=theEncoding
+CreateUser userH with path thePathH
+CreateUser userJ with path thePathJ (with encoded password), password=userJpwd, passwordEncoding=theEncoding

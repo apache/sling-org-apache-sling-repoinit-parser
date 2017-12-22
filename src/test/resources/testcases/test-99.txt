@@ -11,7 +11,8 @@ set ACL on /libs,/apps
 end
 
 create service user bob_the_service
-create service user zoo_the_keeper with path /keeper/zoo
+create service user zoo_the_keeper with path relative/zoo
+create service user zoo_the_keeper with path /absolute/zoo
 
 # Verify that indent is not required
 set ACL on /tmp
@@ -57,6 +58,8 @@ create user userE with password {someEncoding} afdgwdsdf
 create user one_with-more-chars.ok:/123456 with password {encoding_with.ok-:/12345} pw-with.ok-:/13456
 create user userF with path /for/userF
 create user userG with path /for/userG with password ggg
+create user userH with path for/userH
+create user userJ with path for/userJ with password jjj
 create service user the-last-one
 
 disable service user svc1 : "This  is the message"

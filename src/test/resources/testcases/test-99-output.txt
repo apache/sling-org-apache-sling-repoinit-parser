@@ -7,7 +7,8 @@ SetAclPaths on /libs /apps
   AclLine DENY {principals=[user1], privileges=[jcr:lockManagement]}
   AclLine REMOVE {principals=[u3], privileges=[jcr:understand, some:other]}
 CreateServiceUser bob_the_service
-CreateServiceUser zoo_the_keeper with path /keeper/zoo
+CreateServiceUser zoo_the_keeper with path relative/zoo
+CreateServiceUser zoo_the_keeper with path /absolute/zoo
 SetAclPaths on /tmp 
   AclLine ALLOW {principals=[bob_the_service], privileges=[some:otherPrivilege]}
 CreatePath [content, example.com(sling:Folder)]
@@ -34,5 +35,7 @@ CreateUser userE (with encoded password), password=afdgwdsdf, passwordEncoding=s
 CreateUser one_with-more-chars.ok:/123456 (with encoded password), password=pw-with.ok-:/13456, passwordEncoding=encoding_with.ok-:/12345
 CreateUser userF with path /for/userF
 CreateUser userG with path /for/userG (with password), password=ggg
+CreateUser userH with path for/userH
+CreateUser userJ with path for/userJ (with password), password=jjj
 CreateServiceUser the-last-one
 DisableServiceUser svc1 : This  is the message

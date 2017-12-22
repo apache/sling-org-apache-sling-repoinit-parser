@@ -1,3 +1,4 @@
 create service user bob,alice, tom21
 create service user lonesome
-create service user pathA with path /some/test/path
+create service user pathA with path some/relative/path
+create service user pathA with path /some/absolute/path

@@ -164,7 +164,8 @@ String withPathStatement() :
     Token t = null;
 }
 {
-    <WITH> <PATH> t=<PATH_STRING>
+    /* accept relative (string) or absolute path */
+    <WITH> <PATH> ( t=<STRING> | t=<PATH_STRING> )
     { return t.image; }
 }
 
