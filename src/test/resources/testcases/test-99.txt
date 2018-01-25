@@ -1,4 +1,13 @@
 # Complete example with several intermixed statement types
+# 
+# This file should contain a self-explaining example of every repoinit
+# statement, to serve as a general example.
+#
+# Please update the docs at
+# https://sling.apache.org/documentation/bundles/repository-initialization.html
+# if changing this file, it contains a somewhat adapted version of this. And
+# indicate there from which version of which bundles a new feature is available.
+#
 
 create service user user1, u-ser_2
 set ACL on /libs,/apps
