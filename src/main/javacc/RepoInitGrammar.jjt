@@ -75,7 +75,6 @@ TOKEN:
 |   < NAMESPACE: "namespace" >
 |   < PRIVILEGE: "privilege" >
 |   < WITH: "with" >
-|   < AS: "as" >
 |   < ABSTRACT: "abstract" >
 |   < PASSWORD: "password" >
 |   < START_TEXTBLOCK: "<<===" > : TEXTBLOCK
@@ -491,7 +490,7 @@ void registerPrivilegeStatement(List<Operation> result) :
     List<String> aggregates = new ArrayList<String>();
 }
 {
-    <REGISTER> <PRIVILEGE> privilege = <STRING> ((<AS> <ABSTRACT>) {isAbstract = true;})? (<WITH> aggregates = principalsList())?
+    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> privilege = <STRING>  (<WITH> aggregates = principalsList())?
     {
         result.add(new RegisterPrivilege(privilege.image, isAbstract, aggregates));
     }

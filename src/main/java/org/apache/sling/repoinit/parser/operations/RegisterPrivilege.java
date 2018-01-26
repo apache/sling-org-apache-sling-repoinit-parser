@@ -57,11 +57,13 @@ public class RegisterPrivilege extends Operation {
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder("register privilege ");
-        builder.append(this.privilegeName);
+        StringBuilder builder = new StringBuilder("register ");
         if (this.isAbstract) {
-            builder.append(" as abstract");
+            builder.append("abstract ");
         }
+        builder.append("privilege ");
+        builder.append(this.privilegeName);
+
         if (!this.declaredAggregateNames.isEmpty()) {
             builder.append(" with ");
             Iterator<String> iter = this.declaredAggregateNames.iterator();
