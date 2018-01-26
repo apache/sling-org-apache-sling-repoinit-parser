@@ -63,6 +63,11 @@ register nodetypes
       - slingevent:properties (binary)
 ===>>
 
+register privilege priv
+register abstract privilege abstract_priv
+register privilege priv with declared_aggregate_priv
+register privilege priv with declared_aggregate_priv1,declared_aggregate_priv2
+
 create user userE with password {someEncoding} afdgwdsdf
 create user one_with-more-chars.ok:/123456 with password {encoding_with.ok-:/12345} pw-with.ok-:/13456
 create user userF with path /for/userF

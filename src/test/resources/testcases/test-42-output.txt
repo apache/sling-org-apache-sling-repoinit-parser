@@ -1,0 +1,6 @@
+register privilege withoutabstract_withoutaggregates
+register abstract privilege withabstract_withoutaggregates
+register privilege withoutabstract_withaggregate with bla
+register privilege withoutabstract_withaggregates with bla,blub
+register abstract privilege withabstract_withaggregate with foo
+register abstract privilege withabstract_withaggregates with foo,bar

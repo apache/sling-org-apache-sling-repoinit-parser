@@ -73,7 +73,9 @@ TOKEN:
 |   < NODETYPES: "nodetypes" >
 |   < REGISTER: "register" >
 |   < NAMESPACE: "namespace" >
+|   < PRIVILEGE: "privilege" >
 |   < WITH: "with" >
+|   < ABSTRACT: "abstract" >
 |   < PASSWORD: "password" >
 |   < START_TEXTBLOCK: "<<===" > : TEXTBLOCK
 |   < LPAREN: "(" >
@@ -132,6 +134,7 @@ List<Operation> parse() :
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
+        | registerPrivilegeStatement(result)
         | createUserStatement(result)
         | deleteUserStatement(result)
         | disableServiceUserStatement(result)
@@ -477,6 +480,20 @@ void registerNamespaceStatement(List<Operation> result) :
         result.add(new RegisterNamespace(prefix.image, uri.image)); 
     }
     
+    (<EOL> | <EOF>)
+}
+
+void registerPrivilegeStatement(List<Operation> result) :
+{
+    Token privilege;
+    boolean isAbstract = false;
+    List<String> aggregates = new ArrayList<String>();
+}
+{
+    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> privilege = <STRING>  (<WITH> aggregates = principalsList())?
+    {
+        result.add(new RegisterPrivilege(privilege.image, isAbstract, aggregates));
+    }
     (<EOL> | <EOF>)
 }
 
