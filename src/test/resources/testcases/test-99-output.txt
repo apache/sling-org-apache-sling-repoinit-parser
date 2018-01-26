@@ -31,6 +31,10 @@ RegisterNodetypes:
  [slingevent:Event] > nt:unstructured, nt:hierarchyNode
       - slingevent:topic (string)
       - slingevent:properties (binary)
+register privilege priv
+register abstract privilege abstract_priv
+register privilege priv with declared_aggregate_priv
+register privilege priv with declared_aggregate_priv1,declared_aggregate_priv2
 CreateUser userE (with encoded password), password=afdgwdsdf, passwordEncoding=someEncoding
 CreateUser one_with-more-chars.ok:/123456 (with encoded password), password=pw-with.ok-:/13456, passwordEncoding=encoding_with.ok-:/12345
 CreateUser userF with path /for/userF
