@@ -20,6 +20,10 @@ package org.apache.sling.repoinit.parser.operations;
 public class CreateServiceUser extends ServiceUserOperation {
     private final String path;
 
+    public CreateServiceUser(String username) {
+        this(username, null);
+    }
+
     public CreateServiceUser(String username, String path) {
         super(username);
         this.path = path;

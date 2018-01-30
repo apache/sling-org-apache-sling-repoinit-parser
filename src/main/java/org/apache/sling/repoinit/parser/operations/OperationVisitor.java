@@ -17,6 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public interface OperationVisitor {
     void visitCreateUser(CreateUser u);
     void visitDeleteUser(DeleteUser u);

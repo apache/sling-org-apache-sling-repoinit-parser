@@ -28,6 +28,16 @@ public class CreateUser extends Operation {
      * @param passwordEncoding optional encoding for the supplied password
      * @param password optional password
      */
+    public CreateUser(String username, String passwordEncoding, String password) {
+        this(username, passwordEncoding, password, null);
+    }
+
+    /** Operation that creates a user.
+     * @param username the name of the user to create
+     * @param passwordEncoding optional encoding for the supplied password
+     * @param password optional password
+     * @param path optional path
+     */
     public CreateUser(String username, String passwordEncoding, String password, String path) {
         this.username = username;
         this.passwordEncoding = passwordEncoding;
