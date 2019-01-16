@@ -17,21 +17,27 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.osgi.annotation.versioning.ProviderType;
+public class DeleteGroup extends Operation {
+    private final String groupname;
 
-@ProviderType
-public interface OperationVisitor {
-    void visitCreateGroup(CreateGroup g);
-    void visitDeleteGroup(DeleteGroup g);
-    void visitCreateUser(CreateUser u);
-    void visitDeleteUser(DeleteUser u);
-    void visitCreateServiceUser(CreateServiceUser s);
-    void visitDeleteServiceUser(DeleteServiceUser s);
-    void visitSetAclPrincipal(SetAclPrincipals s);
-    void visitSetAclPaths(SetAclPaths s);
-    void visitCreatePath(CreatePath cp);
-    void visitRegisterNamespace(RegisterNamespace rn);
-    void visitRegisterNodetypes(RegisterNodetypes b);
-    void visitRegisterPrivilege(RegisterPrivilege rp);
-    void visitDisableServiceUser(DisableServiceUser dsu);
+    /** Operation that deletes a group.
+     * @param username the name of the group to delete
+     */
+    public DeleteGroup(String groupname) {
+        this.groupname = groupname;
+    }
+
+    @Override
+    public void accept(OperationVisitor v) {
+        v.visitDeleteGroup(this);
+    }
+
+    @Override
+    protected String getParametersDescription() {
+        return groupname;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
 }

@@ -22,9 +22,11 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.sling.repoinit.parser.operations.AclLine;
+import org.apache.sling.repoinit.parser.operations.CreateGroup;
 import org.apache.sling.repoinit.parser.operations.CreatePath;
 import org.apache.sling.repoinit.parser.operations.CreateServiceUser;
 import org.apache.sling.repoinit.parser.operations.CreateUser;
+import org.apache.sling.repoinit.parser.operations.DeleteGroup;
 import org.apache.sling.repoinit.parser.operations.DeleteServiceUser;
 import org.apache.sling.repoinit.parser.operations.DeleteUser;
 import org.apache.sling.repoinit.parser.operations.DisableServiceUser;
@@ -140,5 +142,15 @@ class OperationToStringVisitor implements OperationVisitor {
         if(options != null && options.size() > 0){
             out.print("ACLOptions="+options);
         }
+    }
+
+    @Override
+    public void visitCreateGroup(CreateGroup g) {
+        out.println(g.toString());
+    }
+
+    @Override
+    public void visitDeleteGroup(DeleteGroup g) {
+        out.println(g.toString());
     }
 }

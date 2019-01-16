@@ -1,0 +1,2 @@
+CreateGroup groupa
+CreateGroup groupb with path /thePathF
