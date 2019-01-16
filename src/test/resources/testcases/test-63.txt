@@ -1,0 +1,12 @@
+# Test create group statements
+# 
+# This file should contain a self-explaining example of every repoinit
+# statement, to serve as a general example.
+#
+# Please update the docs at
+# https://sling.apache.org/documentation/bundles/repository-initialization.html
+# if changing this file, it contains a somewhat adapted version of this. And
+# indicate there from which version of which bundles a new feature is available.
+#
+
+delete group groupa

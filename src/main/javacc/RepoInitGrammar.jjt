@@ -70,6 +70,7 @@ TOKEN:
 |   < END: "end" >
 |   < REPOSITORY: "repository" >
 |   < USER: "user" >
+|   < GROUP: "group" >
 |   < NODETYPES: "nodetypes" >
 |   < REGISTER: "register" >
 |   < NAMESPACE: "namespace" >
@@ -135,6 +136,8 @@ List<Operation> parse() :
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
         | registerPrivilegeStatement(result)
+        | createGroupStatement(result)
+        | deleteGroupStatement(result)
         | createUserStatement(result)
         | deleteUserStatement(result)
         | disableServiceUserStatement(result)
@@ -517,6 +520,37 @@ void registerNodetypesStatement(List<Operation> result) :
     (<EOL> | <EOF>)
     {
         result.add(new RegisterNodetypes(b.toString()));
+    }
+}
+
+void createGroupStatement(List<Operation> result) :
+{
+    Token group = null;
+    Token encoding = null;
+    String path = null;
+}
+{
+    <CREATE> <GROUP> 
+    ( group = <STRING> )
+    ( path = withPathStatement() ) ?
+
+    {
+        result.add(new CreateGroup(group.image,
+            path
+        ));
+    }
+}
+
+void deleteGroupStatement(List<Operation> result) :
+{
+    Token group = null;
+}
+{
+    <DELETE> <GROUP> 
+    ( group = <STRING> )
+
+    {
+        result.add(new DeleteGroup(group.image));
     }
 }
 
