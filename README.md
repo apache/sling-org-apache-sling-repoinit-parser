@@ -8,4 +8,4 @@ This module is part of the [Apache Sling](https://sling.apache.org) project.
 
 Parser for the [Repository Initialization language](https://sling.apache.org/documentation/bundles/repository-initialization.html) used in Sling.
 
-To parse repoinit statements use the [RepoInitParser](./blob/master/src/main/java/org/apache/sling/repoinit/parser/RepoInitParser.java) service.
+To parse repoinit statements use the [RepoInitParser](./src/main/java/org/apache/sling/repoinit/parser/RepoInitParser.java) service.
