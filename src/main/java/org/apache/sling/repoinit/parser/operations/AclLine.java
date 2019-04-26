@@ -25,55 +25,57 @@ import java.util.TreeMap;
 
 /** A single "set ACL" line */
 public class AclLine {
-    
+
     private final Action action;
     private static final List<String> EMPTY_LIST = Collections.unmodifiableList(new ArrayList<String>());
-    
+
     public static final String PROP_PATHS = "paths";
     public static final String PROP_PRINCIPALS = "principals";
     public static final String PROP_PRIVILEGES = "privileges";
     public static final String PROP_NODETYPES = "nodetypes";
 
     public enum Action {
-        REMOVE,
-        REMOVE_ALL,
-        DENY,
-        ALLOW
+        REMOVE, REMOVE_ALL, DENY, ALLOW
     };
-    
+
     private final Map<String, List<String>> properties;
     private List<RestrictionClause> restrictions;
-    
+
     public AclLine(Action a) {
         action = a;
-        properties = new TreeMap<String, List<String>>();
+        properties = new TreeMap<>();
     }
-    
+
     public Action getAction() {
         return action;
     }
-    
-    /** Return the named multi-value property, or an empty list
-     *  if not found. 
+
+    /**
+     * Return the named multi-value property, or an empty list if not found.
+     * 
+     * @param name the property to get the value of
      */
     public List<String> getProperty(String name) {
         List<String> value = properties.get(name);
         return value != null ? value : EMPTY_LIST;
     }
-    
+
     public void setProperty(String name, List<String> values) {
         properties.put(name, Collections.unmodifiableList(values));
     }
 
-    public void setRestrictions(List<RestrictionClause> restrictions){
+    public void setRestrictions(List<RestrictionClause> restrictions) {
         this.restrictions = restrictions;
     }
 
-    public List<RestrictionClause> getRestrictions() { return this.restrictions; }
-    
+    public List<RestrictionClause> getRestrictions() {
+        return this.restrictions;
+    }
+
     @Override
     public String toString() {
-        return getClass().getSimpleName() + " " + action + " " + properties + (restrictions == null || restrictions.isEmpty() ? "" : " restrictions="+restrictions);
+        return getClass().getSimpleName() + " " + action + " " + properties
+                + (restrictions == null || restrictions.isEmpty() ? "" : " restrictions=" + restrictions);
 
     }
 }

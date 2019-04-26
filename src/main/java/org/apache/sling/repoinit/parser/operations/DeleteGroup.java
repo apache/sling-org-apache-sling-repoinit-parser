@@ -20,8 +20,10 @@ package org.apache.sling.repoinit.parser.operations;
 public class DeleteGroup extends Operation {
     private final String groupname;
 
-    /** Operation that deletes a group.
-     * @param username the name of the group to delete
+    /**
+     * Operation that deletes a group.
+     * 
+     * @param groupname the name of the group to delete
      */
     public DeleteGroup(String groupname) {
         this.groupname = groupname;

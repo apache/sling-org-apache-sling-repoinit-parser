@@ -21,16 +21,20 @@ public class CreateGroup extends Operation {
     private final String groupname;
     private final String path;
 
-    /** Operation that creates a group.
-     * @param username the name of the user to create
+    /**
+     * Operation that creates a group.
+     * 
+     * @param groupname the name of the group to create
      */
     public CreateGroup(String groupname) {
-        this(groupname,  null);
+        this(groupname, null);
     }
 
-    /** Operation that creates a group.
-     * @param username the name of the group to create
-     * @param path optional path
+    /**
+     * Operation that creates a group.
+     * 
+     * @param groupname the name of the group to create
+     * @param path     optional path
      */
     public CreateGroup(String groupname, String path) {
         this.groupname = groupname;
@@ -45,7 +49,7 @@ public class CreateGroup extends Operation {
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder(groupname);
-        if(path != null) {
+        if (path != null) {
             sb.append(" with path ").append(path);
         }
         return sb.toString();
