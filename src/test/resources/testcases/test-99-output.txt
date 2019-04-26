@@ -43,3 +43,6 @@ CreateUser userH with path for/userH
 CreateUser userJ with path for/userJ (with password), password=jjj
 CreateServiceUser the-last-one
 DisableServiceUser svc1 : This  is the message
+CreateGroup since124_A
+CreateGroup since124_B with path /path_B
+DeleteGroup since124_C
