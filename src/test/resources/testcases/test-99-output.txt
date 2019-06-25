@@ -31,6 +31,7 @@ RegisterNodetypes:
  [slingevent:Event] > nt:unstructured, nt:hierarchyNode
       - slingevent:topic (string)
       - slingevent:properties (binary)
+register privilege crx:replicate
 register privilege priv
 register abstract privilege abstract_priv
 register privilege priv with declared_aggregate_priv

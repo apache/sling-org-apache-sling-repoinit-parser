@@ -493,7 +493,7 @@ void registerPrivilegeStatement(List<Operation> result) :
     List<String> aggregates = new ArrayList<String>();
 }
 {
-    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> privilege = <STRING>  (<WITH> aggregates = principalsList())?
+    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> (privilege = <STRING> | privilege = <NAMESPACED_ITEM>) (<WITH> aggregates = principalsList())?
     {
         result.add(new RegisterPrivilege(privilege.image, isAbstract, aggregates));
     }
