@@ -94,6 +94,7 @@ TOKEN:
 /* The order of these fuzzy statements is important (first match wins?) */ 
 |   < NAMESPACED_ITEM: (["a"-"z"] | ["A"-"Z"])+ ":" (["a"-"z"] | ["A"-"Z"])+ >
 |   < PATH_STRING: "/" (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["@"] | [":"] | ["+"] | ["/"]) * >
+|   < PATH_REPOSITORY: ":repository" >
 |   < STRING: (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["/"] | [":"] | ["*"]) + >
 |   < EOL: "\n" >
 }
@@ -217,8 +218,8 @@ List<String> pathsList() :
     List<String> paths = new ArrayList<String>();
 }
 {
-    t = <PATH_STRING> { paths.add(t.image); } 
-    ( <COMMA> t = <PATH_STRING> { paths.add(t.image); } )* 
+    ( t = <PATH_STRING> | t = <PATH_REPOSITORY> ) { paths.add(t.image); }
+    ( <COMMA> ( t = <PATH_STRING> | t = <PATH_REPOSITORY> ) { paths.add(t.image); } )*
     { return paths; }
 }
 
