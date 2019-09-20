@@ -35,6 +35,7 @@ import org.apache.sling.repoinit.parser.operations.OperationVisitor;
 import org.apache.sling.repoinit.parser.operations.RegisterNamespace;
 import org.apache.sling.repoinit.parser.operations.RegisterPrivilege;
 import org.apache.sling.repoinit.parser.operations.SetAclPaths;
+import org.apache.sling.repoinit.parser.operations.SetAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipals;
 
 /** OperationVisitor that dumps the operations using
@@ -105,7 +106,22 @@ class OperationToStringVisitor implements OperationVisitor {
         out.println();
         dumpAclLines(s.getLines());
     }
-    
+
+    @Override
+    public void visitSetAclPrincipalBased(SetAclPrincipalBased s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" for ");
+        for(String p : s.getPrincipals()) {
+            out.print(p);
+            out.print(' ');
+        }
+
+        dumpAclOptions(s.getOptions());
+
+        out.println();
+        dumpAclLines(s.getLines());
+    }
+
     @Override
     public void visitCreatePath(CreatePath cp) {
         out.println(cp.toString());

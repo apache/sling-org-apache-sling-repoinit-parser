@@ -29,6 +29,7 @@ public interface OperationVisitor {
     void visitDeleteServiceUser(DeleteServiceUser s);
     void visitSetAclPrincipal(SetAclPrincipals s);
     void visitSetAclPaths(SetAclPaths s);
+    void visitSetAclPrincipalBased(SetAclPrincipalBased s);
     void visitCreatePath(CreatePath cp);
     void visitRegisterNamespace(RegisterNamespace rn);
     void visitRegisterNodetypes(RegisterNodetypes b);

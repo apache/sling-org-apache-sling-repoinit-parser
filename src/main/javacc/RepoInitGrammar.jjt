@@ -69,6 +69,7 @@ TOKEN:
 |   < PATH: "path" >
 |   < END: "end" >
 |   < REPOSITORY: "repository" >
+|   < PRINCIPAL: "principal" >
 |   < USER: "user" >
 |   < GROUP: "group" >
 |   < NODETYPES: "nodetypes" >
@@ -132,6 +133,7 @@ List<Operation> parse() :
         serviceUserStatement(result) 
         | setAclPaths(result) 
         | setAclPrincipals(result)
+        | setAclPrincipalBased(result)
         | setAclRepository(result)
         | createPathStatement(result)
         | registerNamespaceStatement(result)
@@ -467,6 +469,23 @@ void setAclPrincipals(List<Operation> result) :
     
     {
         result.add(new SetAclPrincipals(principals, lines, aclOptions));
+    }
+}
+
+void setAclPrincipalBased(List<Operation> result) :
+{
+    List <String> principals;
+    List<AclLine> lines = new ArrayList<AclLine>();
+    List<String> aclOptions;
+}
+{
+    <SET> <PRINCIPAL> <ACL> <FOR> principals = principalsList() aclOptions=aclOptions() <EOL>
+    ( removeStarLine(lines) | pathPrivilegesLine(lines) | blankLine() ) +
+    <END>
+    ( <EOL> | <EOF> )
+
+    {
+        result.add(new SetAclPrincipalBased(principals, lines, aclOptions));
     }
 }
 
