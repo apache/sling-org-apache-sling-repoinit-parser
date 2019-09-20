@@ -22,13 +22,12 @@
 
   <parent>
     <groupId>org.apache.sling</groupId>
-    <artifactId>sling</artifactId>
-    <version>30</version>
+    <artifactId>sling-bundle-parent</artifactId>
+    <version>35</version>
     <relativePath />
   </parent>
 
   <artifactId>org.apache.sling.repoinit.parser</artifactId>
-  <packaging>bundle</packaging>
   <version>1.2.7-SNAPSHOT</version>
   <name>Apache Sling RepoInit Parser</name>
   <description>Parser for the Repository Initialization language used in Sling</description>
@@ -43,9 +42,12 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
+        <groupId>biz.aQute.bnd</groupId>
+        <artifactId>bnd-baseline-maven-plugin</artifactId>
+        <configuration>
+          <!--  Disabled since it requires bumping the minor component of the development version, which is against our versioning practices -->
+          <skip>true</skip>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.rat</groupId>
@@ -88,6 +90,14 @@
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>osgi.core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.annotation.versioning</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
         </dependency>
       <!-- testing -->
         <dependency>
