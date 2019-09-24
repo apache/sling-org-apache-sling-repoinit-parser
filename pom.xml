@@ -44,11 +44,6 @@
       <plugin>
         <groupId>biz.aQute.bnd</groupId>
         <artifactId>bnd-baseline-maven-plugin</artifactId>
-        <configuration>
-          <!--  Disabled since it requires bumping the minor component of the development version, which is against our versioning practices 
-          <skip>true</skip>
-          -->
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.rat</groupId>
