@@ -1,0 +1,29 @@
+# Test functions at the beginning of path names, for SLING-8757
+
+set ACL on home(alice)
+  allow jcr:one for alice, bob, carol
+end
+
+set ACL on home(jack),/tmp/a,functionNamesAreFree(bobby)
+  allow jcr:two for alice
+end
+
+set ACL for fred
+  allow jcr:three on /one,home(Alice123),/tmp
+end
+
+set ACL on /a/b,home(jack,jill),/tmp/a,square(bobby)
+  allow jcr:four for alice
+end
+
+set ACL for austin
+  allow jcr:five on /one,home(Alice123,11bob42),/tmp
+end
+
+set ACL on home(spaces,  are,   ok)
+  allow jcr:six for spaceman
+end
+
+set ACL on home(alice, bob)/sub/folder, /anotherPath, home(fred)/root
+  allow jcr:seven for mercury
+end

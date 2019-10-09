@@ -214,14 +214,53 @@ List<String> namespacedItemsList() :
     { return priv; }
 }
 
-List<String> pathsList() :
+String usernameList() :
+{
+    List<String> names = new ArrayList<String>();
+    Token t = null;
+}
+{
+    ( t = <STRING> ) { names.add(t.image); }
+    ( <COMMA> t = <STRING> { names.add(t.image); }) *
+
+    {
+        return String.join(",", names);
+    }
+}
+
+String pathExpression() : 
 {
     Token t = null;
+    Token tf = null;
+    String usernames = null;
+    final StringBuilder sb = new StringBuilder();
+}
+{
+    ( 
+        tf = <STRING> <LPAREN> usernames = usernameList() <RPAREN> ( t = <PATH_STRING> ) ? 
+        | ( t = <PATH_STRING> 
+        | t = <PATH_REPOSITORY> )
+    )
+    { 
+        if(tf != null) {
+            sb.append(':').append(tf.image).append(':').append(usernames).append('#');
+        }
+        if(t != null) {
+            sb.append(t.image);
+        }
+    }
+
+    { return sb.toString(); }
+}
+
+List<String> pathsList() :
+{
+    String pathExpr = null;
     List<String> paths = new ArrayList<String>();
 }
 {
-    ( t = <PATH_STRING> | t = <PATH_REPOSITORY> ) { paths.add(t.image); }
-    ( <COMMA> ( t = <PATH_STRING> | t = <PATH_REPOSITORY> ) { paths.add(t.image); } )*
+    ( pathExpr = pathExpression() ) { paths.add(pathExpr); }
+    ( <COMMA> ( pathExpr = pathExpression() ) { paths.add(pathExpr); } )*
     { return paths; }
 }
 

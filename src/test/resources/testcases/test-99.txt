@@ -83,3 +83,16 @@ disable service user svc1 : "This  is the message"
 create group since124_A
 create group since124_B with path /path_B
 delete group since124_C
+
+# Home function maps to user and group home folders
+set ACL on home(alice)
+  allow jcr:one for alice, bob, carol
+end
+
+set ACL for bob
+  allow jcr:two on home(alice, fredTheSecond, markTheThird), /another/path, home(larry)
+end  
+
+set ACL on home(alice,bob)/sub/folder/of/their/homes
+  allow jcr:three for fred
+end

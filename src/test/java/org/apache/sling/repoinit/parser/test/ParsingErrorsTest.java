@@ -85,6 +85,13 @@ public class ParsingErrorsTest {
 
             // path must come before password if used
             add(new Object[] { "create user E with password PWD with path P", ParseException.class });
+
+            // SLING-8757 - functions at the beginning of paths
+            add(new Object[] { "set ACL on home(missingRParen \n remove * for u \n end", ParseException.class });
+            add(new Object[] { "set ACL on spaceAfterFunctionName(user) \n remove * for u \n end", ParseException.class });
+            add(new Object[] { "set ACL on one(name)two(onlyOneFunctionAllowed) \n remove * for u \n end", ParseException.class });
+            add(new Object[] { "set ACL on home(alice:colonNotAllowed) \n remove * for u \n end", ParseException.class });
+            add(new Object[] { "set ACL on home(alice#hashNotAllowed) \n remove * for u \n end", ParseException.class });
         }};
         return result;
     }

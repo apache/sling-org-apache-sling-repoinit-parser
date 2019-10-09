@@ -47,3 +47,9 @@ DisableServiceUser svc1 : This  is the message
 CreateGroup since124_A
 CreateGroup since124_B with path /path_B
 DeleteGroup since124_C
+SetAclPaths on :home:alice# 
+  AclLine ALLOW {principals=[alice, bob, carol], privileges=[jcr:one]}
+SetAclPrincipals for bob 
+  AclLine ALLOW {paths=[:home:alice,fredTheSecond,markTheThird#, /another/path, :home:larry#], privileges=[jcr:two]}
+SetAclPaths on :home:alice,bob#/sub/folder/of/their/homes 
+  AclLine ALLOW {principals=[fred], privileges=[jcr:three]}  
