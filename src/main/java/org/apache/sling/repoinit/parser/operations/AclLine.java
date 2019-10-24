@@ -17,7 +17,6 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ import java.util.TreeMap;
 public class AclLine {
 
     private final Action action;
-    private static final List<String> EMPTY_LIST = Collections.unmodifiableList(new ArrayList<String>());
 
     public static final String PROP_PATHS = "paths";
     public static final String PROP_PRINCIPALS = "principals";
@@ -58,7 +56,7 @@ public class AclLine {
      */
     public List<String> getProperty(String name) {
         List<String> value = properties.get(name);
-        return value != null ? value : EMPTY_LIST;
+        return value != null ? value : Collections.<String>emptyList();
     }
 
     public void setProperty(String name, List<String> values) {
@@ -70,7 +68,7 @@ public class AclLine {
     }
 
     public List<RestrictionClause> getRestrictions() {
-        return this.restrictions;
+        return (restrictions == null) ? Collections.<RestrictionClause>emptyList() : restrictions;
     }
 
     @Override
