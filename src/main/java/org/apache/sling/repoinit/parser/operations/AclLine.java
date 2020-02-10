@@ -17,7 +17,6 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ import java.util.TreeMap;
 public class AclLine {
 
     private final Action action;
-    private static final List<String> EMPTY_LIST = Collections.unmodifiableList(new ArrayList<String>());
 
     public static final String PROP_PATHS = "paths";
     public static final String PROP_PRINCIPALS = "principals";
@@ -35,8 +33,8 @@ public class AclLine {
     public static final String PROP_NODETYPES = "nodetypes";
     public static final String PATH_REPOSITORY = ":repository";
     public static final String PATH_HOME = ":home:";
-    public static final char ID_DELIMINATOR = ','; // TODO define
-    public static final char SUBTREE_DELIMINATOR = '#'; // TODO define
+    public static final char ID_DELIMINATOR = ',';
+    public static final char SUBTREE_DELIMINATOR = '#';
 
     public enum Action {
         REMOVE, REMOVE_ALL, DENY, ALLOW
@@ -61,7 +59,7 @@ public class AclLine {
      */
     public List<String> getProperty(String name) {
         List<String> value = properties.get(name);
-        return value != null ? value : EMPTY_LIST;
+        return value != null ? value : Collections.<String>emptyList();
     }
 
     public void setProperty(String name, List<String> values) {
@@ -73,7 +71,7 @@ public class AclLine {
     }
 
     public List<RestrictionClause> getRestrictions() {
-        return this.restrictions;
+        return (restrictions == null) ? Collections.<RestrictionClause>emptyList() : restrictions;
     }
 
     @Override
