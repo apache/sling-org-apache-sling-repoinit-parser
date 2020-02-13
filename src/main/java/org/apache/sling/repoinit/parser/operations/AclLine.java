@@ -32,6 +32,9 @@ public class AclLine {
     public static final String PROP_PRIVILEGES = "privileges";
     public static final String PROP_NODETYPES = "nodetypes";
     public static final String PATH_REPOSITORY = ":repository";
+    public static final String PATH_HOME = ":home:";
+    public static final char ID_DELIMINATOR = ',';
+    public static final char SUBTREE_DELIMINATOR = '#';
 
     public enum Action {
         REMOVE, REMOVE_ALL, DENY, ALLOW
