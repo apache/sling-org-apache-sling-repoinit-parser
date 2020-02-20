@@ -4,11 +4,11 @@ SetAclPaths on :home:jack# /tmp/a :functionNamesAreFree:bobby#
   AclLine ALLOW {principals=[alice], privileges=[jcr:two]}
 SetAclPrincipals for fred 
   AclLine ALLOW {paths=[/one, :home:Alice123#, /tmp], privileges=[jcr:three]}
-SetAclPaths on /a/b :home:jack,jill# /tmp/a :square:bobby# 
+SetAclPaths on /a/b :home:jack# /tmp/a :square:bobby# 
   AclLine ALLOW {principals=[alice], privileges=[jcr:four]}
 SetAclPrincipals for austin 
-  AclLine ALLOW {paths=[/one, :home:Alice123,11bob42#, /tmp], privileges=[jcr:five]}
-SetAclPaths on :home:spaces,are,ok# 
+  AclLine ALLOW {paths=[/one, :home:Alice123#, /tmp], privileges=[jcr:five]}
+SetAclPaths on :home:spacesAreOk# 
   AclLine ALLOW {principals=[spaceman], privileges=[jcr:six]}
-SetAclPaths on :home:alice,bob#/sub/folder /anotherPath :home:fred#/root 
+SetAclPaths on :home:alice#/sub/folder /anotherPath :home:fred#/root 
   AclLine ALLOW {principals=[mercury], privileges=[jcr:seven]}

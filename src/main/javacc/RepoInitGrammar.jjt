@@ -221,7 +221,8 @@ String usernameList() :
 }
 {
     ( t = <STRING> ) { names.add(t.image); }
-    ( <COMMA> t = <STRING> { names.add(t.image); }) *
+    // disable lists for now, not supported downstream
+    // ( <COMMA> t = <STRING> { names.add(t.image); }) *
 
     {
         return String.join(",", names);

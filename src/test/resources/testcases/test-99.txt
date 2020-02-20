@@ -90,9 +90,9 @@ set ACL on home(alice)
 end
 
 set ACL for bob
-  allow jcr:two on home(alice, fredTheSecond, markTheThird), /another/path, home(larry)
+  allow jcr:two on home(alice), /another/path, home(larry)
 end  
 
-set ACL on home(alice,bob)/sub/folder/of/their/homes
+set ACL on home(alice)/sub/folder/of/their/homes
   allow jcr:three for fred
 end

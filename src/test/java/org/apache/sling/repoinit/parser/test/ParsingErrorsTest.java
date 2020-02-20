@@ -92,6 +92,8 @@ public class ParsingErrorsTest {
             add(new Object[] { "set ACL on one(name)two(onlyOneFunctionAllowed) \n remove * for u \n end", ParseException.class });
             add(new Object[] { "set ACL on home(alice:colonNotAllowed) \n remove * for u \n end", ParseException.class });
             add(new Object[] { "set ACL on home(alice#hashNotAllowed) \n remove * for u \n end", ParseException.class });
+            add(new Object[] { "set ACL on home(alice,commaNotAllowed) \n remove * for u \n end", ParseException.class });
+            add(new Object[] { "set ACL on home(alice,comma,not,allowed) \n remove * for u \n end", ParseException.class });
         }};
         return result;
     }

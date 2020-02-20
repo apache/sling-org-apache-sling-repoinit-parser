@@ -12,18 +12,18 @@ set ACL for fred
   allow jcr:three on /one,home(Alice123),/tmp
 end
 
-set ACL on /a/b,home(jack,jill),/tmp/a,square(bobby)
+set ACL on /a/b,home(jack),/tmp/a,square(bobby)
   allow jcr:four for alice
 end
 
 set ACL for austin
-  allow jcr:five on /one,home(Alice123,11bob42),/tmp
+  allow jcr:five on /one,home(Alice123),/tmp
 end
 
-set ACL on home(spaces,  are,   ok)
+set ACL on home(  spacesAreOk )
   allow jcr:six for spaceman
 end
 
-set ACL on home(alice, bob)/sub/folder, /anotherPath, home(fred)/root
+set ACL on home(alice)/sub/folder, /anotherPath, home(fred)/root
   allow jcr:seven for mercury
 end
