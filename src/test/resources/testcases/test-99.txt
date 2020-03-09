@@ -96,3 +96,7 @@ end
 set ACL on home(alice)/sub/folder/of/their/homes
   allow jcr:three for fred
 end
+
+# Add/remove principals to group, since V1.5.2
+add user1,user2 to group grpA
+remove user3,user5 from group grpB

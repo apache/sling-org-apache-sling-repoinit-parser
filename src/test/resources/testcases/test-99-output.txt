@@ -52,4 +52,6 @@ SetAclPaths on :home:alice#
 SetAclPrincipals for bob 
   AclLine ALLOW {paths=[:home:alice#, /another/path, :home:larry#], privileges=[jcr:two]}
 SetAclPaths on :home:alice#/sub/folder/of/their/homes 
-  AclLine ALLOW {principals=[fred], privileges=[jcr:three]}  
+  AclLine ALLOW {principals=[fred], privileges=[jcr:three]}
+AddGroupMembers user1 user2 in group grpA
+RemoveGroupMembers user3 user5 in group grpB

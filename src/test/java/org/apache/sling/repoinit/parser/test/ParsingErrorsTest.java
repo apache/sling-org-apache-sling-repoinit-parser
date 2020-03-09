@@ -94,6 +94,18 @@ public class ParsingErrorsTest {
             add(new Object[] { "set ACL on home(alice#hashNotAllowed) \n remove * for u \n end", ParseException.class });
             add(new Object[] { "set ACL on home(alice,commaNotAllowed) \n remove * for u \n end", ParseException.class });
             add(new Object[] { "set ACL on home(alice,comma,not,allowed) \n remove * for u \n end", ParseException.class });
+
+            // SLING-9084 - add/remove group members
+            add(new Object[] { "add to group missingUsernames", ParseException.class });
+            add(new Object[] { "add missingGroupName, another to group", ParseException.class });
+            add(new Object[] { "add bob, alice to group only, one, allowed", ParseException.class });
+            add(new Object[] { "remove from group missingUsernames", ParseException.class });
+            add(new Object[] { "remove missingGroup from group", ParseException.class });
+            add(new Object[] { "remove bob, alice from group only, one, really", ParseException.class });
+            add(new Object[] { "add bob, alice from group shouldBeToNotFrom", ParseException.class });
+            add(new Object[] { "remove bob, alice to group shouldBeFromNotTo", ParseException.class });
+            add(new Object[] { "add bob, alice group missingTo", ParseException.class });
+            add(new Object[] { "remove bob, alice group missingFrom", ParseException.class });
         }};
         return result;
     }
