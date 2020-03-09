@@ -1,1 +1,2 @@
 -fixupmessages.bundleversion: "The bundle version change *";is:=ignore 
+Provide-Capability: org.apache.sling.repoinit.language;version:Version="8.0"
