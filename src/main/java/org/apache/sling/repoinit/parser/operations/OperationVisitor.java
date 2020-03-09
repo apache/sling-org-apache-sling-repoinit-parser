@@ -35,4 +35,6 @@ public interface OperationVisitor {
     void visitRegisterNodetypes(RegisterNodetypes b);
     void visitRegisterPrivilege(RegisterPrivilege rp);
     void visitDisableServiceUser(DisableServiceUser dsu);
+    void visitAddGroupMembers(AddGroupMembers am);
+    void visitRemoveGroupMembers(RemoveGroupMembers rm);
 }

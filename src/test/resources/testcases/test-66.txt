@@ -1,0 +1,6 @@
+# Test add and remove together statements
+add members user1,user2 in group grpA
+add members user3 in group grpB
+add members user4,user5 in group grpB
+remove members user1 in group grpA
+remove members user3,user5 in group grpB

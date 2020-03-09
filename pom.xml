@@ -28,7 +28,7 @@
   </parent>
 
   <artifactId>org.apache.sling.repoinit.parser</artifactId>
-  <version>1.4.3-SNAPSHOT</version>
+  <version>1.5.1-SNAPSHOT</version>
   <name>Apache Sling Repoinit Parser</name>
   <description>Parser for the Repository Initialization language used in Sling</description>
 
