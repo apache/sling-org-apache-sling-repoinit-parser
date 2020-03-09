@@ -37,6 +37,8 @@ import org.apache.sling.repoinit.parser.operations.RegisterPrivilege;
 import org.apache.sling.repoinit.parser.operations.SetAclPaths;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipals;
+import org.apache.sling.repoinit.parser.operations.AddGroupMembers;
+import org.apache.sling.repoinit.parser.operations.RemoveGroupMembers;
 
 /** OperationVisitor that dumps the operations using
  *  their toString() methods
@@ -168,5 +170,33 @@ class OperationToStringVisitor implements OperationVisitor {
     @Override
     public void visitDeleteGroup(DeleteGroup g) {
         out.println(g.toString());
+    }
+
+    @Override
+    public void visitAddGroupMembers(AddGroupMembers am) {
+        out.print(am.getClass().getSimpleName());
+        out.print(" ");
+        List<String> members =  am.getMembers();
+        for(String p : members) {
+            out.print(p);
+            out.print(" ");
+        }
+        out.print("in group ");
+        out.print(am.getGroupname());
+        out.println();
+    }
+
+    @Override
+    public void visitRemoveGroupMembers(RemoveGroupMembers rm) {
+        out.print(rm.getClass().getSimpleName());
+        out.print(" ");
+        List<String> members =  rm.getMembers();
+        for(String p : members) {
+            out.print(p);
+            out.print(" ");
+        }
+        out.print("in group ");
+        out.print(rm.getGroupname());
+        out.println();
     }
 }

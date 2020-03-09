@@ -57,6 +57,7 @@ TOKEN:
     < SET: "set" >
 |   < ACL: "ACL" >
 |   < ON: "on" >
+|   < IN: "in" >
 |   < REMOVE: "remove" >
 |   < ALLOW: "allow" >
 |   < DENY: "deny" >
@@ -65,6 +66,7 @@ TOKEN:
 |   < DELETE: "delete" >
 |   < DISABLE: "disable" >
 |   < SERVICE: "service" >
+|   < ADD: "add" >
 |   < MIXIN: "mixin" >
 |   < PATH: "path" >
 |   < END: "end" >
@@ -76,6 +78,7 @@ TOKEN:
 |   < REGISTER: "register" >
 |   < NAMESPACE: "namespace" >
 |   < PRIVILEGE: "privilege" >
+|   < MEMBERS: "members" >
 |   < WITH: "with" >
 |   < ABSTRACT: "abstract" >
 |   < PASSWORD: "password" >
@@ -144,6 +147,7 @@ List<Operation> parse() :
         | createUserStatement(result)
         | deleteUserStatement(result)
         | disableServiceUserStatement(result)
+        | groupMembershipStatement(result)
         | blankLine() 
     ) * 
     <EOF>
@@ -660,5 +664,24 @@ void disableServiceUserStatement(List<Operation> result) :
     ( <COLON> msg = <QUOTED> )
     {
         result.add(new DisableServiceUser(user.image, msg == null ? null : msg.image));
+    }
+}
+void groupMembershipStatement(List<Operation> result) :
+{
+    List <String> members;
+    Token t;
+    Token group = null;
+}
+{
+    (t=<ADD> | t=<REMOVE>) <MEMBERS>
+       ( members =  principalsList() )
+        <IN> <GROUP>
+        ( group = <STRING> )
+    {
+        if(ADD == t.kind) {
+           result.add(new AddGroupMembers(members, group.image));
+        } else {
+           result.add(new RemoveGroupMembers(members, group.image));
+        }
     }
 }

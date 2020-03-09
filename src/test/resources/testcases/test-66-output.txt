@@ -1,0 +1,5 @@
+AddGroupMembers user1 user2 in group grpA
+AddGroupMembers user3 in group grpB
+AddGroupMembers user4 user5 in group grpB
+RemoveGroupMembers user1 in group grpA
+RemoveGroupMembers user3 user5 in group grpB
