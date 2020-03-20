@@ -70,6 +70,7 @@ public class ParsingErrorsTest {
             add(new Object[] { "disable service user foo", ParseException.class });
             
             // Quoted strings in disable service user
+            add(new Object[] { "disable service user foo", ParseException.class });
             add(new Object[] { "disable service user foo missing colon and quotes", ParseException.class });
             add(new Object[] { "disable service user foo : missing quotes", ParseException.class });
             add(new Object[] { "disable service user foo \"missing colon\"", ParseException.class });

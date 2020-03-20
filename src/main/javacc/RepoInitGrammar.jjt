@@ -654,17 +654,29 @@ void deleteUserStatement(List<Operation> result) :
     }
 }
 
+String quotedString() :
+{
+    Token str = null;
+}
+{
+    ( str = <QUOTED> )
+    {
+        // Remove escaping backslash for double quotes
+        return str.image.replaceAll("\\\\\"", "\"");
+    }
+}
+
 void disableServiceUserStatement(List<Operation> result) :
 {
     Token user = null;
-    Token msg = null;
+    String msg = null;
 }
 {
     <DISABLE> <SERVICE> <USER> 
     ( user = <STRING> )
-    ( <COLON> msg = <QUOTED> )
+    ( <COLON> msg = quotedString() )
     {
-        result.add(new DisableServiceUser(user.image, msg == null ? null : msg.image));
+        result.add(new DisableServiceUser(user.image, msg));
     }
 }
 

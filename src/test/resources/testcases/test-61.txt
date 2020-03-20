@@ -1,2 +1,3 @@
 # Test "disable service user" statements
 disable service user svcA : "This message explains why it's disabled.  Whitespace   is  preserved."
+disable service user svcB : "Testing escaped double \"quote\" in this string."

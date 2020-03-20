@@ -1,1 +1,2 @@
 DisableServiceUser svcA : This message explains why it's disabled.  Whitespace   is  preserved.
+DisableServiceUser svcB : Testing escaped double "quote" in this string.
