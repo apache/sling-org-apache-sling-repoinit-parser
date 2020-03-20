@@ -1,0 +1,6 @@
+SetProperties on /a/b/c
+  PropertyLine sling:ResourceType={String}[/x/y/z]
+  PropertyLine cq:allowedTemplates={String}[/d/e/f/*, m/n/*]
+  PropertyLine customSingleValueStringProp=[test]
+  PropertyLine customMultiValueStringProp=[test1, test2]
+

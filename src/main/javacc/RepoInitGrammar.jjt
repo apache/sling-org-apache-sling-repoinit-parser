@@ -94,6 +94,7 @@ TOKEN:
 |   < EQUALS: "=" >
 |   < RESTRICTION: "restriction" >
 |   < ACL_OPTIONS: "ACLOptions" >
+|   < PROPERTIES: "properties" >
 
 /* The order of these fuzzy statements is important (first match wins?) */ 
 |   < NAMESPACED_ITEM: (["a"-"z"] | ["A"-"Z"])+ ":" (["a"-"z"] | ["A"-"Z"])+ >
@@ -149,6 +150,7 @@ List<Operation> parse() :
         | disableServiceUserStatement(result)
         | addToGroupStatement(result)
         | removeFromGroupStatement(result)
+        | setPropertiesStatement(result)
         | blankLine() 
     ) * 
     <EOF>
@@ -714,5 +716,47 @@ void removeFromGroupStatement(List<Operation> result) :
 
     {
         result.add(new RemoveGroupMembers(members, group.image));
+    }
+}
+
+List<String> valuesList() :
+{
+    Token t = null;
+    List<String> values = new ArrayList<String>();
+}
+{
+    (t = <STRING> | t = <PATH_STRING>) { values.add(t.image); }
+    ( <COMMA> t = <STRING> { values.add(t.image); } )*
+    { return values; }
+}
+
+void propertyLine(List<PropertyLine> lines) :
+{
+    Token name = null;
+    Token type = null;
+    List<String> values;
+}
+{
+    ( name = <STRING> | name = <NAMESPACED_ITEM>)
+    ( <LCURLY> (type = <STRING>) <RCURLY> )?
+    <LPAREN> values = valuesList() <RPAREN>
+    <EOL>
+    {
+        lines.add(new PropertyLine(name.image,  type == null ? null : type.image, values));
+    }
+}
+
+void setPropertiesStatement(List<Operation> result) :
+{
+    List<PropertyLine> lines = new ArrayList<PropertyLine>();
+    Token t = null;
+}
+{
+    <SET> <PROPERTIES> <ON>  ( t = <PATH_STRING> ) <EOL>
+    ( propertyLine(lines) | blankLine() ) +
+    <END>
+    ( <EOL> | <EOF> )
+    {
+        result.add(new SetProperties(t.image, lines));
     }
 }

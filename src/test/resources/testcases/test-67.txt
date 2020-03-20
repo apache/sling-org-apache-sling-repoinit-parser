@@ -1,0 +1,7 @@
+# Test set property statements
+set properties on /a/b/c
+    sling:ResourceType{String}(/x/y/z)
+    cq:allowedTemplates{String}(/d/e/f/*, m/n/*)
+    customSingleValueStringProp(test)
+    customMultiValueStringProp(test1, test2)
+end
