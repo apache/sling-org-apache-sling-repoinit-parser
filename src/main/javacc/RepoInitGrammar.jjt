@@ -662,7 +662,10 @@ String quotedString() :
     ( str = <QUOTED> )
     {
         // Remove escaping backslash for double quotes
-        return str.image.replaceAll("\\\\\"", "\"");
+        return str.image
+            .replaceAll("\\\\\"", "\"")
+            .replaceAll("\\\\\\\\", "\\\\")
+        ;
     }
 }
 
