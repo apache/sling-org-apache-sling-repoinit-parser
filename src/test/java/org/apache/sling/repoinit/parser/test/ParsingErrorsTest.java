@@ -108,6 +108,14 @@ public class ParsingErrorsTest {
             add(new Object[] { "remove bob, alice to group shouldBeFromNotTo", ParseException.class });
             add(new Object[] { "add bob, alice group missingTo", ParseException.class });
             add(new Object[] { "remove bob, alice group missingFrom", ParseException.class });
+
+            // SLING-9171 Support setting node properties via repoinit
+            add(new Object[] { "set properties on appsWithoutSlash \n set sling:ResourceType{String} to /x/y/z \n end", ParseException.class });
+            add(new Object[] { "set properties on /apps  \n set dob{Date} to 13-10-2019 \n end", ParseException.class });
+            add(new Object[] { "set properties on /pathA/b  \n set someProp{inValidType} to abc \n end", ParseException.class });
+            add(new Object[] { "set properties on /pathA/b  \n set smallcasetype{string} to abc \n end", ParseException.class });
+            add(new Object[] { "set properties on /pathA/b  \n set {String} to missingPropertyName \n end", ParseException.class });
+            add(new Object[] { "set properties on /pathA/b  \n set somepProp{String} withoutTo \n end", ParseException.class });
         }};
         return result;
     }

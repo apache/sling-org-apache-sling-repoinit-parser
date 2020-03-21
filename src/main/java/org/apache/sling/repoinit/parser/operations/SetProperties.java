@@ -21,11 +21,11 @@ package org.apache.sling.repoinit.parser.operations;
 import java.util.List;
 
 public class SetProperties extends Operation {
-    private final String nodePath;
+    private final List<String> paths;
     private final List<PropertyLine> lines;
 
-    public SetProperties(String nodePath, List<PropertyLine> lines) {
-        this.nodePath = nodePath;
+    public SetProperties(List<String> paths, List<PropertyLine> lines) {
+        this.paths = paths;
         this.lines = lines;
     }
 
@@ -43,8 +43,8 @@ public class SetProperties extends Operation {
         return sb.toString();
     }
 
-    public String getNodePath() {
-        return nodePath;
+    public List<String> getPaths() {
+        return paths;
     }
 
     public List<PropertyLine> getPropertyLines () {return lines;};

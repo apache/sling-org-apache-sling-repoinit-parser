@@ -204,10 +204,12 @@ class OperationToStringVisitor implements OperationVisitor {
 
     @Override
     public void visitSetProperties(SetProperties sp) {
-        System.out.println("nitin: ");
         out.print(sp.getClass().getSimpleName());
-        out.print(" on ");
-        out.print(sp.getNodePath());
+        out.print(" on");
+        for(String p : sp.getPaths()) {
+            out.print(' ');
+            out.print(p);
+        }
         out.println();
         List<PropertyLine> lines =  sp.getPropertyLines();
         for(PropertyLine p : lines) {
