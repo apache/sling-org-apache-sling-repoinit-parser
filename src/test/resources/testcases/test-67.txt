@@ -2,9 +2,9 @@
 set properties on /pathA, /path/B
   set sling:ResourceType{String} to /x/y/z
   set cq:allowedTemplates to /d/e/f/*, m/n/*
-  set someInteger{Long} to 42
+  default someInteger{Long} to 42
   set someFlag{Boolean} to true
-  set someDate{Date} to 2020-03-19T11:39:33.437+05:30
+  default someDate{Date} to 2020-03-19T11:39:33.437+05:30
   set customSingleValueStringProp to test
   set customSingleValueQuotedStringProp to "hello, you!"
   set customMultiValueStringProp to test1, test2

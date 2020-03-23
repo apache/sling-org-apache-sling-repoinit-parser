@@ -25,6 +25,7 @@ public class PropertyLine {
     private final String name;
     private final String type;
     private final List<String> values;
+    private boolean isDefault = false;
 
     /**
      * Operation that sets property on a node.
@@ -32,10 +33,12 @@ public class PropertyLine {
      *  @param type   property type
      *  @param values  values of the property
      */
-    public PropertyLine(String name, String type, List<String> values) {
+    public PropertyLine(String name, String type, List<String> values, boolean isDefault) {
         this.name = name;
         this.type = type;
         this.values = values;
+        this.isDefault = isDefault;
+
     }
 
     public String getPropertyName() {return name;};
@@ -46,11 +49,16 @@ public class PropertyLine {
         return values;
     }
 
+    public boolean isDefault() { return isDefault; }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" ");
+        if(isDefault()) {
+            sb.append("default ");
+        }
         sb.append(name);
         sb.append("=");
         if (type != null) {
@@ -58,6 +66,7 @@ public class PropertyLine {
             sb.append(type);
             sb.append("}");
         }
+
         sb.append(values);
         return sb.toString();
     }

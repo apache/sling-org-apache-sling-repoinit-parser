@@ -100,6 +100,7 @@ TOKEN:
 |   < PROP_TYPE_DOUBLE: "Double" >
 |   < PROP_TYPE_DATE: "Date" >
 |   < PROP_TYPE_BOOLEAN: "Boolean" >
+|   < SETDEF: "default" >
 
 /* The order of these fuzzy statements is important (first match wins?) */ 
 |   < NAMESPACED_ITEM: (["a"-"z"] | ["A"-"Z"])+ ":" (["a"-"z"] | ["A"-"Z"])+ >
@@ -796,13 +797,15 @@ void propertyLine(List<PropertyLine> lines) :
     Token name = null;
     String type = null;
     List<String> values;
+    Token t = null;
+    boolean isDefault = false;
 }
 {
-    <SET> ( name = <STRING> | name = <NAMESPACED_ITEM>)  ((( <LCURLY> ( type = propertyDataType() ) <RCURLY> )? <TO>
+    (t = <SET> | t = <SETDEF> {isDefault = true;}) ( name = <STRING> | name = <NAMESPACED_ITEM>)  ((( <LCURLY> ( type = propertyDataType() ) <RCURLY> )? <TO>
     values = valuesList()) | (( <LCURLY> ( type = dateDataType() ) <RCURLY> ) <TO>  values = dateValuesList()))
     <EOL>
     {
-        lines.add(new PropertyLine(name.image,  type == null ? "String" : type, values));
+        lines.add(new PropertyLine(name.image,  type == null ? "String" : type, values, isDefault));
     }
 }
 
