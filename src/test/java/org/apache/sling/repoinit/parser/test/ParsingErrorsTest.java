@@ -113,7 +113,7 @@ public class ParsingErrorsTest {
             add(new Object[] { "set properties on appsWithoutSlash \n set sling:ResourceType{String} to /x/y/z \n end", ParseException.class });
             add(new Object[] { "set properties on /apps  \n set dob{Date} to 13-10-2019 \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set someProp{inValidType} to abc \n end", ParseException.class });
-            add(new Object[] { "set properties on /pathA/b  \n set smallcasetype{string} to abc \n end", ParseException.class });
+            add(new Object[] { "set properties on /pathA/b  \n set lowercasetype{string} to abc \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set {String} to missingPropertyName \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set somepProp{String} withoutTo \n end", ParseException.class });
         }};

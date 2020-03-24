@@ -17,38 +17,56 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** A single "set property" line */
 public class PropertyLine {
 
     private final String name;
-    private final String type;
+    private final PropertyType propertyType;
     private final List<String> values;
     private boolean isDefault = false;
 
+    /** Valid types for these properties */
+    public static enum PropertyType {
+        String,
+        Long,
+        Double,
+        Date,
+        Boolean
+    }
+
     /**
-     * Operation that sets property on a node.
+     * Stores data for one line of a "set property" block
      *  @param name  name of the property
-     *  @param type   property type
+     *  @param typeString property type, as a String
      *  @param values  values of the property
      */
-    public PropertyLine(String name, String type, List<String> values, boolean isDefault) {
+    public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) {
         this.name = name;
-        this.type = type;
-        this.values = values;
+        this.propertyType = typeString == null ? PropertyType.String : PropertyType.valueOf(typeString);
+        this.values = values == null ? new ArrayList<>() : values;
         this.isDefault = isDefault;
 
     }
 
+    /** @return the name of the property to set */
     public String getPropertyName() {return name;};
 
-    public String getPropertyType() {return type;};
+    /** @return the type of the property to set */
+    public PropertyType getPropertyType() {return propertyType;};
 
+    /** @return the list ot values of the property to set */
     public List<String> getPropertyValues() {
-        return values;
+        return Collections.unmodifiableList(values);
     }
 
+    /** True if this line is a "default" as opposed to a "set" instruction.
+     * @return true if a previously existing value of this property is kept, instead
+     *      of being overwritten like a "set" instruction does
+     */
     public boolean isDefault() { return isDefault; }
 
     @Override
@@ -59,13 +77,12 @@ public class PropertyLine {
         if(isDefault()) {
             sb.append("default ");
         }
+
         sb.append(name);
         sb.append("=");
-        if (type != null) {
-            sb.append("{");
-            sb.append(type);
-            sb.append("}");
-        }
+        sb.append("{");
+        sb.append(propertyType.toString());
+        sb.append("}");
 
         sb.append(values);
         return sb.toString();
