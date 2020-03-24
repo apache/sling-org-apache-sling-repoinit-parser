@@ -39,6 +39,8 @@ import org.apache.sling.repoinit.parser.operations.SetAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipals;
 import org.apache.sling.repoinit.parser.operations.AddGroupMembers;
 import org.apache.sling.repoinit.parser.operations.RemoveGroupMembers;
+import org.apache.sling.repoinit.parser.operations.SetProperties;
+import org.apache.sling.repoinit.parser.operations.PropertyLine;
 
 /** OperationVisitor that dumps the operations using
  *  their toString() methods
@@ -198,5 +200,21 @@ class OperationToStringVisitor implements OperationVisitor {
         out.print("in group ");
         out.print(rm.getGroupname());
         out.println();
+    }
+
+    @Override
+    public void visitSetProperties(SetProperties sp) {
+        out.print(sp.getClass().getSimpleName());
+        out.print(" on");
+        for(String p : sp.getPaths()) {
+            out.print(' ');
+            out.print(p);
+        }
+        out.println();
+        List<PropertyLine> lines =  sp.getPropertyLines();
+        for(PropertyLine p : lines) {
+            out.print("  ");
+            out.println(p);
+        }
     }
 }

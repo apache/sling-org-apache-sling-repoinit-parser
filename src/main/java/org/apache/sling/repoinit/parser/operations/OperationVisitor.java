@@ -37,4 +37,5 @@ public interface OperationVisitor {
     void visitDisableServiceUser(DisableServiceUser dsu);
     void visitAddGroupMembers(AddGroupMembers am);
     void visitRemoveGroupMembers(RemoveGroupMembers rm);
+    void visitSetProperties(SetProperties sp);
 }

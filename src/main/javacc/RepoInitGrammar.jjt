@@ -94,12 +94,20 @@ TOKEN:
 |   < EQUALS: "=" >
 |   < RESTRICTION: "restriction" >
 |   < ACL_OPTIONS: "ACLOptions" >
+|   < PROPERTIES: "properties" >
+|   < PROP_TYPE_STRING: "String" >
+|   < PROP_TYPE_LONG: "Long" >
+|   < PROP_TYPE_DOUBLE: "Double" >
+|   < PROP_TYPE_DATE: "Date" >
+|   < PROP_TYPE_BOOLEAN: "Boolean" >
+|   < SETDEF: "default" >
 
 /* The order of these fuzzy statements is important (first match wins?) */ 
 |   < NAMESPACED_ITEM: (["a"-"z"] | ["A"-"Z"])+ ":" (["a"-"z"] | ["A"-"Z"])+ >
 |   < PATH_STRING: "/" (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["@"] | [":"] | ["+"] | ["/"]) * >
 |   < PATH_REPOSITORY: ":repository" >
 |   < STRING: (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["/"] | [":"] | ["*"]) + >
+|   < DATE_STRING: ("+" | "-")? ["0"-"9"]["0"-"9"]["0"-"9"]["0"-"9"] ["-"] ((["0"]["1"-"9"]) | (["1"]["0"-"2"])) ["-"] (["0"]["1"-"9"] | (["1"]|["2"])["0"-"9"] | ["3"](["0"] | ["1"])) ["T"] (["0"]["0"-"9"] | ["1"]["0"-"9"] | ["2"]["0"-"3"]) [":"] (["0"-"5"]["0"-"9"]) [":"] (["0"-"5"]["0"-"9"]) ["."] ["0"-"9"]["0"-"9"]["0"-"9"] (["Z"]| ((["+"]|["-"])(["0"]["0"-"9"] | ["1"]["0"-"9"] | ["2"]["0"-"3"]) [":"] (["0"-"5"]["0"-"9"]))) >
 |   < EOL: "\n" >
 }
 
@@ -149,6 +157,7 @@ List<Operation> parse() :
         | disableServiceUserStatement(result)
         | addToGroupStatement(result)
         | removeFromGroupStatement(result)
+        | setPropertiesStatement(result)
         | blankLine() 
     ) * 
     <EOF>
@@ -654,6 +663,17 @@ void deleteUserStatement(List<Operation> result) :
     }
 }
 
+String escapeQuotedString(String s) :
+{}
+{
+    {
+        return s
+            .replaceAll("\\\\\"", "\"")
+            .replaceAll("\\\\\\\\", "\\\\")
+        ;
+     }
+}
+
 String quotedString() :
 {
     Token str = null;
@@ -662,10 +682,7 @@ String quotedString() :
     ( str = <QUOTED> )
     {
         // Remove escaping backslash for double quotes
-        return str.image
-            .replaceAll("\\\\\"", "\"")
-            .replaceAll("\\\\\\\\", "\\\\")
-        ;
+        return escapeQuotedString(str.image);
     }
 }
 
@@ -714,5 +731,95 @@ void removeFromGroupStatement(List<Operation> result) :
 
     {
         result.add(new RemoveGroupMembers(members, group.image));
+    }
+}
+
+void addValueToList(List<String> list, Token valueToken) :
+{}
+{
+    {
+        if(QUOTED == valueToken.kind) {
+            list.add(escapeQuotedString(valueToken.image));
+        } else {
+            list.add(valueToken.image);
+        }
+    }
+}
+
+List<String> valuesList() :
+{
+    Token t = null;
+    List<String> values = new ArrayList<String>();
+}
+{
+    (t = <STRING> | t = <QUOTED> | t = <PATH_STRING> | t = <NAMESPACED_ITEM>)  { addValueToList(values, t);}
+    ( <COMMA> (t = <STRING> | t = <QUOTED> | t = <PATH_STRING> | t = <NAMESPACED_ITEM>) { addValueToList(values, t); } )*
+    { return values; }
+}
+
+List<String> dateValuesList() :
+{
+    Token t = null;
+    List<String> values = new ArrayList<String>();
+}
+{
+    (t = <DATE_STRING>)  { addValueToList(values, t);}
+    ( <COMMA> (t = <DATE_STRING>) { addValueToList(values, t); } )*
+    { return values; }
+}
+
+String propertyDataType() :
+{
+   Token t;
+}
+{
+  ( t = <PROP_TYPE_STRING> | t = <PROP_TYPE_LONG> | t = <PROP_TYPE_DOUBLE> | t = <PROP_TYPE_BOOLEAN> )
+  {
+      return t.image;
+  }
+
+}
+
+String dateDataType() :
+{
+   Token t;
+}
+{
+  (t = <PROP_TYPE_DATE>)
+  {
+      return t.image;
+  }
+
+}
+
+void propertyLine(List<PropertyLine> lines) :
+{
+    Token name = null;
+    String type = null;
+    List<String> values;
+    Token t = null;
+    boolean isDefault = false;
+}
+{
+    (t = <SET> | t = <SETDEF> {isDefault = true;}) ( name = <STRING> | name = <NAMESPACED_ITEM>)  ((( <LCURLY> ( type = propertyDataType() ) <RCURLY> )? <TO>
+    values = valuesList()) | (( <LCURLY> ( type = dateDataType() ) <RCURLY> ) <TO>  values = dateValuesList()))
+    <EOL>
+    {
+        lines.add(new PropertyLine(name.image,  type == null ? "String" : type, values, isDefault));
+    }
+}
+
+void setPropertiesStatement(List<Operation> result) :
+{
+    List<PropertyLine> lines = new ArrayList<PropertyLine>();
+    List<String> paths;
+}
+{
+    <SET> <PROPERTIES> <ON>  ( paths  = pathsList() ) <EOL>
+    ( propertyLine(lines) | blankLine() ) +
+    <END>
+    ( <EOL> | <EOF> )
+    {
+        result.add(new SetProperties(paths, lines));
     }
 }

@@ -15,6 +15,6 @@
  * limitations under the License.
  ******************************************************************************/
 
-@org.osgi.annotation.versioning.Version("4.5.0")
+@org.osgi.annotation.versioning.Version("4.6.0")
 package org.apache.sling.repoinit.parser.operations;
 

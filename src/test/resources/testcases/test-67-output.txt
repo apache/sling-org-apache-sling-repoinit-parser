@@ -1,0 +1,12 @@
+SetProperties on /pathA /path/B
+  PropertyLine sling:ResourceType={String}[/x/y/z]
+  PropertyLine cq:allowedTemplates={String}[/d/e/f/*, m/n/*]
+  PropertyLine default someInteger={Long}[42]
+  PropertyLine someFlag={Boolean}[true]
+  PropertyLine default someDate={Date}[2020-03-19T11:39:33.437+05:30]
+  PropertyLine customSingleValueStringProp={String}[test]
+  PropertyLine customSingleValueQuotedStringProp={String}["hello, you!"]
+  PropertyLine customMultiValueStringProp={String}[test1, test2]
+
+
+
