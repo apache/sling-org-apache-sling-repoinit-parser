@@ -4,8 +4,15 @@ set properties on /pathA, /path/B
   set cq:allowedTemplates to /d/e/f/*, m/n/*
   default someInteger{Long} to 42
   set someFlag{Boolean} to true
-  default someDate{Date} to 2020-03-19T11:39:33.437+05:30
+  default someDate{Date} to "2020-03-19T11:39:33.437+05:30"
   set customSingleValueStringProp to test
   set customSingleValueQuotedStringProp to "hello, you!"
   set customMultiValueStringProp to test1, test2
+  default threeValues to test1, test2, test3
+  set quotedA to "Here's a \"double quoted string\" with suffix"
+  set quotedMix to "quoted", non-quoted, "the last \" one"
+end
+
+set properties on /single/path
+  set someString to "some string"
 end

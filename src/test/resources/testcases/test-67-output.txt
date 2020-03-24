@@ -1,12 +1,14 @@
 SetProperties on /pathA /path/B
-  PropertyLine sling:ResourceType={String}[/x/y/z]
-  PropertyLine cq:allowedTemplates={String}[/d/e/f/*, m/n/*]
-  PropertyLine default someInteger={Long}[42]
-  PropertyLine someFlag={Boolean}[true]
-  PropertyLine default someDate={Date}[2020-03-19T11:39:33.437+05:30]
-  PropertyLine customSingleValueStringProp={String}[test]
-  PropertyLine customSingleValueQuotedStringProp={String}["hello, you!"]
-  PropertyLine customMultiValueStringProp={String}[test1, test2]
-
-
-
+  PropertyLine sling:ResourceType{String}=[{String}/x/y/z]
+  PropertyLine cq:allowedTemplates{String}=[{String}/d/e/f/*, {String}m/n/*]
+  PropertyLine default someInteger{Long}=[{Long}42]
+  PropertyLine someFlag{Boolean}=[{Boolean}true]
+  PropertyLine default someDate{Date}=[{GregorianCalendar}2020-03-19T11:39:33.437+05:30]
+  PropertyLine customSingleValueStringProp{String}=[{String}test]
+  PropertyLine customSingleValueQuotedStringProp{String}=[{String}hello, you!]
+  PropertyLine customMultiValueStringProp{String}=[{String}test1, {String}test2]
+  PropertyLine default threeValues{String}=[{String}test1, {String}test2, {String}test3]
+  PropertyLine quotedA{String}=[{String}Here's a "double quoted string" with suffix]
+  PropertyLine quotedMix{String}=[{String}quoted, {String}non-quoted, {String}the last " one]
+SetProperties on /single/path
+  PropertyLine someString{String}=[{String}some string]

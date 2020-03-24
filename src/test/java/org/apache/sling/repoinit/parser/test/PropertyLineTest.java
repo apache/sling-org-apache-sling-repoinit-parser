@@ -18,25 +18,51 @@ package org.apache.sling.repoinit.parser.test;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.Date;
+
+import org.apache.jackrabbit.util.ISO8601;
 import org.apache.sling.repoinit.parser.operations.PropertyLine;
+import org.apache.sling.repoinit.parser.impl.ParseException;
 import org.junit.Test;
 
 public class PropertyLineTest {
 
     @Test
-    public void testDefaultPropertyType() {
+    public void testDefaultPropertyType() throws ParseException {
         final PropertyLine p = new PropertyLine("someName", null, null, false);
         assertEquals(PropertyLine.PropertyType.String, p.getPropertyType());
     }
 
     @Test
-    public void testValidPropertyType() {
+    public void testValidPropertyType() throws ParseException {
         final PropertyLine p = new PropertyLine("someName", "Boolean", null, false);
         assertEquals(PropertyLine.PropertyType.Boolean, p.getPropertyType());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testInvalidPropertyType() {
+    @Test(expected = ParseException.class)
+    public void testInvalidPropertyType() throws ParseException {
         new PropertyLine("someName", "invalidTypeName", null, false);
+    }
+
+    @Test
+    public void testValidDateFormat() throws ParseException {
+        final Date now = new Date();
+        final String [] value = { ISO8601.format(now) };
+        final PropertyLine p = new PropertyLine("someName", "Date", Arrays.asList(value), false);
+        assertEquals(ISO8601.parse(value[0]), p.getPropertyValues().get(0));
+    }
+
+    @Test(expected=ParseException.class)
+    public void testInvalidDateFormat() throws ParseException {
+        final String [] notAnIsoDate = { "really not a date" };
+        new PropertyLine("someName", "Date", Arrays.asList(notAnIsoDate), false);
+    }
+
+    @Test
+    public void testInvalidDateFormatAsString() throws ParseException {
+        final String [] notAnIsoDate = { "2020-03-24" };
+        final PropertyLine p = new PropertyLine("someName", "String", Arrays.asList(notAnIsoDate), false);
+        assertEquals(notAnIsoDate[0], p.getPropertyValues().get(0));
     }
 }

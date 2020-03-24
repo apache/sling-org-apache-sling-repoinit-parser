@@ -21,7 +21,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -116,6 +118,7 @@ public class ParsingErrorsTest {
             add(new Object[] { "set properties on /pathA/b  \n set lowercasetype{string} to abc \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set {String} to missingPropertyName \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set somepProp{String} withoutTo \n end", ParseException.class });
+            add(new Object[] { "set properties on /noPropsFails  \n end", ParseException.class });
         }};
         return result;
     }
@@ -123,6 +126,15 @@ public class ParsingErrorsTest {
     public ParsingErrorsTest(String input, Class<? extends Throwable> expected) {
         this.input = input;
         this.expected = expected;
+    }
+
+    private String getInfo(String msg, Throwable unexpected) {
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw);
+        pw.println("For input '" + input + "', unexpected stack trace=");
+        unexpected.printStackTrace(pw);
+        pw.flush();
+        return sw.toString();
     }
 
     @Test
@@ -133,9 +145,9 @@ public class ParsingErrorsTest {
             new RepoInitParserImpl(r).parse();
             noException = true;
         } catch(Exception e) {
-            assertEquals("for input " + input, expected, e.getClass());
+            assertEquals(getInfo(input, e), expected, e.getClass());
         } catch(Error err) {
-            assertEquals("for input " + input, expected, err.getClass());
+            assertEquals(getInfo(input, err), expected, err.getClass());
         } finally {
             r.close();
         }

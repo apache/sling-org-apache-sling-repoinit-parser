@@ -18,15 +18,21 @@
 package org.apache.sling.repoinit.parser.operations;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+
+import javax.sound.sampled.Port;
+
+import org.apache.jackrabbit.util.ISO8601;
+import org.apache.sling.repoinit.parser.impl.ParseException;
 
 /** A single "set property" line */
 public class PropertyLine {
 
     private final String name;
     private final PropertyType propertyType;
-    private final List<String> values;
+    private final List<Object> values;
     private boolean isDefault = false;
 
     /** Valid types for these properties */
@@ -44,22 +50,59 @@ public class PropertyLine {
      *  @param typeString property type, as a String
      *  @param values  values of the property
      */
-    public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) {
+    public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) throws ParseException {
         this.name = name;
-        this.propertyType = typeString == null ? PropertyType.String : PropertyType.valueOf(typeString);
-        this.values = values == null ? new ArrayList<>() : values;
+        this.propertyType = typeString == null ? PropertyType.String : parseType(typeString);
+        this.values = parseList(this.propertyType, values);
         this.isDefault = isDefault;
 
     }
 
-    /** @return the name of the property to set */
+    private static PropertyType parseType(String type) throws ParseException {
+        try {
+            return PropertyType.valueOf(type);
+        } catch(IllegalArgumentException e) {
+            throw new ParseException("Invalid property type:" + type);
+        }
+    }
+
+    private static List<Object> parseList(PropertyType type, List<String> values) throws ParseException {
+        if(values == null) {
+            return new ArrayList<>();
+        }
+        final List<Object> result = new ArrayList<>();
+        for(String val : values) {
+            result.add(parseValue(type, val));
+        }
+        return result;
+    }
+
+    private static Object parseValue(PropertyType type, String value) throws ParseException {
+        if(value == null) throw new ParseException("Null value for type " + type);
+        if(type == PropertyType.String) return value;
+        if(type == PropertyType.Long) return Long.valueOf(value);
+        if(type == PropertyType.Double) return Double.valueOf(value);
+        if(type == PropertyType.Date) return parseDate(value);
+        if(type == PropertyType.Boolean) return Boolean.valueOf(value);
+        throw new ParseException("Invalid type " + type);
+    }
+
+    private static Calendar parseDate(String dateStr) throws ParseException {
+        final Calendar result = ISO8601.parse(dateStr);
+        if(result == null) {
+            throw new ParseException("Invalid ISO8601 date: " + dateStr);
+        }
+        return result;
+    }
+
+        /** @return the name of the property to set */
     public String getPropertyName() {return name;};
 
     /** @return the type of the property to set */
     public PropertyType getPropertyType() {return propertyType;};
 
     /** @return the list ot values of the property to set */
-    public List<String> getPropertyValues() {
+    public List<Object> getPropertyValues() {
         return Collections.unmodifiableList(values);
     }
 
@@ -79,12 +122,23 @@ public class PropertyLine {
         }
 
         sb.append(name);
-        sb.append("=");
         sb.append("{");
         sb.append(propertyType.toString());
-        sb.append("}");
+        sb.append("}=[");
 
-        sb.append(values);
+        String sep = "";
+        for(Object value : values) {
+            sb.append(sep);
+            sep = ", ";
+            sb.append("{").append(value.getClass().getSimpleName()).append("}");
+            if(value instanceof Calendar) {
+                sb.append(ISO8601.format((Calendar)value));
+            } else {
+                sb.append(value.toString());
+            }
+        }
+
+        sb.append("]");
         return sb.toString();
     }
 }

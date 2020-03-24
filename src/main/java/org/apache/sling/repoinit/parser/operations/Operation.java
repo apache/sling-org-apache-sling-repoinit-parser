@@ -32,12 +32,6 @@ public abstract class Operation {
         if(s == null) {
             return null;
         }
-        if(s.startsWith(DQUOTE)) {
-            s = s.substring(1);
-        }
-        if(s.endsWith(DQUOTE)) {
-            s = s.substring(0, s.length() - 1);
-        }
         s = s.trim();
         if(s.length() == 0) {
             return null;
