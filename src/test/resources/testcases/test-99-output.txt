@@ -55,3 +55,9 @@ SetAclPaths on :home:alice#/sub/folder/of/their/homes
   AclLine ALLOW {principals=[fred], privileges=[jcr:three]}
 AddGroupMembers user1 user2 in group grpA
 RemoveGroupMembers user3 user5 in group grpB
+SetProperties on /pathA /path/B
+  PropertyLine sling:ResourceType{String}=[{String}/x/y/z]
+  PropertyLine default someInteger{Long}=[{Long}42]
+  PropertyLine someFlag{Boolean}=[{Boolean}true]
+  PropertyLine default someDate{Date}=[{GregorianCalendar}2020-03-19T11:39:33.437+05:30]
+  PropertyLine quotedMix{String}=[{String}quoted, {String}non-quoted, {String}the last " one]

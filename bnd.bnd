@@ -3,4 +3,4 @@
 -includeresource:\
   @jackrabbit-jcr-commons-*.jar!/org/apache/jackrabbit/util/ISO8601.*
 
-Provide-Capability: org.apache.sling.repoinit.language;version:Version="8.0"
+Provide-Capability: org.apache.sling.repoinit.language;version:Version="8.1"

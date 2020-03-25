@@ -100,3 +100,15 @@ end
 # Add/remove principals to group, since V1.5.2
 add user1,user2 to group grpA
 remove user3,user5 from group grpB
+
+# Set properties, since V1.6.2
+# 'set' overwrites any existing value while
+# 'default' only sets the property if not set yet
+set properties on /pathA, /path/B
+  set sling:ResourceType{String} to /x/y/z
+  default someInteger{Long} to 42
+  set someFlag{Boolean} to true
+  default someDate{Date} to "2020-03-19T11:39:33.437+05:30"
+  set quotedMix to "quoted", non-quoted, "the last \" one"
+end
+
