@@ -1,5 +1,3 @@
--fixupmessages.bundleversion: "The bundle version change *";is:=ignore 
-
 -includeresource:\
   @jackrabbit-jcr-commons-*.jar!/org/apache/jackrabbit/util/ISO8601.*
 
