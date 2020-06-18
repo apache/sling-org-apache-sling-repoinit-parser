@@ -10,4 +10,12 @@ Parser for the [Repository Initialization language](https://sling.apache.org/doc
 
 To parse repoinit statements use the [RepoInitParser](./src/main/java/org/apache/sling/repoinit/parser/RepoInitParser.java) service.
 
-The user documentation for the Sling Repoinit modules is at https://sling.apache.org/documentation/bundles/repository-initialization.html
+See the [Sling Website Repository Initialization page](https://sling.apache.org/documentation/bundles/repository-initialization.html) for more information.
+
+## Module dependencies
+
+The [Feature Model Analyser](https://github.com/apache/sling-org-apache-sling-feature-analyser) uses this
+module to validate repoinit statements embedded in feature models. It should be kept up to date with new
+releases of this parser.
+
+
