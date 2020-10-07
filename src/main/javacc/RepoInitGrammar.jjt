@@ -1,7 +1,8 @@
 /* JavaCC grammar for the SLING-5449 content repository 
  * initialization language
- * See https://javacc.java.net/doc/docindex.html for the JavaCC docs
- * and http://www.engr.mun.ca/~theo/JavaCC-FAQ/javacc-faq-moz.htm for the FAQ
+ * See https://javacc.github.io/javacc/ for the most recent docs,
+ *   including links to grammar examples
+ * See http://www.engr.mun.ca/~theo/JavaCC-FAQ/javacc-faq-moz.htm for a FAQ from 2011
  */
  
 options
