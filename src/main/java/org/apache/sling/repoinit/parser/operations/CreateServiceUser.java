@@ -17,16 +17,16 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+
 public class CreateServiceUser extends ServiceUserOperation {
-    private final String path;
 
     public CreateServiceUser(String username) {
         this(username, null);
     }
 
-    public CreateServiceUser(String username, String path) {
-        super(username);
-        this.path = path;
+    public CreateServiceUser(String username, WithPathOptions wph) {
+        super(username, wph);
     }
 
     @Override
@@ -39,14 +39,11 @@ public class CreateServiceUser extends ServiceUserOperation {
         final StringBuilder sb = new StringBuilder();
         sb.append(super.getParametersDescription());
 
-        if(path != null) {
-            sb.append(" with path ").append(path);
+        final String forced = isForcedPath() ? "forced " : "";
+        if (getPath() != null) {
+            sb.append(" with " + forced + "path ").append(getPath());
         }
 
         return sb.toString();
-    }
-
-    public String getPath() {
-        return path;
     }
 }

@@ -19,7 +19,7 @@ package org.apache.sling.repoinit.parser.operations;
 
 public class DeleteServiceUser extends ServiceUserOperation {
     public DeleteServiceUser(String username) {
-        super(username);
+        super(username, null);
     }
     
     @Override

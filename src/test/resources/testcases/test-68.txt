@@ -1,0 +1,9 @@
+# SLING-9857 - test "with forced path" option
+create user A with path /path/user/A
+create user AF with forced path /path/user/AF
+
+create service user B with path /path/service/B
+create service user BF with forced path /path/service/BF
+
+create group G with path /path/group/G
+create group GF with forced path /path/group/GF

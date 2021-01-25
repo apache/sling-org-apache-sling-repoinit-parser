@@ -17,9 +17,10 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-public class CreateGroup extends Operation {
+import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+
+public class CreateGroup extends OperationWithPathOptions {
     private final String groupname;
-    private final String path;
 
     /**
      * Operation that creates a group.
@@ -36,9 +37,9 @@ public class CreateGroup extends Operation {
      * @param groupname the name of the group to create
      * @param path     optional path
      */
-    public CreateGroup(String groupname, String path) {
+    public CreateGroup(String groupname, WithPathOptions wph) {
+        super(wph);
         this.groupname = groupname;
-        this.path = path;
     }
 
     @Override
@@ -49,17 +50,14 @@ public class CreateGroup extends Operation {
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder(groupname);
-        if (path != null) {
-            sb.append(" with path ").append(path);
+        final String forced = isForcedPath() ? "forced " : "";
+        if (getPath() != null) {
+            sb.append(" with " + forced + "path ").append(getPath());
         }
         return sb.toString();
     }
 
     public String getGroupname() {
         return groupname;
-    }
-
-    public String getPath() {
-        return path;
     }
 }

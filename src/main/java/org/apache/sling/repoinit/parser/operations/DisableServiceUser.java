@@ -21,7 +21,7 @@ public class DisableServiceUser extends ServiceUserOperation {
     private final String reason;
     
     public DisableServiceUser(String username, String reason) {
-        super(username);
+        super(username, null);
         this.reason = cleanupQuotedString(reason);
         if(this.reason == null || this.reason.length() == 0) {
             throw new IllegalArgumentException("A non-empty reason is required");

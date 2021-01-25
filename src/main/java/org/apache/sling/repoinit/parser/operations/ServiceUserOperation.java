@@ -17,10 +17,13 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-public abstract class ServiceUserOperation extends Operation {
+import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+
+public abstract class ServiceUserOperation extends OperationWithPathOptions {
     protected final String username;
     
-    ServiceUserOperation(String username) {
+    ServiceUserOperation(String username, WithPathOptions wpopt) {
+        super(wpopt);
         this.username = username;
     }
     

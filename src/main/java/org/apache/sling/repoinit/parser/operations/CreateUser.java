@@ -17,11 +17,12 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-public class CreateUser extends Operation {
+import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+
+public class CreateUser extends OperationWithPathOptions {
     private final String username;
     private final String passwordEncoding;
     private final String password;
-    private final String path;
 
     /** Operation that creates a user.
      * @param username the name of the user to create
@@ -38,11 +39,11 @@ public class CreateUser extends Operation {
      * @param password optional password
      * @param path optional path
      */
-    public CreateUser(String username, String passwordEncoding, String password, String path) {
+    public CreateUser(String username, String passwordEncoding, String password, WithPathOptions wpopt) {
+        super(wpopt);
         this.username = username;
         this.passwordEncoding = passwordEncoding;
         this.password = password;
-        this.path = path;
     }
 
     @Override
@@ -53,8 +54,9 @@ public class CreateUser extends Operation {
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder(username);
-        if(path != null) {
-            sb.append(" with path ").append(path);
+        final String forced = isForcedPath() ? "forced " : "";
+        if (getPath() != null) {
+            sb.append(" with " + forced + "path ").append(getPath());
         }
         if(password != null) {
             if(passwordEncoding == null) {
@@ -76,9 +78,5 @@ public class CreateUser extends Operation {
     
     public String getPasswordEncoding() {
         return passwordEncoding;
-    }
-
-    public String getPath() {
-        return path;
     }
 }

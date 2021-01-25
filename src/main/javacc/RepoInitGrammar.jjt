@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.sling.repoinit.parser.operations.*;
+import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -97,6 +98,7 @@ TOKEN:
 |   < ACL_OPTIONS: "ACLOptions" >
 |   < PROPERTIES: "properties" >
 |   < SETDEF: "default" >
+|   < FORCED: "forced" >
 
 /* The order of these fuzzy statements is important (first match wins?) */ 
 |   < NAMESPACED_ITEM: (["a"-"z"] | ["A"-"Z"])+ ":" (["a"-"z"] | ["A"-"Z"])+ >
@@ -177,33 +179,34 @@ List<String> principalsList() :
     { return principals; }
 }
 
-String withPathStatement() :
+WithPathOptions withPathStatement() :
 {
-    Token t = null;
+    Token path = null;
+    Token forced = null;
 }
 {
     /* accept relative (string) or absolute path */
-    <WITH> <PATH> ( t=<STRING> | t=<PATH_STRING> )
-    { return t.image; }
+    <WITH> (forced=<FORCED>)? <PATH> ( path=<STRING> | path=<PATH_STRING> )
+    { return new WithPathOptions(path.image, forced != null); }
 }
 
 void serviceUserStatement(List<Operation> result) :
 {
     Token t;
     List<String> principals;
-    String path = null;
+    WithPathOptions wpopt = null;
 }
 {
     (t=<CREATE> | t=<DELETE>) 
     <SERVICE> <USER> 
     principals = principalsList() 
-    ( path = withPathStatement() ) ?
+    ( wpopt = withPathStatement() ) ?
     (<EOL> | <EOF>)
     
     {
         for(String principal : principals) {
             if(CREATE == t.kind) {
-                result.add(new CreateServiceUser(principal, path));
+                result.add(new CreateServiceUser(principal, wpopt));
             } else {
                 result.add(new DeleteServiceUser(principal));
             }
@@ -596,17 +599,15 @@ void createGroupStatement(List<Operation> result) :
 {
     Token group = null;
     Token encoding = null;
-    String path = null;
+    WithPathOptions wpopt = null;
 }
 {
     <CREATE> <GROUP> 
     ( group = <STRING> )
-    ( path = withPathStatement() ) ?
+    ( wpopt = withPathStatement() ) ?
 
     {
-        result.add(new CreateGroup(group.image,
-            path
-        ));
+        result.add(new CreateGroup(group.image, wpopt));
     }
 }
 
@@ -628,19 +629,19 @@ void createUserStatement(List<Operation> result) :
     Token user = null;
     Token encoding = null;
     Token password = null;
-    String path = null;
+    WithPathOptions wpopt = null;
 }
 {
     <CREATE> <USER> 
     ( user = <STRING> )
-    ( path = withPathStatement() ) ?
+    ( wpopt = withPathStatement() ) ?
     ( <WITH> <PASSWORD> ( <LCURLY> encoding = <STRING> <RCURLY> )? password = <STRING> )?
 
     {
         result.add(new CreateUser(user.image, 
             (encoding == null ? null : encoding.image), 
             (password == null ? null : password.image),
-            path
+            wpopt
         ));
     }
 }
