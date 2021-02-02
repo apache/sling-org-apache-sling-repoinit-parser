@@ -16,3 +16,8 @@ end
 set properties on /single/path
   set someString to "some string"
 end
+
+set properties on /test/curly/brackets
+  set curlyBracketsAndDoubleQuotes{String} to "{\"one, two\":\"three, four\"}"
+  set curlyBracketsAndSingleQuotes{String} to "{'five, six':'seven,eight'}"
+end

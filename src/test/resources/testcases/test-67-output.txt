@@ -12,3 +12,6 @@ SetProperties on /pathA /path/B
   PropertyLine quotedMix{String}=[{String}quoted, {String}non-quoted, {String}the last " one]
 SetProperties on /single/path
   PropertyLine someString{String}=[{String}some string]
+SetProperties on /test/curly/brackets
+  PropertyLine curlyBracketsAndDoubleQuotes{String}=[{String}{"one, two":"three, four"}]
+  PropertyLine curlyBracketsAndSingleQuotes{String}=[{String}{'five, six':'seven,eight'}]
