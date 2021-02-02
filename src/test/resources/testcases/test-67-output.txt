@@ -15,3 +15,6 @@ SetProperties on /single/path
 SetProperties on /test/curly/brackets
   PropertyLine curlyBracketsAndDoubleQuotes{String}=[{String}{"one, two":"three, four"}]
   PropertyLine curlyBracketsAndSingleQuotes{String}=[{String}{'five, six':'seven,eight'}]
+SetProperties on /endkeyword
+  PropertyLine endS{String}=[{String}one]
+  PropertyLine two{String}=[{String}endS]

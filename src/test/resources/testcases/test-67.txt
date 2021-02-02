@@ -21,3 +21,9 @@ set properties on /test/curly/brackets
   set curlyBracketsAndDoubleQuotes{String} to "{\"one, two\":\"three, four\"}"
   set curlyBracketsAndSingleQuotes{String} to "{'five, six':'seven,eight'}"
 end
+
+set properties on /endkeyword
+  # using "end" instead of "endS" below causes parsing to fail
+  set endS to one
+  set two to endS
+end
