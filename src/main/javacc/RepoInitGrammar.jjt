@@ -89,6 +89,7 @@ TOKEN:
 |   < RPAREN: ")" >
 |   < LCURLY: "{" >
 |   < RCURLY: "}" >
+|   < MULTI: "[]" >
 |   < COMMA: "," >
 |   < DQUOTE: "\"" >
 |   < COLON: ":" >
@@ -738,7 +739,7 @@ List<String> propertyValuesList() :
     List<String> values = new ArrayList<String>();
 }
 {
-    ( t = propertyValue() ) { values.add(t.image); }
+    (( t = propertyValue() ) { values.add(t.image); })?
     ( <COMMA> ( t = propertyValue() ) { values.add(t.image); } )*
     { return values; }
 }
@@ -754,7 +755,7 @@ void propertyLine(List<PropertyLine> lines) :
 {
     (t = <SET> | t = <SETDEF> {isDefault = true;} )
     ( name = <STRING> | name = <NAMESPACED_ITEM>)
-    ( <LCURLY> ( type = <STRING> ) <RCURLY> )?
+    ( <LCURLY> ( type = <STRING> ) <RCURLY> | <LCURLY> ( type = <STRING> ) <MULTI> <RCURLY> )?
     <TO> ( values = propertyValuesList() )
     <EOL>
     {

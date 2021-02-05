@@ -54,6 +54,10 @@ public class PropertyLine {
      */
     public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) throws ParseException {
         this.name = name;
+        boolean forceList = typeString != null && typeString.endsWith("[]");
+        if(forceList) {
+            typeString = typeString.substring(0, typeString.length() - 2);
+        }
         this.propertyType = typeString == null ? PropertyType.String : parseType(typeString);
         this.values = parseList(this.propertyType, values);
         this.isDefault = isDefault;
