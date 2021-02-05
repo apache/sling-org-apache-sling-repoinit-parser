@@ -56,6 +56,7 @@ public class AclLine {
      * Return the named multi-value property, or an empty list if not found.
      * 
      * @param name the property to get the value of
+     * @return the value of the property.
      */
     public List<String> getProperty(String name) {
         List<String> value = properties.get(name);

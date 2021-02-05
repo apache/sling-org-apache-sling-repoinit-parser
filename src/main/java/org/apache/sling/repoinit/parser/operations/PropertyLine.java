@@ -49,6 +49,8 @@ public class PropertyLine {
      *  @param name  name of the property
      *  @param typeString property type, as a String
      *  @param values  values of the property
+     *  @param isDefault true if this line is a "default" as opposed to a "set" instruction
+     *  @throws ParseException if the line cannot be parsed.
      */
     public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) throws ParseException {
         this.name = name;

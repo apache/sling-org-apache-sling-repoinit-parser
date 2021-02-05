@@ -37,7 +37,7 @@ public class CreateUser extends OperationWithPathOptions {
      * @param username the name of the user to create
      * @param passwordEncoding optional encoding for the supplied password
      * @param password optional password
-     * @param path optional path
+     * @param wpopt optional path
      */
     public CreateUser(String username, String passwordEncoding, String password, WithPathOptions wpopt) {
         super(wpopt);

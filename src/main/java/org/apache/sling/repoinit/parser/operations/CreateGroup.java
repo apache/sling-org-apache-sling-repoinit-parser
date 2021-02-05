@@ -35,7 +35,7 @@ public class CreateGroup extends OperationWithPathOptions {
      * Operation that creates a group.
      * 
      * @param groupname the name of the group to create
-     * @param path     optional path
+     * @param wph       optional path
      */
     public CreateGroup(String groupname, WithPathOptions wph) {
         super(wph);

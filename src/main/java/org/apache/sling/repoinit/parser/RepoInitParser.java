@@ -34,6 +34,7 @@ public interface RepoInitParser {
      * Parse the supplied input.
      *
      * @param reader Input in repoinit format. The reader is closed by this method.
+     * @return The parsed result.
      * @throws RepoInitParsingException on parsing errors
      */
     List<Operation> parse(Reader reader) throws RepoInitParsingException;
