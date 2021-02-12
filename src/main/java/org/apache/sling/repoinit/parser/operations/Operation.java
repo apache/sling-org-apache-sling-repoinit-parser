@@ -17,6 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public abstract class Operation {
     public abstract void accept(OperationVisitor v);
     public static final String DQUOTE = "\"";

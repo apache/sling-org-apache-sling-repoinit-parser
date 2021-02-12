@@ -21,9 +21,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /** Set ACL statement that groups a set of AclLines
  *  that all refer to the same set of paths.
  */
+@ProviderType
 public class SetAclPaths extends AclGroupBase {
     
     private final List<String> paths;

@@ -21,6 +21,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /** Removes an prefix at the beginning of
  *  each line in a String. 
  *  Used for embedding CND files in repoinit
@@ -29,6 +31,7 @@ import java.io.StringReader;
  *  statements like [sling:someNodetype] which
  *  are similar to provisioning model sections. 
  */
+@ProviderType
 public class LinePrefixCleaner {
     public String removePrefix(String prefix, String textBlock) {
         final StringBuilder result = new StringBuilder();

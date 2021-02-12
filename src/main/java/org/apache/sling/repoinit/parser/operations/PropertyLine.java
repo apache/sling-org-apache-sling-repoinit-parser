@@ -26,8 +26,10 @@ import javax.sound.sampled.Port;
 
 import org.apache.jackrabbit.util.ISO8601;
 import org.apache.sling.repoinit.parser.impl.ParseException;
+import org.osgi.annotation.versioning.ProviderType;
 
 /** A single "set property" line */
+@ProviderType
 public class PropertyLine {
 
     private final String name;

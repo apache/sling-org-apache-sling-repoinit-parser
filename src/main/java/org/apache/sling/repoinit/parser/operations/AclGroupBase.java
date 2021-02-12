@@ -22,8 +22,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /** Base class for operations that group AclLines */
- abstract class AclGroupBase extends Operation {
+@ProviderType 
+abstract class AclGroupBase extends Operation {
     /**
      * Supported ACL options
      */

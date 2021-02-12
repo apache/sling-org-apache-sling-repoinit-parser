@@ -17,8 +17,10 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+import org.apache.sling.repoinit.parser.impl.WithPathOptions;
+import org.osgi.annotation.versioning.ProviderType;
 
+@ProviderType
 abstract class OperationWithPathOptions extends Operation {
     private final WithPathOptions wpopt;
 

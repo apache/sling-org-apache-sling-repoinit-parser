@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.sling.repoinit.parser.operations.*;
-import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+import org.apache.sling.repoinit.parser.impl.WithPathOptions;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more

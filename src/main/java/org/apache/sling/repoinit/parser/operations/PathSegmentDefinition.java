@@ -19,9 +19,12 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /** Defines a segment of a path to be created,
  *  with its name and an optional primary type and optional mixins
  */
+@ProviderType
 public class PathSegmentDefinition {
     private final String segment;
     private final String primaryType;

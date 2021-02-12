@@ -17,6 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class RegisterNamespace extends Operation {
     private final String prefix;
     private final String uri;

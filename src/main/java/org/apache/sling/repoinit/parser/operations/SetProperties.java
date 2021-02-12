@@ -20,6 +20,9 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class SetProperties extends Operation {
     private final List<String> paths;
     private final List<PropertyLine> lines;

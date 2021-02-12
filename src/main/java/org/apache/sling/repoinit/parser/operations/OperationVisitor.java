@@ -17,9 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.annotation.versioning.ConsumerType;
 
-@ProviderType
+@ConsumerType
 public interface OperationVisitor {
     void visitCreateGroup(CreateGroup g);
     void visitDeleteGroup(DeleteGroup g);

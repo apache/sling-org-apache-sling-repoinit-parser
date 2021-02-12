@@ -21,6 +21,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class RegisterPrivilege extends Operation {
 
     private final String privilegeName;

@@ -17,7 +17,10 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /** An embedded block of text */
+@ProviderType
 public class RegisterNodetypes extends Operation {
     private final String cndStatements;
     

@@ -17,6 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class DeleteServiceUser extends ServiceUserOperation {
     public DeleteServiceUser(String username) {
         super(username, null);

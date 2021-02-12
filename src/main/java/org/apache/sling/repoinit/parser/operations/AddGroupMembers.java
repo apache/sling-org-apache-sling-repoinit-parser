@@ -19,6 +19,9 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class AddGroupMembers extends Operation {
     private final String groupname;
     private final List<String> members;
