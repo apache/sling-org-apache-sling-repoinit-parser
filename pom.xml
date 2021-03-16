@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.apache.sling</groupId>
     <artifactId>sling-bundle-parent</artifactId>
-    <version>40</version>
+    <version>41</version>
     <relativePath />
   </parent>
 
@@ -39,6 +39,10 @@
     <tag>HEAD</tag>
   </scm>
   
+  <properties>
+    <project.build.outputTimestamp>2020-01-22T15:10:15Z</project.build.outputTimestamp>
+  </properties>
+
   <build>
     <plugins>
       <plugin>

@@ -18,10 +18,9 @@
  */
 package org.apache.sling.repoinit.parser.impl;
 
+import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.List;
 
 import org.apache.sling.repoinit.parser.RepoInitParser;
@@ -40,14 +39,9 @@ public class RepoInitParserService implements RepoInitParser {
     @Override
     public List<Operation> parse(final Reader r) throws RepoInitParsingException {
         // in order to avoid parsing problems with trailing comments we add a line feed at the end
-        try ( final StringWriter sw = new StringWriter()) {
-            final char[] buf = new char[2048];
-            int l;
-            while ( (l = r.read(buf)) > 0 ) {
-                sw.write(buf, 0, l);
-            }
-            try (final StringReader sr = new StringReader(sw.toString().concat("\n")) ){
-                return new RepoInitParserImpl(sr).parse();
+        try (final Reader readerWrapper = new AddTailingLinefeedFilterReader(r)) {
+            try {
+                return new RepoInitParserImpl(readerWrapper).parse();
             } catch (TokenMgrError tme) {
                 throw new RepoInitParsingException(tme.getMessage(), tme);
             } catch (ParseException pe) {
@@ -55,11 +49,28 @@ public class RepoInitParserService implements RepoInitParser {
             }
         } catch ( final IOException ioe ) {
             throw new RepoInitParsingException(ioe.getMessage(), ioe);
-        } finally {
-            try {
-                r.close();
-            } catch(IOException ignore) {
+        }
+    }
+    
+    private static final class AddTailingLinefeedFilterReader extends FilterReader {
+
+        private boolean alreadyAddedNewline;
+
+        protected AddTailingLinefeedFilterReader(Reader in) {
+            super(in);
+        }
+
+        @Override
+        public int read(char[] cbuf, int off, int len) throws IOException {
+            int result = super.read(cbuf, off, len);
+            if (result == -1 && !alreadyAddedNewline) {
+                cbuf[off] = '\n';
+                alreadyAddedNewline = true;
+                return 1;
+            } else {
+                return result;
             }
         }
+        
     }
 }
