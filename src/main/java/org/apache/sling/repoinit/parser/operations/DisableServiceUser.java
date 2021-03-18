@@ -46,4 +46,8 @@ public class DisableServiceUser extends ServiceUserOperation {
     public void accept(OperationVisitor v) {
         v.visitDisableServiceUser(this);
     }
+
+    public String getReason() {
+        return reason;
+    }
 }
