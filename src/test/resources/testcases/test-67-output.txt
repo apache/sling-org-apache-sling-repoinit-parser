@@ -18,3 +18,8 @@ SetProperties on /test/curly/brackets
 SetProperties on /endkeyword
   PropertyLine endS{String}=[{String}one]
   PropertyLine two{String}=[{String}endS]
+SetProperties on /forcedMultiValue
+  PropertyLine singleMultiValue{String}=[{String}single]
+  PropertyLine emptyMultiValue{String}=[]
+  PropertyLine singleLongMultiValue{Long}=[{Long}1243]
+  PropertyLine emptyLongMultiValue{Long}=[]

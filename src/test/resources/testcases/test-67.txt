@@ -27,3 +27,10 @@ set properties on /endkeyword
   set endS to one
   set two to endS
 end
+
+set properties on /forcedMultiValue
+  set singleMultiValue{String[]} to "single"
+  set emptyMultiValue{String[]} to
+  set singleLongMultiValue{Long[]} to 1243
+  set emptyLongMultiValue{Long[]} to
+end
