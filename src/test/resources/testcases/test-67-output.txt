@@ -18,3 +18,11 @@ SetProperties on /test/curly/brackets
 SetProperties on /endkeyword
   PropertyLine endS{String}=[{String}one]
   PropertyLine two{String}=[{String}endS]
+SetProperties on :authorizable:bob#
+  PropertyLine stringProp{String}=[{String}hello, you!]
+SetProperties on :authorizable:bob#/nested
+  PropertyLine stringProp{String}=[{String}hello, you nested!]
+SetProperties on :authorizable:bob# :authorizable:alice#
+  PropertyLine stringProp{String}=[{String}hello, you again!]
+SetProperties on :authorizable:bob#/nested :authorizable:alice#/nested
+  PropertyLine stringProp{String}=[{String}hello, you nested again!]
