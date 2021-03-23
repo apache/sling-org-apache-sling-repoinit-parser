@@ -20,7 +20,9 @@ package org.apache.sling.repoinit.parser.operations;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 /** Set ACL statement that groups a set of AclLines
@@ -46,7 +48,22 @@ public class SetAclPrincipals extends AclGroupBase {
         sb.append(super.getParametersDescription());
         return sb.toString(); 
     }
-    
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        if (getLines().stream().anyMatch(line -> {
+            List<String> paths = line.getProperty(AclLine.PROP_PATHS);
+            return paths == null || paths.isEmpty();
+        })) {
+            String topline = String.format("set repository ACL for %s%s%n", listToString(principals), getAclOptionsString());
+            return asRepoInit(topline, true);
+        } else {
+            String topline = String.format("set ACL for %s%s%n", listToString(principals), getAclOptionsString());
+            return asRepoInit(topline, true);
+        }
+    }
+
     public List<String> getPrincipals() {
         return principals;
     }

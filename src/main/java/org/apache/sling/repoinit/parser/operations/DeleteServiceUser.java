@@ -29,4 +29,9 @@ public class DeleteServiceUser extends ServiceUserOperation {
     public void accept(OperationVisitor v) {
         v.visitDeleteServiceUser(this);
     }
+
+    @Override
+    public String asRepoInitString() {
+        return String.format("delete service user %s%n", username);
+    }
 }

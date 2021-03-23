@@ -18,8 +18,15 @@
 package org.apache.sling.repoinit.parser.operations;
 
 
+import java.util.Calendar;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.apache.jackrabbit.util.ISO8601;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -44,6 +51,41 @@ public class SetProperties extends Operation {
             sb.append("\n  ").append(line.toString());
         }
         return sb.toString();
+    }
+
+    @Override
+    public String asRepoInitString() {
+        // FIXME: see SLING-10238 for type and quoted values that cannot be generated
+        //        exactly as they were originally defined in repo-init
+        try (Formatter formatter = new Formatter()) {
+            formatter.format("set properties on %s%n", listToString(paths));
+            for (PropertyLine line : lines) {
+                String type = (line.getPropertyType() == null) ? "" : "{" + line.getPropertyType().name() + "}";
+                String values = valuesToString(line.getPropertyValues(), line.getPropertyType());
+                if (line.isDefault()) {
+                    formatter.format("default %s%s to %s%n", line.getPropertyName(), type, values);
+                } else {
+                    formatter.format("set %s%s to %s%n", line.getPropertyName(), type, values);
+                }
+            }
+            formatter.format("end%n");
+            return formatter.toString();
+        }
+    }
+
+    private static String valuesToString(@NotNull List<Object> values, @Nullable PropertyLine.PropertyType type) {
+        List<String> strings = values.stream()
+                .map(o -> {
+                    if (type == null || type == PropertyLine.PropertyType.String) {
+                        return escape(Objects.toString(o, ""));
+                    } else if (type == PropertyLine.PropertyType.Date) {
+                        return "\"" + ISO8601.format((Calendar) o) + "\"";
+                    } else {
+                        return Objects.toString(o, null);
+                    }
+                })
+                .collect(Collectors.toList());
+        return listToString(strings);
     }
 
     public List<String> getPaths() {

@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -41,7 +42,13 @@ public class DisableServiceUser extends ServiceUserOperation {
         }
         return sb.toString();
     }
-    
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("disable service user %s : %s%n", username, escape(reason));
+    }
+
     @Override
     public void accept(OperationVisitor v) {
         v.visitDisableServiceUser(this);

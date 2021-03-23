@@ -46,7 +46,13 @@ public class SetAclPrincipalBased extends AclGroupBase {
         sb.append(super.getParametersDescription());
         return sb.toString(); 
     }
-    
+
+    @Override
+    public String asRepoInitString() {
+        String topline = String.format("set principal ACL for %s%s%n", listToString(principals), getAclOptionsString());
+        return asRepoInit(topline, true);
+    }
+
     public List<String> getPrincipals() {
         return principals;
     }

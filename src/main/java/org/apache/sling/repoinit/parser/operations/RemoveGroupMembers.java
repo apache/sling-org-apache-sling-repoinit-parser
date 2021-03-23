@@ -19,6 +19,7 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -49,6 +50,12 @@ public class RemoveGroupMembers extends Operation {
         sb.append(members);
         sb.append(" in group ").append(groupname);
         return sb.toString();
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("remove %s from group %s%n", listToString(members), groupname);
     }
 
     public String getGroupname() {

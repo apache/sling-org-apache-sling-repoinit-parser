@@ -20,8 +20,11 @@ package org.apache.sling.repoinit.parser.operations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 /** Base class for operations that group AclLines */
@@ -58,5 +61,81 @@ abstract class AclGroupBase extends Operation {
 
     public List<String> getOptions() {
         return aclOptions;
+    }
+
+    String asRepoInit(@NotNull String topLine, boolean hasPathLines) {
+        try (Formatter formatter = new Formatter()) {
+            formatter.format("%s",topLine);
+            for (AclLine line : lines) {
+                String action = actionToString(line.getAction());
+                String privileges = privilegesToString(line.getAction(), line.getProperty(AclLine.PROP_PRIVILEGES));
+                String onOrFor;
+                if (hasPathLines) {
+                    String pathStr = pathsToString(line.getProperty(AclLine.PROP_PATHS));
+                    onOrFor = (pathStr.isEmpty()) ? "" : " on " + pathStr;
+                } else {
+                    onOrFor = " for " + listToString(line.getProperty(AclLine.PROP_PRINCIPALS));
+                }
+                formatter.format("    %s %s%s%s%s%n", action, privileges, onOrFor,
+                        nodetypesToString(line.getProperty(AclLine.PROP_NODETYPES)),
+                        restrictionsToString(line.getRestrictions()));
+            }
+            formatter.format("end%n");
+            return formatter.toString();
+        }
+    }
+
+    @NotNull
+    String getAclOptionsString() {
+        return (aclOptions.isEmpty()) ? "" : " (ACLOptions="+ listToString(aclOptions)+")";
+    }
+
+    @NotNull
+    static String privilegesToString(@NotNull AclLine.Action action, @NotNull List<String> privileges) {
+        return (action == AclLine.Action.REMOVE_ALL) ? "*" : listToString(privileges);
+    }
+
+    @NotNull
+    static String pathsToString(@NotNull List<String> paths) {
+        return listToString(paths.stream()
+                .map(s -> {
+                    if (s.startsWith(":") && s.contains("#")) {
+                        String func = s.substring(1, s.indexOf(":",1));
+                        String s2 = s.substring(func.length()+2, s.lastIndexOf('#'));
+                        String trailingPath = (s.endsWith("#")) ?  "" : s.substring(s.indexOf("#")+1);
+                        return func + "(" + s2 +")" + trailingPath;
+                    } else {
+                        return s;
+                    }
+                })
+                .collect(Collectors.toList()));
+    }
+
+    @NotNull
+    private static String nodetypesToString(@NotNull List<String> nodetypes) {
+        return (nodetypes.isEmpty()) ? "" : " nodetypes " + listToString(nodetypes);
+    }
+
+    @NotNull
+    private static String restrictionsToString(@NotNull List<RestrictionClause> restrictionClauses) {
+        StringBuilder sb = new StringBuilder();
+        for (RestrictionClause rc : restrictionClauses) {
+            sb.append(" restriction(").append(rc.getName());
+            for (String v : rc.getValues()) {
+                sb.append(",").append(v);
+            }
+            sb.append(')');
+        }
+        return sb.toString();
+    }
+
+    @NotNull
+    private static String actionToString(@NotNull AclLine.Action action) {
+        switch (action) {
+            case DENY: return "deny";
+            case REMOVE: return "remove";
+            case REMOVE_ALL: return "remove";
+            default: return "allow";
+        }
     }
 }

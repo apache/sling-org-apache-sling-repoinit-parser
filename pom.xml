@@ -105,6 +105,12 @@
           <version>2.20.0</version>
           <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>18.0.0</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- testing -->
         <dependency>

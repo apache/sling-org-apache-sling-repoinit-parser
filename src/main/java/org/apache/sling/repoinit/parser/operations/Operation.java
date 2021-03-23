@@ -17,7 +17,10 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
+
+import java.util.List;
 
 @ProviderType
 public abstract class Operation {
@@ -25,7 +28,9 @@ public abstract class Operation {
     public static final String DQUOTE = "\"";
     
     protected abstract String getParametersDescription();
-    
+
+    public abstract String asRepoInitString();
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + " " + getParametersDescription();
@@ -40,5 +45,21 @@ public abstract class Operation {
             return null;
         }
         return s;
+    }
+
+    @NotNull
+    static String escape(@NotNull String s) {
+        // TODO: verify
+        String esc = s.replace("\\", "\\\\");
+        String escapequotes = esc.replace("\"", "\\\"");
+        return "\"" + escapequotes + "\"";
+    }
+
+    static String listToString(@NotNull List<String> list) {
+        if (list.isEmpty()) {
+            return "";
+        } else {
+            return String.join(",", list);
+        }
     }
 }

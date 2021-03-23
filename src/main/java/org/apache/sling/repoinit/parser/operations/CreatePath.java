@@ -44,6 +44,27 @@ public class CreatePath extends Operation {
     }
 
     @Override
+    public String asRepoInitString() {
+        String defaultTypeStr = (defaultPrimaryType == null) ? "" : "("+defaultPrimaryType+") ";
+        StringBuilder sb = new StringBuilder();
+        for (PathSegmentDefinition psd : getDefinitions()) {
+            sb.append("/").append(psd.getSegment());
+            List<String> mixins = psd.getMixins();
+            if (!psd.isDefaultPrimary() || !mixins.isEmpty()) {
+                sb.append("(");
+                if (!psd.isDefaultPrimary()) {
+                    sb.append(psd.getPrimaryType());
+                }
+                if (!mixins.isEmpty()) {
+                    sb.append(" mixin ").append(listToString(mixins));
+                }
+                sb.append(")");
+            }
+        }
+        return String.format("create path %s%s%n", defaultTypeStr, sb.toString());
+    }
+
+    @Override
     public void accept(OperationVisitor v) {
         v.visitCreatePath(this);
     }
@@ -62,16 +83,18 @@ public class CreatePath extends Operation {
                 continue;
             }
             String pt = defaultPrimaryType;
+            boolean isDefaultPrimary = true;
             List<String> ms = null;
             if(i == segments.length -1) {
                 if (primaryType != null) {
                     pt = primaryType;
+                    isDefaultPrimary = false;
                 }
                 if (mixins != null && ! mixins.isEmpty()) {
                     ms = mixins;
                 }
             }
-            pathDef.add(new PathSegmentDefinition(segments[i], pt, ms));
+            pathDef.add(new PathSegmentDefinition(segments[i], pt, ms, isDefaultPrimary));
         }
     }
     
