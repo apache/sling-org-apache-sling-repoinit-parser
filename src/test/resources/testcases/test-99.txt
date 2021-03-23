@@ -118,3 +118,14 @@ set properties on /pathA, /path/B
   set quotedMix to "quoted", non-quoted, "the last \" one"
 end
 
+# Set properties on users or groups, since V1.6.8
+# 'set' overwrites any existing value while
+# 'default' only sets the property if not set yet
+set properties on authorizable(bob), authorizable(grpB)/nested
+  set someString{String} to /x/y/z
+  default someInteger{Long} to 42
+  set someFlag{Boolean} to true
+  default someDate{Date} to "2020-03-19T11:39:33.437+05:30"
+  set quotedMix to "quoted", non-quoted, "the last \" one"
+end
+

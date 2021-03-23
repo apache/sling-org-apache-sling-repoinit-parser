@@ -27,3 +27,18 @@ set properties on /endkeyword
   set endS to one
   set two to endS
 end
+
+# SLING-10252 set properties on the user or group profile
+set properties on authorizable(bob)
+  set stringProp to "hello, you!"
+end
+set properties on authorizable(bob)/nested
+  set stringProp to "hello, you nested!"
+end
+
+set properties on authorizable(bob), authorizable(alice)
+  set stringProp to "hello, you again!"
+end
+set properties on authorizable(bob)/nested, authorizable(alice)/nested
+  set stringProp to "hello, you nested again!"
+end
