@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ProviderType
 public abstract class Operation {
@@ -62,5 +63,21 @@ public abstract class Operation {
         } else {
             return String.join(",", list);
         }
+    }
+
+    @NotNull
+    static String pathsToString(@NotNull List<String> paths) {
+        return listToString(paths.stream()
+                .map(s -> {
+                    if (s.startsWith(":") && s.contains("#")) {
+                        String func = s.substring(1, s.indexOf(":",1));
+                        String s2 = s.substring(func.length()+2, s.lastIndexOf('#'));
+                        String trailingPath = (s.endsWith("#")) ?  "" : s.substring(s.indexOf("#")+1);
+                        return func + "(" + s2 +")" + trailingPath;
+                    } else {
+                        return s;
+                    }
+                })
+                .collect(Collectors.toList()));
     }
 }

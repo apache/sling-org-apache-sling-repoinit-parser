@@ -59,7 +59,7 @@ public class SetProperties extends Operation {
         // FIXME: see SLING-10238 for type and quoted values that cannot be generated
         //        exactly as they were originally defined in repo-init
         try (Formatter formatter = new Formatter()) {
-            formatter.format("set properties on %s%n", listToString(paths));
+            formatter.format("set properties on %s%n", pathsToString(paths));
             for (PropertyLine line : lines) {
                 String type = (line.getPropertyType() == null) ? "" : "{" + line.getPropertyType().name() + "}";
                 String values = valuesToString(line.getPropertyValues(), line.getPropertyType());
