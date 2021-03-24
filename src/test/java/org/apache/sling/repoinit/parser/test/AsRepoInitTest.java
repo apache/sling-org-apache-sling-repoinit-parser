@@ -74,6 +74,10 @@ public class AsRepoInitTest {
 
         List<Operation> ops = new RepoInitParserService().parse(new StringReader(repoInit.toString()));
         assertEquals(expectedResult.size(), ops.size());
-        // FIXME: assert operations are equivalent
+        for (int i = 0; i < expectedResult.size(); i++) {
+            Operation expected = expectedResult.get(i);
+            Operation op = ops.get(i);
+            assertEquals(expected.toString(), op.toString());
+        }
     }
 }

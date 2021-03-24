@@ -77,7 +77,7 @@ public class SetProperties extends Operation {
         List<String> strings = values.stream()
                 .map(o -> {
                     if (type == null || type == PropertyLine.PropertyType.String) {
-                        return escape(Objects.toString(o, ""));
+                        return escapeQuotes(Objects.toString(o, ""));
                     } else if (type == PropertyLine.PropertyType.Date) {
                         return "\"" + ISO8601.format((Calendar) o) + "\"";
                     } else {
