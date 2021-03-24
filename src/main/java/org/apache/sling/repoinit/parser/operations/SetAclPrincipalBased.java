@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 /** Set ACL statement that groups a set of AclLines
@@ -47,6 +48,7 @@ public class SetAclPrincipalBased extends AclGroupBase {
         return sb.toString(); 
     }
 
+    @NotNull
     @Override
     public String asRepoInitString() {
         String topline = String.format("set principal ACL for %s%s%n", listToString(principals), getAclOptionsString());

@@ -29,6 +29,7 @@ public abstract class Operation {
     
     protected abstract String getParametersDescription();
 
+    @NotNull
     public abstract String asRepoInitString();
 
     @Override

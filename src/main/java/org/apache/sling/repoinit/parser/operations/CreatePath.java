@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -43,6 +44,7 @@ public class CreatePath extends Operation {
         return pathDef.toString();
     }
 
+    @NotNull
     @Override
     public String asRepoInitString() {
         String defaultTypeStr = (defaultPrimaryType == null) ? "" : "("+defaultPrimaryType+") ";

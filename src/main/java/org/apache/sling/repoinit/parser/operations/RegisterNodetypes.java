@@ -55,6 +55,7 @@ public class RegisterNodetypes extends Operation {
         return sb.toString();
     }
 
+    @NotNull
     @Override
     public String asRepoInitString() {
         try (Formatter formatter = new Formatter()) {

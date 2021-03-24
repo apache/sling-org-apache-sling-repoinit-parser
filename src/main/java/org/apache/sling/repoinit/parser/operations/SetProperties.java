@@ -53,6 +53,7 @@ public class SetProperties extends Operation {
         return sb.toString();
     }
 
+    @NotNull
     @Override
     public String asRepoInitString() {
         // FIXME: see SLING-10238 for type and quoted values that cannot be generated
@@ -73,6 +74,7 @@ public class SetProperties extends Operation {
         }
     }
 
+    @NotNull
     private static String valuesToString(@NotNull List<Object> values, @Nullable PropertyLine.PropertyType type) {
         List<String> strings = values.stream()
                 .map(o -> {

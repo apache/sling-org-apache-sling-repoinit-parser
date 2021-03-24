@@ -20,7 +20,6 @@ package org.apache.sling.repoinit.parser.operations;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
