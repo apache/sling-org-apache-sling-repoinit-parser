@@ -29,7 +29,6 @@ public abstract class Operation {
     
     protected abstract String getParametersDescription();
 
-    @NotNull
     public abstract String asRepoInitString();
 
     @Override
@@ -50,10 +49,9 @@ public abstract class Operation {
 
     @NotNull
     static String escapeQuotes(@NotNull String s) {
-        // TODO: verify
         String esc = s.replace("\\", "\\\\");
-        String escapequotes = esc.replace(DQUOTE, "\\\"");
-        return DQUOTE + escapequotes + DQUOTE;
+        String escapequotes = esc.replace("\"", "\\\"");
+        return "\"" + escapequotes + "\"";
     }
 
     @NotNull
