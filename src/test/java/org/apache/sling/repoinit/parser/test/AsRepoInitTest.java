@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.test;
 
+import org.apache.sling.repoinit.parser.RepoInitParsingException;
 import org.apache.sling.repoinit.parser.impl.RepoInitParserService;
 import org.apache.sling.repoinit.parser.operations.Operation;
 import org.junit.Test;
@@ -31,6 +32,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /** Test the parser using our test-* input/expected output files.
  *  The code of this class doesn't contain any actual tests, it
@@ -72,12 +74,17 @@ public class AsRepoInitTest {
             tc.close();
         }
 
-        List<Operation> ops = new RepoInitParserService().parse(new StringReader(repoInit.toString()));
-        assertEquals(expectedResult.size(), ops.size());
-        for (int i = 0; i < expectedResult.size(); i++) {
-            Operation expected = expectedResult.get(i);
-            Operation op = ops.get(i);
-            assertEquals(expected.toString(), op.toString());
+        try {
+            List<Operation> ops = new RepoInitParserService().parse(new StringReader(repoInit.toString()));
+            assertEquals(expectedResult.size(), ops.size());
+            for (int i = 0; i < expectedResult.size(); i++) {
+                Operation expected = expectedResult.get(i);
+                Operation op = ops.get(i);
+                assertEquals(expected.toString(), op.toString());
+            }
+        } catch (RepoInitParsingException e) {
+            String msg = String.format("Parsing generated repo-init %n%s%nfailed with Exception:%n%s", repoInit.toString(), e.getMessage());
+            fail(msg);
         }
     }
 }
