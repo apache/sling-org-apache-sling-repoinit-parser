@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 
-package org.apache.sling.repoinit.parser.test;
+package org.apache.sling.repoinit.parser.operations;
 
 import org.apache.sling.repoinit.parser.RepoInitParsingException;
 import org.apache.sling.repoinit.parser.impl.RepoInitParserService;
-import org.apache.sling.repoinit.parser.operations.Operation;
+import org.apache.sling.repoinit.parser.test.ParserTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -80,7 +80,7 @@ public class AsRepoInitTest {
             for (int i = 0; i < expectedResult.size(); i++) {
                 Operation expected = expectedResult.get(i);
                 Operation op = ops.get(i);
-                assertEquals(expected.toString(), op.toString());
+                assertEquals(expected.getParametersDescription(), op.getParametersDescription());
             }
         } catch (RepoInitParsingException e) {
             String msg = String.format("Parsing generated repo-init %n%s%nfailed with Exception:%n%s", repoInit.toString(), e.getMessage());

@@ -49,8 +49,8 @@ public class ParserTest {
 
     public static final String DEFAULT_ENCODING = "UTF-8";
 
-    static class TestCase {
-        final Reader input;
+    public static class TestCase {
+        public final Reader input;
         final String inputFilename;
         final InputStream expected;
         final String outputFilename;
@@ -74,7 +74,7 @@ public class ParserTest {
             expected = getClass().getResourceAsStream(outputFilename);
         }
 
-        static TestCase build(int index) throws IOException {
+        public static TestCase build(int index) throws IOException {
             final TestCase result = new TestCase(index);
             if(result.input == null || result.expected == null) {
                 return null;
@@ -82,7 +82,7 @@ public class ParserTest {
             return result;
         }
 
-        void close() {
+        public void close() {
             try {
                 input.close();
             } catch(IOException ignored) {
