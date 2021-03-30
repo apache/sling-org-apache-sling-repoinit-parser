@@ -52,7 +52,7 @@ public class ParserTest {
     public static class TestCase {
         public final Reader input;
         final String inputFilename;
-        final InputStream expected;
+        public final InputStream expected;
         final String outputFilename;
 
         private static final String PREFIX = "/testcases/test-";
@@ -92,34 +92,12 @@ public class ParserTest {
             } catch(IOException ignored) {
             }
         }
-    }
 
-    private final TestCase tc;
-
-    @Parameters(name="{0}")
-    public static Collection<Object[]> data() throws IOException {
-        final List<Object []> result = new ArrayList<>();
-        for(int i=0; i < 100; i++) {
-            final TestCase tc = TestCase.build(i);
-            if(tc != null) {
-                result.add(new Object[] { tc });
-            }
-        }
-        return result;
-
-    }
-
-    public ParserTest(TestCase tc) {
-        this.tc = tc;
-    }
-
-    @Test
-    public void checkResult() throws RepoInitParsingException, IOException {
-        final String expected = IOUtils.toString(tc.expected, DEFAULT_ENCODING).trim();
-        try {
+        public static void validate(Reader validateInput, InputStream validateExpected) throws RepoInitParsingException, IOException {
+            final String expected = IOUtils.toString(validateExpected, DEFAULT_ENCODING).trim();
             final StringWriter sw = new StringWriter();
             final OperationVisitor v = new OperationToStringVisitor(new PrintWriter(sw));
-            final List<Operation> result = new RepoInitParserService().parse(tc.input);
+            final List<Operation> result = new RepoInitParserService().parse(validateInput);
             for(Operation o : result) {
                 o.accept(v);
             }
@@ -130,6 +108,35 @@ public class ParserTest {
             actual = actual.replaceAll("\r\n", "\n");
 
             assertEquals(expected, actual);
+        }
+
+        public static Collection<Object[]> buildTestData() throws IOException {
+            final List<Object []> result = new ArrayList<>();
+            for(int i=0; i < 100; i++) {
+                final ParserTest.TestCase tc = ParserTest.TestCase.build(i);
+                if(tc != null) {
+                    result.add(new Object[] { tc });
+                }
+            }
+            return result;
+        }
+    }
+
+    private final TestCase tc;
+
+    @Parameters(name="{0}")
+    public static Collection<Object[]> data() throws IOException {
+        return TestCase.buildTestData();
+    }
+
+    public ParserTest(TestCase tc) {
+        this.tc = tc;
+    }
+
+    @Test
+    public void checkResult() throws RepoInitParsingException, IOException {
+        try {
+            TestCase.validate(tc.input, tc.expected);
         } finally {
             tc.close();
         }

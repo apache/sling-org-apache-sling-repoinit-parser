@@ -26,19 +26,15 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-/** Test the parser using our test-* input/expected output files.
- *  The code of this class doesn't contain any actual tests, it
- *  just looks for test-*.txt files, parses them and verifies that
- *  rebuilding the repoinit statements using {@link Operation#asRepoInitString()})
- *  returns statements equivalent to the original ones.
+/** Similar to {@link ParserTest} but uses {@link Operation#asRepoInitString()})
+ *  to rebuild the input script after parsing it, to verify that that operation
+ *  returns equivalent statements.
  */
 @RunWith(Parameterized.class)
 public class AsRepoInitTest {
@@ -47,45 +43,28 @@ public class AsRepoInitTest {
 
     @Parameters(name="{0}")
     public static Collection<Object[]> data() throws IOException {
-        final List<Object []> result = new ArrayList<>();
-        for(int i=0; i < 100; i++) {
-            final ParserTest.TestCase tc = ParserTest.TestCase.build(i);
-            if(tc != null) {
-                result.add(new Object[] { tc });
-            }
-        }
-        return result;
-
+        return ParserTest.TestCase.buildTestData();
     }
 
     public AsRepoInitTest(ParserTest.TestCase tc) {
         this.tc = tc;
     }
 
+    /** Rebuild the input script using {@link Operation#asRepoInitString()}) */
+    private static Reader rebuildInputScript(Reader input) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        for (Operation o : new RepoInitParserService().parse(input)) {
+            sb.append(o.asRepoInitString());
+        }
+        return new StringReader(sb.toString());
+    }
+
     @Test
     public void checkResultAsRepoInit() throws Exception {
-        StringBuilder repoInit = new StringBuilder();
-        final List<Operation> expectedResult;
         try {
-            expectedResult = new RepoInitParserService().parse(tc.input);
-            for (Operation o : expectedResult) {
-                repoInit.append(o.asRepoInitString());
-            }
+            ParserTest.TestCase.validate(rebuildInputScript(tc.input), tc.expected);
         } finally {
             tc.close();
-        }
-
-        try {
-            List<Operation> ops = new RepoInitParserService().parse(new StringReader(repoInit.toString()));
-            assertEquals(expectedResult.size(), ops.size());
-            for (int i = 0; i < expectedResult.size(); i++) {
-                Operation expected = expectedResult.get(i);
-                Operation op = ops.get(i);
-                assertEquals(expected.getParametersDescription(), op.getParametersDescription());
-            }
-        } catch (RepoInitParsingException e) {
-            String msg = String.format("Parsing generated repo-init %n%s%nfailed with Exception:%n%s", repoInit.toString(), e.getMessage());
-            fail(msg);
         }
     }
 }
