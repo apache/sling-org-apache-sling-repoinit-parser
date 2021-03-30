@@ -20,7 +20,6 @@ package org.apache.sling.repoinit.parser.operations;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 /** Defines a segment of a path to be created,

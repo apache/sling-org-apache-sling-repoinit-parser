@@ -17,9 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.RepoInitParsingException;
 import org.apache.sling.repoinit.parser.impl.RepoInitParserService;
 import org.apache.sling.repoinit.parser.test.ParserTest;
+import org.apache.sling.repoinit.parser.test.ParserTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -28,9 +28,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /** Similar to {@link ParserTest} but uses {@link Operation#asRepoInitString()})
  *  to rebuild the input script after parsing it, to verify that that operation
@@ -39,14 +37,14 @@ import java.util.List;
 @RunWith(Parameterized.class)
 public class AsRepoInitTest {
 
-    private final ParserTest.TestCase tc;
+    private final ParserTestCase tc;
 
     @Parameters(name="{0}")
     public static Collection<Object[]> data() throws IOException {
-        return ParserTest.TestCase.buildTestData();
+        return ParserTestCase.buildTestData();
     }
 
-    public AsRepoInitTest(ParserTest.TestCase tc) {
+    public AsRepoInitTest(ParserTestCase tc) {
         this.tc = tc;
     }
 
@@ -61,10 +59,6 @@ public class AsRepoInitTest {
 
     @Test
     public void checkResultAsRepoInit() throws Exception {
-        try {
-            ParserTest.TestCase.validate(rebuildInputScript(tc.input), tc.expected);
-        } finally {
-            tc.close();
-        }
+        ParserTestCase.validate(rebuildInputScript(tc.input), tc.expected, tc);
     }
 }
