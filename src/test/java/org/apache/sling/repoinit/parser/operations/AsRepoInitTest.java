@@ -36,8 +36,9 @@ import static org.junit.Assert.fail;
 
 /** Test the parser using our test-* input/expected output files.
  *  The code of this class doesn't contain any actual tests, it
- *  just looks for test-*.txt files, parses them and verifies the
- *  results according to the test-*-output.txt files.
+ *  just looks for test-*.txt files, parses them and verifies that
+ *  rebuilding the repoinit statements using {@link Operation#asRepoInitString()})
+ *  returns statements equivalent to the original ones.
  */
 @RunWith(Parameterized.class)
 public class AsRepoInitTest {
