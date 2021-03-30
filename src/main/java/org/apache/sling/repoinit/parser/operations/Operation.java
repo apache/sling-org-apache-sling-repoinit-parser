@@ -17,7 +17,11 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ProviderType
 public abstract class Operation {
@@ -25,7 +29,10 @@ public abstract class Operation {
     public static final String DQUOTE = "\"";
     
     protected abstract String getParametersDescription();
-    
+
+    @NotNull
+    public abstract String asRepoInitString();
+
     @Override
     public String toString() {
         return getClass().getSimpleName() + " " + getParametersDescription();
@@ -40,5 +47,37 @@ public abstract class Operation {
             return null;
         }
         return s;
+    }
+
+    @NotNull
+    static String escapeQuotes(@NotNull String s) {
+        String esc = s.replace("\\", "\\\\");
+        String escapequotes = esc.replace("\"", "\\\"");
+        return "\"" + escapequotes + "\"";
+    }
+
+    @NotNull
+    static String listToString(@NotNull List<String> list) {
+        if (list.isEmpty()) {
+            return "";
+        } else {
+            return String.join(",", list);
+        }
+    }
+
+    @NotNull
+    static String pathsToString(@NotNull List<String> paths) {
+        return listToString(paths.stream()
+                .map(s -> {
+                    if (s.startsWith(":") && s.contains("#")) {
+                        String func = s.substring(1, s.indexOf(":",1));
+                        String s2 = s.substring(func.length()+2, s.lastIndexOf('#'));
+                        String trailingPath = (s.endsWith("#")) ?  "" : s.substring(s.indexOf("#")+1);
+                        return func + "(" + s2 +")" + trailingPath;
+                    } else {
+                        return s;
+                    }
+                })
+                .collect(Collectors.toList()));
     }
 }

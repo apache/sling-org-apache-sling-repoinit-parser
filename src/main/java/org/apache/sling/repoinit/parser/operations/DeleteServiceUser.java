@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -28,5 +29,11 @@ public class DeleteServiceUser extends ServiceUserOperation {
     @Override
     public void accept(OperationVisitor v) {
         v.visitDeleteServiceUser(this);
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("delete service user %s%n", username);
     }
 }

@@ -18,6 +18,7 @@
 package org.apache.sling.repoinit.parser.operations;
 
 import org.apache.sling.repoinit.parser.impl.WithPathOptions;
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -47,5 +48,11 @@ public class CreateServiceUser extends ServiceUserOperation {
         }
 
         return sb.toString();
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return asRepoInitString("service user", username);
     }
 }

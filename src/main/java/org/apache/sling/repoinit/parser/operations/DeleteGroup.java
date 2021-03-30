@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -40,6 +41,12 @@ public class DeleteGroup extends Operation {
     @Override
     protected String getParametersDescription() {
         return groupname;
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("delete group %s%n", groupname);
     }
 
     public String getGroupname() {

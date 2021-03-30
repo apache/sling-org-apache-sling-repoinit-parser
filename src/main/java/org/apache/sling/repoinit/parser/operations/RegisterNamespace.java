@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
@@ -40,6 +41,12 @@ public class RegisterNamespace extends Operation {
         sb.append("(").append(prefix == null ? "" : prefix).append(") ");
         sb.append(uri);
         return sb.toString();
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("register namespace ( %s ) %s%n", prefix, uri);
     }
 
     @Override
