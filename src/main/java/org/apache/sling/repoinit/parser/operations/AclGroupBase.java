@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
+import org.apache.sling.repoinit.parser.operations.AclLine.Action;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -115,11 +115,9 @@ abstract class AclGroupBase extends Operation {
 
     @NotNull
     private static String actionToString(@NotNull AclLine.Action action) {
-        switch (action) {
-            case DENY: return "deny";
-            case REMOVE: return "remove";
-            case REMOVE_ALL: return "remove";
-            default: return "allow";
+        if(action.equals(Action.REMOVE_ALL)) {
+            return Action.REMOVE.toString().toLowerCase();
         }
+        return action.toString().toLowerCase();
     }
 }
