@@ -29,6 +29,15 @@ set properties on /endkeyword
   set two to endS
 end
 
+set properties on /blankLinesInList
+  set one to two
+
+  set two to four
+
+
+  set three to five
+end
+
 # SLING-10252 set properties on the user or group profile
 set properties on authorizable(bob)
   set stringProp to "hello, you!"
