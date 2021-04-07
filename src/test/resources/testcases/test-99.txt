@@ -93,11 +93,17 @@ create group GF with forced path /path/group/GF
 # Home function maps to user and group home folders
 set ACL on home(alice)
   allow jcr:one for alice, bob, carol
+  allow priv for larry
 end
 
 set ACL for bob
-  allow jcr:two on home(alice), /another/path, home(larry)
-end  
+  allow jcr:two on home(alice), /another/path
+  allow priv on home(larry)
+end
+
+set principal ACL for bob
+  allow priv on home(alice), /another/path
+end
 
 set ACL on home(alice)/sub/folder/of/their/homes
   allow jcr:three for fred

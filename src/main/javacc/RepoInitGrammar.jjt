@@ -226,6 +226,17 @@ List<String> namespacedItemsList() :
     { return priv; }
 }
 
+List<String> privilegesList() :
+{
+    Token t = null;
+    List<String> privilegeNames = new ArrayList<String>();
+}
+{
+    ( t=<NAMESPACED_ITEM> | t=<STRING> ) { privilegeNames.add(t.image); }
+    ( <COMMA> ( t=<NAMESPACED_ITEM> | t=<STRING> ) { privilegeNames.add(t.image); } )*
+    { return privilegeNames; }
+}
+
 String usernameList() :
 {
     List<String> names = new ArrayList<String>();
@@ -361,7 +372,7 @@ void userPrivilegesLine(List<AclLine> lines) :
 }
 {
     line = privilegesLineOperation()
-    tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
+    tmp = privilegesList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
     <FOR>
     tmp = principalsList() { line.setProperty(AclLine.PROP_PRINCIPALS, tmp); }
     restrictions = restrictions()  { line.setRestrictions(restrictions); }
@@ -442,7 +453,7 @@ void pathPrivilegesLine(List<AclLine> lines) :
 }
 {
     line = privilegesLineOperation()
-    tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); } 
+    tmp = privilegesList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
     <ON> tmp = pathsList() { line.setProperty(AclLine.PROP_PATHS, tmp); }
     ( <NODETYPES> tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_NODETYPES, tmp); }) ?
      restrictions = restrictions()  { line.setRestrictions(restrictions); }
@@ -492,7 +503,7 @@ void setAclRepository(List<Operation> result) :
                 line = new AclLine(AclLine.Action.REMOVE_ALL);
                 lines.add(line);
             }
-        | ( line = privilegesLineOperation() privileges = namespacedItemsList() )
+        | ( line = privilegesLineOperation() privileges = privilegesList() )
             {
                 line.setProperty(AclLine.PROP_PRIVILEGES, privileges);
                 lines.add(line);
@@ -565,7 +576,7 @@ void registerPrivilegeStatement(List<Operation> result) :
     List<String> aggregates = new ArrayList<String>();
 }
 {
-    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> (privilege = <STRING> | privilege = <NAMESPACED_ITEM>) (<WITH> aggregates = principalsList())?
+    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> (privilege = <STRING> | privilege = <NAMESPACED_ITEM>) (<WITH> aggregates = privilegesList())?
     {
         result.add(new RegisterPrivilege(privilege.image, isAbstract, aggregates));
     }

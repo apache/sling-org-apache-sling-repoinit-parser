@@ -52,8 +52,12 @@ CreateServiceUser BF with forced path /path/service/BF
 CreateGroup GF with forced path /path/group/GF
 SetAclPaths on :home:alice# 
   AclLine ALLOW {principals=[alice, bob, carol], privileges=[jcr:one]}
+  AclLine ALLOW {principals=[larry], privileges=[priv]}
 SetAclPrincipals for bob 
-  AclLine ALLOW {paths=[:home:alice#, /another/path, :home:larry#], privileges=[jcr:two]}
+  AclLine ALLOW {paths=[:home:alice#, /another/path], privileges=[jcr:two]}
+  AclLine ALLOW {paths=[:home:larry#], privileges=[priv]}
+SetAclPrincipalBased for bob 
+  AclLine ALLOW {paths=[:home:alice#, /another/path], privileges=[priv]}
 SetAclPaths on :home:alice#/sub/folder/of/their/homes 
   AclLine ALLOW {principals=[fred], privileges=[jcr:three]}
 AddGroupMembers user1 user2 in group grpA
