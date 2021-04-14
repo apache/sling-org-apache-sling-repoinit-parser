@@ -44,6 +44,11 @@ CreateUser userH with path for/userH
 CreateUser userJ with path for/userJ (with password), password=jjj
 CreateServiceUser the-last-one
 DisableServiceUser svc1 : This  is the message
+DeleteUser userA
+DeleteUser userB_listsAreNotSupported
+DeleteServiceUser svcA
+DeleteServiceUser svcB
+DeleteServiceUser svcC
 CreateGroup since124_A
 CreateGroup since124_B with path /path_B
 DeleteGroup since124_C
@@ -70,8 +75,3 @@ SetProperties on :authorizable:bob# :authorizable:grpB#/nested
   PropertyLine someFlag{Boolean}=[{Boolean}true]
   PropertyLine default someDate{Date}=[{GregorianCalendar}2020-03-19T11:39:33.437+05:30]
   PropertyLine quotedMix{String}=[{String}quoted, {String}non-quoted, {String}the last " one]
-DeleteUser userA
-DeleteUser userB_listsAreNotSupported
-DeleteServiceUser svcA
-DeleteServiceUser svcB
-DeleteServiceUser svcC

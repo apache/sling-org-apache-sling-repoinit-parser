@@ -79,6 +79,12 @@ create service user the-last-one
 
 disable service user svc1 : "This  is the message"
 
+# Delete (service) users
+delete user userA
+delete user userB_listsAreNotSupported
+delete service user svcA
+delete service user svcB,svcC
+
 # Groups are supported since version 1.2.4, SLING-8219
 create group since124_A
 create group since124_B with path /path_B
@@ -128,9 +134,3 @@ set properties on authorizable(bob), authorizable(grpB)/nested
   default someDate{Date} to "2020-03-19T11:39:33.437+05:30"
   set quotedMix to "quoted", non-quoted, "the last \" one"
 end
-
-# Delete (service) users
-delete user userA
-delete user userB_listsAreNotSupported
-delete service user svcA
-delete service user svcB,svcC
