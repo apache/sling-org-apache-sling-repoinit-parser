@@ -129,3 +129,8 @@ set properties on authorizable(bob), authorizable(grpB)/nested
   set quotedMix to "quoted", non-quoted, "the last \" one"
 end
 
+# Delete (service) users
+delete user userA
+delete user userB_listsAreNotSupported
+delete service user svcA
+delete service user svcB,svcC

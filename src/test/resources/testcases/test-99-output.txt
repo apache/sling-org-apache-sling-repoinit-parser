@@ -70,3 +70,8 @@ SetProperties on :authorizable:bob# :authorizable:grpB#/nested
   PropertyLine someFlag{Boolean}=[{Boolean}true]
   PropertyLine default someDate{Date}=[{GregorianCalendar}2020-03-19T11:39:33.437+05:30]
   PropertyLine quotedMix{String}=[{String}quoted, {String}non-quoted, {String}the last " one]
+DeleteUser userA
+DeleteUser userB_listsAreNotSupported
+DeleteServiceUser svcA
+DeleteServiceUser svcB
+DeleteServiceUser svcC

@@ -119,6 +119,9 @@ public class ParsingErrorsTest {
             add(new Object[] { "set properties on /pathA/b  \n set {String} to missingPropertyName \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set somepProp{String} withoutTo \n end", ParseException.class });
             add(new Object[] { "set properties on /noPropsFails  \n end", ParseException.class });
+
+            // SLING-6219 - delete user does not support lists
+            add(new Object[] { "delete user alice,bob", ParseException.class });
         }};
         return result;
     }
