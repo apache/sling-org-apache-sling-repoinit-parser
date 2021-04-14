@@ -23,7 +23,7 @@ releases of this parser.
 The [Sling Website Repository Initialization page](https://sling.apache.org/documentation/bundles/repository-initialization.html) describes
 the general repoinit principles and is meant to show examples of _all_ possible language constructs.
 
-To this end, we maintain a [test scenario that includes all those constructs](.src/test/resources/testcases/test-99.txt) as part of this module's unit tests, and
+To this end, we maintain a [test scenario that includes all those constructs](./src/test/resources/testcases/test-99.txt) as part of this module's unit tests, and
 slightly adapt that test's repoinit script for the documentation page.
 
 If adding new statements of options, please keep that `test-99` in sync so that it reflects the full language syntax, and update the
