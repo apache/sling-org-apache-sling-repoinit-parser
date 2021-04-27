@@ -151,7 +151,7 @@ List<Operation> parse() :
         | deleteGroupStatement(result)
         | createUserStatement(result)
         | deleteUserStatement(result)
-        | disableServiceUserStatement(result)
+        | disableUserStatement(result)
         | addToGroupStatement(result)
         | removeFromGroupStatement(result)
         | setPropertiesStatement(result)
@@ -676,17 +676,20 @@ Token quotedString() :
     }
 }
 
-void disableServiceUserStatement(List<Operation> result) :
+void disableUserStatement(List<Operation> result) :
 {
     Token user = null;
     Token msg = null;
+    Token isServiceUser = null;
 }
 {
-    <DISABLE> <SERVICE> <USER> 
+    <DISABLE> ( isServiceUser = <SERVICE> )? <USER>
     ( user = <STRING> )
     ( <COLON> msg = quotedString() )
     {
-        result.add(new DisableServiceUser(user.image, msg.image));
+        DisableServiceUser dsu = new DisableServiceUser(user.image, msg.image);
+        dsu.setServiceUser(isServiceUser != null);
+        result.add(dsu);
     }
 }
 

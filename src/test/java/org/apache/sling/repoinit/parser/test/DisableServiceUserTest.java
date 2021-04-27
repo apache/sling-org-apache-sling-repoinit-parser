@@ -48,4 +48,15 @@ public class DisableServiceUserTest {
         final String reason = "because " + UUID.randomUUID();
         assertEquals(reason, new DisableServiceUser(USERNAME, reason).getReason());
     }
+
+    @Test
+    public void userType() {
+        final String reason = "nothing";
+        final boolean [] values = { false, true };
+        for(boolean value : values) {
+            final DisableServiceUser dsu = new DisableServiceUser(USERNAME, reason);
+            dsu.setServiceUser(value);
+            assertEquals(value, dsu.isServiceUser());
+        }
+    }
 }

@@ -1,0 +1,5 @@
+DisableServiceUser A (regular user) : This message explains why it's disabled.  Whitespace   is  preserved.
+DisableServiceUser uB (regular user) : Testing escaped double "quote" in this string.
+DisableServiceUser userC (regular user) : Testing escaped backslash \ in this string.
+DisableServiceUser D (regular user) : Testing quoted escaped backslash "\" in this string.
+DisableServiceUser E (regular user) : Testing unescaped single backslash \ in this string.

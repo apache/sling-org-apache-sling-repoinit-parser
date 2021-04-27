@@ -21,8 +21,12 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
+/** The class name is for historical reasons but this actually manages
+ *  both service and regular users.
+ */
 public class DisableServiceUser extends ServiceUserOperation {
     private final String reason;
+    private boolean isServiceUser;
     
     public DisableServiceUser(String username, String reason) {
         super(username, null);
@@ -32,10 +36,19 @@ public class DisableServiceUser extends ServiceUserOperation {
         }
     }
 
+    public void setServiceUser(boolean b) {
+        isServiceUser = b;
+    }
+
     @Override
     public String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append(super.getParametersDescription());
+        if(isServiceUser) {
+            sb.append(" (service user)");
+        } else {
+            sb.append(" (regular user)");
+        }
         if(reason!=null) {
             sb.append(" : ");
             sb.append(reason);
@@ -46,7 +59,8 @@ public class DisableServiceUser extends ServiceUserOperation {
     @NotNull
     @Override
     public String asRepoInitString() {
-        return String.format("disable service user %s : %s%n", username, escapeQuotes(reason));
+        final String userType = isServiceUser ? "service " : "";
+        return String.format("disable %s user %s : %s%n", userType, username, escapeQuotes(reason));
     }
 
     @Override
@@ -56,5 +70,9 @@ public class DisableServiceUser extends ServiceUserOperation {
 
     public String getReason() {
         return reason;
+    }
+
+    public boolean isServiceUser() {
+        return isServiceUser;
     }
 }

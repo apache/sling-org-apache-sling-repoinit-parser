@@ -43,7 +43,8 @@ CreateUser userG with path /for/userG (with password), password=ggg
 CreateUser userH with path for/userH
 CreateUser userJ with path for/userJ (with password), password=jjj
 CreateServiceUser the-last-one
-DisableServiceUser svc1 : This  is the message
+DisableServiceUser svc1 (service user) : This  is the message
+DisableServiceUser spongeBob (regular user) : Left the company
 DeleteUser userA
 DeleteUser userB_listsAreNotSupported
 DeleteServiceUser svcA

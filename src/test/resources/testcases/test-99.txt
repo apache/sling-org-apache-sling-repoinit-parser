@@ -78,6 +78,7 @@ create user userJ with path for/userJ with password jjj
 create service user the-last-one
 
 disable service user svc1 : "This  is the message"
+disable user spongeBob : "Left the company"
 
 # Delete (service) users
 delete user userA
