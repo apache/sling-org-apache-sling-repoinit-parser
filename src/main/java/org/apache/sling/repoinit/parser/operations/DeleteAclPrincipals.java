@@ -17,9 +17,11 @@
 package org.apache.sling.repoinit.parser.operations;
 
 import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
 
 import java.util.List;
 
+@ProviderType
 public class DeleteAclPrincipals extends Operation {
     
     private final List<String> principals;
