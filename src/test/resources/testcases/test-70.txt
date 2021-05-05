@@ -1,0 +1,13 @@
+remove ACL for ana
+
+remove ACL for alice, aida
+
+remove ACL on :repository, home(anni), functionNamesAreFree(aendu)
+
+remove ACL on /, /var, /etc
+
+remove ACL on /content
+
+remove principal ACL for ada, amy
+
+remove principal ACL for adi

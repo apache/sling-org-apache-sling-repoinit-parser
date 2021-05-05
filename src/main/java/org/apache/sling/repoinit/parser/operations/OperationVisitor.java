@@ -38,4 +38,8 @@ public interface OperationVisitor {
     void visitAddGroupMembers(AddGroupMembers am);
     void visitRemoveGroupMembers(RemoveGroupMembers rm);
     void visitSetProperties(SetProperties sp);
+    default void visitRemoveAclPrincipals(RemoveAclPrincipals s) { throw new UnsupportedOperationException(); }
+    default void visitRemoveAclPaths(RemoveAclPaths s) { throw new UnsupportedOperationException(); }
+    default void visitRemoveAclPrincipalBased(RemoveAclPrincipalBased s) { throw new UnsupportedOperationException(); }
+
 }

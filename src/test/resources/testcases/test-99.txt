@@ -135,3 +135,12 @@ set properties on authorizable(bob), authorizable(grpB)/nested
   default someDate{Date} to "2020-03-19T11:39:33.437+05:30"
   set quotedMix to "quoted", non-quoted, "the last \" one"
 end
+
+# Remove AC policies entirely (not just individual entries)
+remove ACL for ana
+remove ACL for alice, aida
+remove ACL on :repository, home(anni), functionNamesAreFree(aendu)
+remove ACL on /, /var, /etc
+remove ACL on /content
+remove principal ACL for ada, amy
+remove principal ACL for adi

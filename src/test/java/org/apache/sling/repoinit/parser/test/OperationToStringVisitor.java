@@ -34,6 +34,9 @@ import org.apache.sling.repoinit.parser.operations.RegisterNodetypes;
 import org.apache.sling.repoinit.parser.operations.OperationVisitor;
 import org.apache.sling.repoinit.parser.operations.RegisterNamespace;
 import org.apache.sling.repoinit.parser.operations.RegisterPrivilege;
+import org.apache.sling.repoinit.parser.operations.RemoveAclPaths;
+import org.apache.sling.repoinit.parser.operations.RemoveAclPrincipalBased;
+import org.apache.sling.repoinit.parser.operations.RemoveAclPrincipals;
 import org.apache.sling.repoinit.parser.operations.SetAclPaths;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipals;
@@ -124,6 +127,40 @@ class OperationToStringVisitor implements OperationVisitor {
 
         out.println();
         dumpAclLines(s.getLines());
+    }
+
+    @Override
+    public void visitRemoveAclPrincipals(RemoveAclPrincipals s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" for");
+        for (String p : s.getPrincipals()) {
+            out.print(' ');
+            out.print(p);
+        }
+        out.println();
+    }
+
+    @Override
+    public void visitRemoveAclPaths(RemoveAclPaths s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" on");
+        for (String p : s.getPaths()) {
+            out.print(' ');
+            out.print(p);
+        }
+        out.println();
+
+    }
+
+    @Override
+    public void visitRemoveAclPrincipalBased(RemoveAclPrincipalBased s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" for");
+        for (String p : s.getPrincipals()) {
+            out.print(' ');
+            out.print(p);
+        }
+        out.println();
     }
 
     @Override
