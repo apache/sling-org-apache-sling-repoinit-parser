@@ -1,7 +1,7 @@
-RemoveAclPrincipals for ana
-RemoveAclPrincipals for alice aida
-RemoveAclPaths on :repository :home:anni# :functionNamesAreFree:aendu#
-RemoveAclPaths on / /var /etc
-RemoveAclPaths on /content
-RemoveAclPrincipalBased for ada amy
-RemoveAclPrincipalBased for adi
+DeleteAclPrincipals for ana
+DeleteAclPrincipals for alice aida
+DeleteAclPaths on :repository :home:anni# :functionNamesAreFree:aendu#
+DeleteAclPaths on / /var /etc
+DeleteAclPaths on /content
+DeleteAclPrincipalBased for ada amy
+DeleteAclPrincipalBased for adi

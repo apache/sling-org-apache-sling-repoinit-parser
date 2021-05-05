@@ -20,32 +20,32 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class RemoveAclPrincipals extends Operation {
+public class DeleteAclPaths extends Operation {
+
+    private final List<String> paths;
     
-    private final List<String> principals;
-    
-    public RemoveAclPrincipals(@NotNull List<String> principals) {
-        this.principals = principals;
+    public DeleteAclPaths(@NotNull List<String> paths) {
+        this.paths = paths;
     }
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitRemoveAclPrincipals(this);
+        v.visitDeleteAclPaths(this);
     }
 
     @Override
     protected String getParametersDescription() {
-        return principals.toString();
+        return paths.toString();
     }
 
     @Override
     public @NotNull String asRepoInitString() {
-        return String.format("remove ACL for %s%n", listToString(principals));
+        return String.format("delete ACL on %s%n", pathsToString(paths));
     }
 
     @NotNull
-    public List<String> getPrincipals() {
-        return principals;
+    public List<String> getPaths() {
+        return paths;
     }
 
 }

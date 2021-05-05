@@ -76,10 +76,10 @@ SetProperties on :authorizable:bob# :authorizable:grpB#/nested
   PropertyLine someFlag{Boolean}=[{Boolean}true]
   PropertyLine default someDate{Date}=[{GregorianCalendar}2020-03-19T11:39:33.437+05:30]
   PropertyLine quotedMix{String}=[{String}quoted, {String}non-quoted, {String}the last " one]
-RemoveAclPrincipals for ana
-RemoveAclPrincipals for alice aida
-RemoveAclPaths on :repository :home:anni# :functionNamesAreFree:aendu#
-RemoveAclPaths on / /var /etc
-RemoveAclPaths on /content
-RemoveAclPrincipalBased for ada amy
-RemoveAclPrincipalBased for adi  
+DeleteAclPrincipals for ana
+DeleteAclPrincipals for alice aida
+DeleteAclPaths on :repository :home:anni# :functionNamesAreFree:aendu#
+DeleteAclPaths on / /var /etc
+DeleteAclPaths on /content
+DeleteAclPrincipalBased for ada amy
+DeleteAclPrincipalBased for adi  

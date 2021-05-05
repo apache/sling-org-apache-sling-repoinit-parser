@@ -20,17 +20,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class RemoveAclPrincipalBased extends Operation {
+public class DeleteAclPrincipalBased extends Operation {
 
     private final List<String> principals;
 
-    public RemoveAclPrincipalBased(@NotNull List<String> principals) {
+    public DeleteAclPrincipalBased(@NotNull List<String> principals) {
         this.principals = principals;
     }
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitRemoveAclPrincipalBased(this);
+        v.visitDeleteAclPrincipalBased(this);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class RemoveAclPrincipalBased extends Operation {
 
     @Override
     public @NotNull String asRepoInitString() {
-        return String.format("remove principal ACL for %s%n", listToString(principals));
+        return String.format("delete principal ACL for %s%n", listToString(principals));
     }
 
     @NotNull

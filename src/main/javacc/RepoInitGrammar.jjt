@@ -549,10 +549,10 @@ void removeAclPaths(List<Operation> result) :
     List<String> paths;
 } 
 {
-    <REMOVE> <ACL> <ON> paths  = pathsList()
+    <DELETE> <ACL> <ON> paths  = pathsList()
     ( <EOL> | <EOF> )  
     {
-        result.add(new RemoveAclPaths(paths));
+        result.add(new DeleteAclPaths(paths));
     }
 }
 
@@ -561,10 +561,10 @@ void removeAclPrincipals(List<Operation> result) :
     List <String> principals;
 }
 {
-    <REMOVE> <ACL> <FOR> principals = principalsList()
+    <DELETE> <ACL> <FOR> principals = principalsList()
     ( <EOL> | <EOF> )
     {
-        result.add(new RemoveAclPrincipals(principals));
+        result.add(new DeleteAclPrincipals(principals));
     }
 }
 
@@ -573,10 +573,10 @@ void removeAclPrincipalBased(List<Operation> result) :
     List <String> principals;
 }
 {
-    <REMOVE> <PRINCIPAL> <ACL> <FOR> principals = principalsList()
+    <DELETE> <PRINCIPAL> <ACL> <FOR> principals = principalsList()
     ( <EOL> | <EOF> )
     {
-        result.add(new RemoveAclPrincipalBased(principals));
+        result.add(new DeleteAclPrincipalBased(principals));
     }
 }
 
