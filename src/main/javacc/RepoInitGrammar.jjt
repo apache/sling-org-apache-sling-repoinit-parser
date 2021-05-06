@@ -3,6 +3,7 @@
  * See https://javacc.github.io/javacc/ for the most recent docs,
  *   including links to grammar examples
  * See http://www.engr.mun.ca/~theo/JavaCC-FAQ/javacc-faq-moz.htm for a FAQ from 2011
+ * See also http://eriklievaart.com/web/javacc1.html (from 2014) for additional information
  */
  
 options
