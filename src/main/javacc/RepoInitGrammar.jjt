@@ -143,9 +143,9 @@ List<Operation> parse() :
         | setAclPrincipals(result)
         | setAclPrincipalBased(result)
         | setAclRepository(result)
-        | removeAclPaths(result) 
-        | removeAclPrincipals(result)
-        | removeAclPrincipalBased(result)
+        | deleteAclPaths(result) 
+        | deleteAclPrincipals(result)
+        | deleteAclPrincipalBased(result)
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
@@ -544,7 +544,7 @@ void setAclPrincipalBased(List<Operation> result) :
     }
 }
 
-void removeAclPaths(List<Operation> result) :
+void deleteAclPaths(List<Operation> result) :
 {
     List<String> paths;
 } 
@@ -556,7 +556,7 @@ void removeAclPaths(List<Operation> result) :
     }
 }
 
-void removeAclPrincipals(List<Operation> result) :
+void deleteAclPrincipals(List<Operation> result) :
 {
     List <String> principals;
 }
@@ -568,7 +568,7 @@ void removeAclPrincipals(List<Operation> result) :
     }
 }
 
-void removeAclPrincipalBased(List<Operation> result) :
+void deleteAclPrincipalBased(List<Operation> result) :
 {
     List <String> principals;
 }
