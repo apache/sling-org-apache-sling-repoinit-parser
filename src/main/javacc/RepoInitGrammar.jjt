@@ -144,6 +144,9 @@ List<Operation> parse() :
         | setAclPrincipals(result)
         | setAclPrincipalBased(result)
         | setAclRepository(result)
+        | deleteAclPaths(result) 
+        | deleteAclPrincipals(result)
+        | deleteAclPrincipalBased(result)
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
@@ -539,6 +542,42 @@ void setAclPrincipalBased(List<Operation> result) :
 
     {
         result.add(new SetAclPrincipalBased(principals, lines, aclOptions));
+    }
+}
+
+void deleteAclPaths(List<Operation> result) :
+{
+    List<String> paths;
+} 
+{
+    <DELETE> <ACL> <ON> paths  = pathsList()
+    ( <EOL> | <EOF> )  
+    {
+        result.add(new DeleteAclPaths(paths));
+    }
+}
+
+void deleteAclPrincipals(List<Operation> result) :
+{
+    List <String> principals;
+}
+{
+    <DELETE> <ACL> <FOR> principals = principalsList()
+    ( <EOL> | <EOF> )
+    {
+        result.add(new DeleteAclPrincipals(principals));
+    }
+}
+
+void deleteAclPrincipalBased(List<Operation> result) :
+{
+    List <String> principals;
+}
+{
+    <DELETE> <PRINCIPAL> <ACL> <FOR> principals = principalsList()
+    ( <EOL> | <EOF> )
+    {
+        result.add(new DeleteAclPrincipalBased(principals));
     }
 }
 
