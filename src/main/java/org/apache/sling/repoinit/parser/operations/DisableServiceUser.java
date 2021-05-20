@@ -60,7 +60,7 @@ public class DisableServiceUser extends ServiceUserOperation {
     @Override
     public String asRepoInitString() {
         final String userType = isServiceUser ? "service " : "";
-        return String.format("disable %s user %s : %s%n", userType, username, escapeQuotes(reason));
+        return String.format("disable %suser %s : %s%n", userType, username, escapeQuotes(reason));
     }
 
     @Override
