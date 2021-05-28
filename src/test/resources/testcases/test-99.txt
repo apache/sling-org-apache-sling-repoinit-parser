@@ -13,7 +13,7 @@ create service user user1, u-ser_2
 set ACL on /libs,/apps
     remove * for user1,u-ser_2
     allow jcr:read for user1,u-ser_2
-    allow noNamespace for user4
+    allow privilege_without_namespace for user4
 
     deny jcr:write for u-ser_2
     deny jcr:lockManagement for user1

@@ -3,7 +3,7 @@ CreateServiceUser u-ser_2
 SetAclPaths on /libs /apps 
   AclLine REMOVE_ALL {principals=[user1, u-ser_2]}
   AclLine ALLOW {principals=[user1, u-ser_2], privileges=[jcr:read]}
-  AclLine ALLOW {principals=[user4], privileges=[noNamespace]}
+  AclLine ALLOW {principals=[user4], privileges=[privilege_without_namespace]}
   AclLine DENY {principals=[u-ser_2], privileges=[jcr:write]}
   AclLine DENY {principals=[user1], privileges=[jcr:lockManagement]}
   AclLine REMOVE {principals=[u3], privileges=[jcr:understand, some:other]}
