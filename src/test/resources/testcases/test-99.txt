@@ -13,6 +13,7 @@ create service user user1, u-ser_2
 set ACL on /libs,/apps
     remove * for user1,u-ser_2
     allow jcr:read for user1,u-ser_2
+    allow privilege_without_namespace for user4
 
     deny jcr:write for u-ser_2
     deny jcr:lockManagement for user1
@@ -66,8 +67,10 @@ register nodetypes
 register privilege crx:replicate
 register privilege priv
 register abstract privilege abstract_priv
+register abstract privilege namespaced:priv3
 register privilege priv with declared_aggregate_priv
 register privilege priv with declared_aggregate_priv1,declared_aggregate_priv2
+register privilege priv with declared_aggregate_priv1,namespaced:_priv4
 
 create user userE with password {someEncoding} afdgwdsdf
 create user one_with-more-chars.ok:/123456 with password {encoding_with.ok-:/12345} pw-with.ok-:/13456

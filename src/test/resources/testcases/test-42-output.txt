@@ -1,6 +1,12 @@
 register privilege withoutabstract_withoutaggregates
+register privilege ns:withoutabstract_withoutaggregatesNS
 register abstract privilege withabstract_withoutaggregates
+register abstract privilege ns:withabstract_withoutaggregatesNS
 register privilege withoutabstract_withaggregate with bla
 register privilege withoutabstract_withaggregates with bla,blub
+register privilege withoutabstract_withaggregates with bla,ns:namespacedA
+register privilege ns:withoutabstract_withaggregates with bla,ns:namespacedB
 register abstract privilege withabstract_withaggregate with foo
 register abstract privilege withabstract_withaggregates with foo,bar
+register abstract privilege withabstract_withaggregates with foo,ns:namespacedC
+register abstract privilege ns:withabstract_withaggregates with foo,ns:namespacedD
