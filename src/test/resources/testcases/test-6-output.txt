@@ -1,0 +1,2 @@
+DeletePath /var/leftover
+DeletePath /jcr:system/jcr:versionStorage/test

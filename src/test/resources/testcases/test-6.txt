@@ -1,0 +1,3 @@
+# Testing deleting of paths
+delete path /var/leftover
+delete path /jcr:system/jcr:versionStorage/test
