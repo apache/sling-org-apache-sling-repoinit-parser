@@ -41,5 +41,5 @@ public interface OperationVisitor {
     default void visitDeleteAclPrincipals(DeleteAclPrincipals s) { throw new UnsupportedOperationException(); }
     default void visitDeleteAclPaths(DeleteAclPaths s) { throw new UnsupportedOperationException(); }
     default void visitDeleteAclPrincipalBased(DeleteAclPrincipalBased s) { throw new UnsupportedOperationException(); }
-
+    default void visitDeletePath(DeletePath s) { throw new UnsupportedOperationException(); }
 }
