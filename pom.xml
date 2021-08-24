@@ -55,6 +55,7 @@
         <configuration>
           <excludes>
             <exclude>src/test/resources/testcases/**</exclude>
+            <exclude>concatenate-test-scenarios.sh</exclude>
           </excludes>
         </configuration>
       </plugin>

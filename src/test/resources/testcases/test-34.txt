@@ -1,4 +1,4 @@
-# Test functions at the beginning of path names, for SLING-8757
+# Functions at the beginning of path names (SLING-8757)
 
 set ACL on home(alice)
   allow jcr:one for alice, bob, carol

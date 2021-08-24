@@ -10,3 +10,5 @@ register abstract privilege withabstract_withaggregate with foo
 register abstract privilege withabstract_withaggregates with foo,bar
 register abstract privilege withabstract_withaggregates with foo,ns:namespacedC
 register abstract privilege ns:withabstract_withaggregates with foo,ns:namespacedD
+register privilege priv with declared_aggregate_priv1,declared_aggregate_priv2
+register privilege priv with declared_aggregate_priv1,namespaced:_priv4

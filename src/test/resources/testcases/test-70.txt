@@ -1,13 +1,8 @@
+# Remove AC policies entirely (not just individual entries)
 delete ACL for ana
-
 delete ACL for alice, aida
-
 delete ACL on :repository, home(anni), functionNamesAreFree(aendu)
-
 delete ACL on /, /var, /etc
-
 delete ACL on /content
-
 delete principal ACL for ada, amy
-
 delete principal ACL for adi

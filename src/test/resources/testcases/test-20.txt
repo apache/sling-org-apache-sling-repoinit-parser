@@ -1,4 +1,4 @@
-# Various create path tests
+# Various "create path" tests
 create path (sling:Folder) /var/discovery(nt:unstructured)/somefolder
 create path /one/two/three
 create path /three/four(nt:folk)/five(nt:jazz)/six

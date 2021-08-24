@@ -1,4 +1,4 @@
-# Test set property statements
+# Set properties
 set properties on /pathA, /path/B
   set sling:ResourceType{String} to /x/y/z
   set cq:allowedTemplates to /d/e/f/*, m/n/*
@@ -38,7 +38,7 @@ set properties on /blankLinesInList
   set three to five
 end
 
-# SLING-10252 set properties on the user or group profile
+# SLING-10252: set properties on the user or group profile
 set properties on authorizable(bob)
   set stringProp to "hello, you!"
 end

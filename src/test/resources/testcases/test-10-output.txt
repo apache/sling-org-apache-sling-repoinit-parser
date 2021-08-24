@@ -5,3 +5,5 @@ SetAclPaths on /libs /apps / /content/example.com/some-other_path
   AclLine DENY {principals=[user2], privileges=[jcr:write, something:else, another:one]}
   AclLine DENY {principals=[user1], privileges=[jcr:lockManagement]}
   AclLine DENY {principals=[user2], privileges=[jcr:modifyProperties]} restrictions=[rep:itemNames=[prop1, prop2]]
+SetAclPaths on /no-indentation 
+  AclLine ALLOW {principals=[userA, userB], privileges=[jcr:read]}  

@@ -1,4 +1,8 @@
-# Test the principal-based ACL syntax
+# Set principal-based access control (see SLING-8602), requires
+# o.a.s.repoinit.parser 1.2.8 and
+# o.a.s.jcr.repoinit 1.1.14
+# precondition for o.a.s.jcr.repoinit: 
+# repository needs to support 'o.a.j.api.security.authorization.PrincipalAccessControlList'
 
 set principal ACL for principal1,principal2
     remove * on /libs,/apps
@@ -26,22 +30,19 @@ set principal ACL for principal1,principal2
     allow jcr:something on / restriction(rep:glob)
 end
 
-# Test the principal-baesd ACL syntax with options SLING-6423
-
+# Principal-baesd ACL syntax with options (SLING-6423)
 set principal ACL for principal1,principal2 (ACLOptions=mergePreserve)
     remove * on /libs,/apps
     allow jcr:read on /content
 end
 
-# with multiple options
-
+# With multiple options
 set principal ACL for principal1,principal2 (ACLOptions=mergePreserve,someOtherOption,someOther123,namespaced:option)
     remove * on /libs,/apps
     allow jcr:read on /content
 end
 
 # repository level
-
 set principal ACL for principal1,principal2
     allow jcr:namespaceManagement on :repository 
 end

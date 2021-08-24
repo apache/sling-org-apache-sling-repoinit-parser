@@ -1,4 +1,4 @@
-# Test create/delete user statements
+# Create/delete users
 
 delete user userB
 create user userB

@@ -1,4 +1,4 @@
-# Test parsing embedded CNDs
+# Embedded CNDs for nodetype definitions
 
 register nodetypes
 <<===

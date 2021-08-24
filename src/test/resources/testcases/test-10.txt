@@ -10,3 +10,7 @@ set ACL on /libs,/apps, /, /content/example.com/some-other_path
     deny jcr:lockManagement for user1
     deny jcr:modifyProperties for user2 restriction(rep:itemNames,prop1,prop2)
 end
+
+set ACL on /no-indentation
+allow jcr:read for userA,userB
+end
