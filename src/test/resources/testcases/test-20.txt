@@ -1,5 +1,17 @@
 # Various "create path" tests
+
+# Nodetypes:
+# A nodetype in brackets right after "create path", like
+# sling:Folder below, sets the default type for all path
+# segments of this statement.
+# A nodetype in brackets at the end of a path segment, like
+# nt:unstructured below, applies just to that path segment.
+# If no specific nodetype is set, the repository uses its
+# default based on node type definitions.
+
 create path (sling:Folder) /var/discovery(nt:unstructured)/somefolder
+
+# more tests and examples
 create path /one/two/three
 create path /three/four(nt:folk)/five(nt:jazz)/six
 create path (nt:x) /seven/eight/nine
