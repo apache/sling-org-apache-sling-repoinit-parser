@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.sling.repoinit.parser.impl.AuthorizableIdUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ public class SetAclPrincipals extends AclGroupBase {
     private final List<String> principals;
     
     public SetAclPrincipals(List<String> principals, List<AclLine> lines) {
-        this(principals,lines,new ArrayList<String>());
+        this(principals,lines,new ArrayList<>());
     }
 
     public SetAclPrincipals(List<String> principals,List<AclLine> lines, List<String> aclOptions) {
@@ -41,6 +42,7 @@ public class SetAclPrincipals extends AclGroupBase {
         this.principals = Collections.unmodifiableList(principals);
     }
 
+    @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append(principals);
@@ -55,10 +57,12 @@ public class SetAclPrincipals extends AclGroupBase {
             List<String> paths = line.getProperty(AclLine.PROP_PATHS);
             return paths == null || paths.isEmpty();
         })) {
-            String topline = String.format("set repository ACL for %s%s%n", listToString(principals), getAclOptionsString());
+            String topline = String.format("set repository ACL for %s%s%n",
+                    listToString(AuthorizableIdUtil.forRepoInitString(principals)), getAclOptionsString());
             return asRepoInit(topline, true);
         } else {
-            String topline = String.format("set ACL for %s%s%n", listToString(principals), getAclOptionsString());
+            String topline = String.format("set ACL for %s%s%n",
+                    listToString(AuthorizableIdUtil.forRepoInitString(principals)), getAclOptionsString());
             return asRepoInit(topline, true);
         }
     }

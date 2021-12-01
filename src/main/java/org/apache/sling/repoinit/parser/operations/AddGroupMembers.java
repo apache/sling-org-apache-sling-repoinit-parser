@@ -19,6 +19,7 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.apache.sling.repoinit.parser.impl.AuthorizableIdUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -55,7 +56,8 @@ public class AddGroupMembers extends Operation {
     @NotNull
     @Override
     public String asRepoInitString() {
-        return String.format("add %s to group %s%n", listToString(members), groupname);
+        return String.format("add %s to group %s%n", listToString(AuthorizableIdUtil.forRepoInitString(members)),
+                AuthorizableIdUtil.forRepoInitString(groupname));
     }
 
     public String getGroupname() {

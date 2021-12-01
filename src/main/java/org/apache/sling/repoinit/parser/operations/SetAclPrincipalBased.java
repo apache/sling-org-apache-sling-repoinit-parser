@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.sling.repoinit.parser.impl.AuthorizableIdUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -33,7 +34,7 @@ public class SetAclPrincipalBased extends AclGroupBase {
     private final List<String> principals;
 
     public SetAclPrincipalBased(List<String> principals, List<AclLine> lines) {
-        this(principals,lines,new ArrayList<String>());
+        this(principals,lines,new ArrayList<>());
     }
 
     public SetAclPrincipalBased(List<String> principals, List<AclLine> lines, List<String> aclOptions) {
@@ -41,6 +42,7 @@ public class SetAclPrincipalBased extends AclGroupBase {
         this.principals = Collections.unmodifiableList(principals);
     }
 
+    @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append(principals);
@@ -51,7 +53,8 @@ public class SetAclPrincipalBased extends AclGroupBase {
     @NotNull
     @Override
     public String asRepoInitString() {
-        String topline = String.format("set principal ACL for %s%s%n", listToString(principals), getAclOptionsString());
+        String topline = String.format("set principal ACL for %s%s%n",
+                listToString(AuthorizableIdUtil.forRepoInitString(principals)), getAclOptionsString());
         return asRepoInit(topline, true);
     }
 

@@ -1,0 +1,20 @@
+CreateGroup Test Group
+CreateGroup Test Group With Spaces with path /thePathF
+DeleteGroup Test Group
+SetAclPaths on /content 
+  AclLine ALLOW {principals=[Test Group, user1], privileges=[jcr:read]}
+SetAclPaths on /content 
+  AclLine ALLOW {principals=[Test Group- Cool People, Test Group, user1], privileges=[jcr:read]}
+SetAclPrincipals for user1 Test Group u2 
+  AclLine ALLOW {paths=[/content], privileges=[jcr:read]}
+SetAclPrincipalBased for user1 Test Group ACLOptions=[mergePreserve]
+  AclLine REMOVE_ALL {paths=[/libs, /apps]}
+  AclLine ALLOW {paths=[/content], privileges=[jcr:read]}
+SetAclPaths on /test ACLOptions=[merge]
+  AclLine REMOVE_ALL {principals=[user1, Test Group, user2]}
+SetProperties on :authorizable:bob# :authorizable:Test Group#
+  PropertyLine stringProp{String}=[{String}hello, you again!]
+SetProperties on :authorizable:bob#/nested :authorizable:Test Group#/nested
+  PropertyLine stringProp{String}=[{String}hello, you nested again!]
+AddGroupMembers user1 Test Group 2000 user2 in group Parent Group
+RemoveGroupMembers user1 Test Group 2000 user2 in group Parent Group
