@@ -17,9 +17,12 @@
 package org.apache.sling.repoinit.parser.impl;
 
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class AuthorizableIdUtil {
+
+    private static final Pattern regex = Pattern.compile("\\s");
 
     private AuthorizableIdUtil() {
         // hidden
@@ -33,7 +36,7 @@ public class AuthorizableIdUtil {
      * @return the (potentially quoted) authorizable id
      */
     public static final String forRepoInitString(String authorizableId) {
-        return !authorizableId.matches(".*\\s.*") ? authorizableId : "\"" + authorizableId + "\"";
+        return !regex.matcher(authorizableId).find() ? authorizableId : "\"" + authorizableId + "\"";
     }
 
     /**
