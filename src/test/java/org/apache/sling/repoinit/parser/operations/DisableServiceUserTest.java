@@ -14,15 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.apache.sling.repoinit.parser.operations;
 
-package org.apache.sling.repoinit.parser.helpers;
+import org.junit.Test;
 
-public class WithPathOptions {
-    public final String path;
-    public final boolean forcedPath;
+import static org.junit.Assert.assertEquals;
 
-    public WithPathOptions(String path, boolean forcedPath) {
-        this.path = path;
-        this.forcedPath = forcedPath;
+public class DisableServiceUserTest {
+
+
+    @Test
+    public void testAsRepoiniString() {
+        DisableServiceUser dsu = new DisableServiceUser("name", "reason");
+        assertEquals(String.format("disable user name : \"reason\"%n"), dsu.asRepoInitString());
+        
+        dsu.setServiceUser(true);
+        assertEquals(String.format("disable service user name : \"reason\"%n"), dsu.asRepoInitString());
     }
 }

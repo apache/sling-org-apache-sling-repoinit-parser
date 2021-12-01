@@ -2,6 +2,7 @@ SetProperties on /pathA /path/B
   PropertyLine sling:ResourceType{String}=[{String}/x/y/z]
   PropertyLine cq:allowedTemplates{String}=[{String}/d/e/f/*, {String}m/n/*]
   PropertyLine default someInteger{Long}=[{Long}42]
+  PropertyLine aDouble{Double}=[{Double}3.14]
   PropertyLine someFlag{Boolean}=[{Boolean}true]
   PropertyLine default someDate{Date}=[{GregorianCalendar}2020-03-19T11:39:33.437+05:30]
   PropertyLine customSingleValueStringProp{String}=[{String}test]
@@ -23,3 +24,15 @@ SetProperties on /forcedMultiValue
   PropertyLine emptyMultiValue{String}=[]
   PropertyLine singleLongMultiValue{Long}=[{Long}1243]
   PropertyLine emptyLongMultiValue{Long}=[]
+SetProperties on /blankLinesInList
+  PropertyLine one{String}=[{String}two]
+  PropertyLine two{String}=[{String}four]
+  PropertyLine three{String}=[{String}five]
+SetProperties on :authorizable:bob#
+  PropertyLine stringProp{String}=[{String}hello, you!]
+SetProperties on :authorizable:bob#/nested
+  PropertyLine stringProp{String}=[{String}hello, you nested!]
+SetProperties on :authorizable:bob# :authorizable:alice#
+  PropertyLine stringProp{String}=[{String}hello, you again!]
+SetProperties on :authorizable:bob#/nested :authorizable:alice#/nested
+  PropertyLine stringProp{String}=[{String}hello, you nested again!]

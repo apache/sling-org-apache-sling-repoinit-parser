@@ -21,9 +21,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
+
 /** Set ACL statement that groups a set of AclLines
  *  that all refer to the same set of principals.
  */
+@ProviderType
 public class SetAclPrincipalBased extends AclGroupBase {
 
     private final List<String> principals;
@@ -43,7 +47,14 @@ public class SetAclPrincipalBased extends AclGroupBase {
         sb.append(super.getParametersDescription());
         return sb.toString(); 
     }
-    
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        String topline = String.format("set principal ACL for %s%s%n", listToString(principals), getAclOptionsString());
+        return asRepoInit(topline, true);
+    }
+
     public List<String> getPrincipals() {
         return principals;
     }

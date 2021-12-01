@@ -17,6 +17,10 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class DeleteUser extends Operation {
     private final String username;
 
@@ -35,6 +39,12 @@ public class DeleteUser extends Operation {
     @Override
     protected String getParametersDescription() {
         return username;
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("delete user %s%n", username);
     }
 
     public String getUsername() {

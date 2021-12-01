@@ -18,9 +18,12 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * Single restriction(name,values*)
  */
+@ProviderType
 public final class RestrictionClause {
 
     private final String name;

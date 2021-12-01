@@ -1,4 +1,4 @@
-# including repo-level
+# Mixing paths and repo-level ACL
 set ACL on /content,:repository
     allow jcr:all for user1
 end

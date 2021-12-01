@@ -1,11 +1,14 @@
-# Test create/delete user statements
+# Create/delete users
 
 delete user userB
 create user userB
 
 create user userC with password some_password
-create user userD with password {SHA-256}dc460da4ad72c
 
+# Although the following syntax is valid for encrpyted passwords,
+# the o.a.s.jcr.repoinit module only supports plain text
+# ones, see SLING-6219
+create user userD with password {SHA-256}dc460da4ad72c
 create user userE with password {someEncoding} afdgwdsdf
 
 create user one_with-more-chars.ok:/123456 with password {encoding_with.ok-:/12345} pw-with.ok-:/13456

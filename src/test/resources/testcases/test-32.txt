@@ -1,4 +1,4 @@
-# including repo-level
+# repo-level permissions in "set ACL for"
 set ACL for user1
     allow jcr:all on :repository,/content
 end

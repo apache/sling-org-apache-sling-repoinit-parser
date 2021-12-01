@@ -17,7 +17,18 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.List;
+
 /** An embedded block of text */
+@ProviderType
 public class RegisterNodetypes extends Operation {
     private final String cndStatements;
     
@@ -43,7 +54,38 @@ public class RegisterNodetypes extends Operation {
         sb.append(getCndStatements());
         return sb.toString();
     }
-    
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        try (Formatter formatter = new Formatter()) {
+            for (String nodetypeRegistrationSentence : generateRepoInitLines(new BufferedReader(new StringReader(cndStatements)))) {
+                formatter.format("%s%n", nodetypeRegistrationSentence);
+            }
+            return formatter.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("Unexpected IOException", e);
+        }
+    }
+
+    @NotNull
+    public static List<String> generateRepoInitLines(@NotNull BufferedReader rawLines) throws IOException {
+        List<String> lines = new ArrayList<>();
+        lines.add("register nodetypes");
+        lines.add("<<===");
+
+        String raw;
+        while((raw = rawLines.readLine()) != null) {
+            if (raw.isEmpty()) {
+                lines.add("");
+            } else {
+                lines.add("<< "+raw);
+            }
+        }
+        lines.add("===>>");
+        return lines;
+    }
+
     @Override
     public void accept(OperationVisitor v) {
         v.visitRegisterNodetypes(this);

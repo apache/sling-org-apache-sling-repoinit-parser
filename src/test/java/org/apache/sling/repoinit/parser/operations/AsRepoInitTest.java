@@ -15,24 +15,27 @@
  * limitations under the License.
  */
 
-package org.apache.sling.repoinit.parser.test;
+package org.apache.sling.repoinit.parser.operations;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import org.apache.sling.repoinit.parser.RepoInitParsingException;
+import org.apache.sling.repoinit.parser.impl.RepoInitParserService;
+import org.apache.sling.repoinit.parser.test.ParserTest;
+import org.apache.sling.repoinit.parser.test.ParserTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-/** Test the parser using our test-* input/expected output files.
- *  The code of this class doesn't contain any actual tests, it
- *  just looks for test-*.txt files, parses them and verifies the
- *  results according to the test-*-output.txt files.
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Collection;
+
+/** Similar to {@link ParserTest} but uses {@link Operation#asRepoInitString()})
+ *  to rebuild the input script after parsing it, to verify that that operation
+ *  returns equivalent statements.
  */
 @RunWith(Parameterized.class)
-public class ParserTest {
+public class AsRepoInitTest {
 
     private final ParserTestCase tc;
 
@@ -41,12 +44,21 @@ public class ParserTest {
         return ParserTestCase.buildTestData();
     }
 
-    public ParserTest(ParserTestCase tc) {
+    public AsRepoInitTest(ParserTestCase tc) {
         this.tc = tc;
     }
 
+    /** Rebuild the input script using {@link Operation#asRepoInitString()}) */
+    private static Reader rebuildInputScript(Reader input) throws Exception {
+        StringBuilder sb = new StringBuilder();
+        for (Operation o : new RepoInitParserService().parse(input)) {
+            sb.append(o.asRepoInitString());
+        }
+        return new StringReader(sb.toString());
+    }
+
     @Test
-    public void checkResult() throws RepoInitParsingException, IOException {
-        ParserTestCase.validate(tc.input, tc.expected, tc);
+    public void checkResultAsRepoInit() throws Exception {
+        ParserTestCase.validate(rebuildInputScript(tc.input), tc.expected, tc);
     }
 }

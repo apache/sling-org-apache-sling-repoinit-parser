@@ -1,2 +1,2 @@
-# Test "add members" statements
+# Add members to groups
 add user1,user2 to group grpA

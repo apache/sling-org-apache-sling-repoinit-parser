@@ -14,42 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.sling.repoinit.parser.operations;
 
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
-@ProviderType
-public class DeleteGroup extends Operation {
-    private final String groupname;
+import java.util.List;
 
-    /**
-     * Operation that deletes a group.
-     * 
-     * @param groupname the name of the group to delete
-     */
-    public DeleteGroup(String groupname) {
-        this.groupname = groupname;
+@ProviderType
+public class DeleteAclPrincipalBased extends Operation {
+
+    private final List<String> principals;
+
+    public DeleteAclPrincipalBased(@NotNull List<String> principals) {
+        this.principals = principals;
     }
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitDeleteGroup(this);
+        v.visitDeleteAclPrincipalBased(this);
     }
 
     @Override
     protected String getParametersDescription() {
-        return groupname;
+        return principals.toString();
+    }
+
+    @Override
+    public @NotNull String asRepoInitString() {
+        return String.format("delete principal ACL for %s%n", listToString(principals));
     }
 
     @NotNull
-    @Override
-    public String asRepoInitString() {
-        return String.format("delete group %s%n", groupname);
-    }
-
-    public String getGroupname() {
-        return groupname;
+    public List<String> getPrincipals() {
+        return principals;
     }
 }

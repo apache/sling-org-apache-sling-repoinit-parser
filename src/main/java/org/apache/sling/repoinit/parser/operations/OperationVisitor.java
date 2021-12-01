@@ -17,9 +17,9 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.annotation.versioning.ConsumerType;
 
-@ProviderType
+@ConsumerType
 public interface OperationVisitor {
     void visitCreateGroup(CreateGroup g);
     void visitDeleteGroup(DeleteGroup g);
@@ -38,4 +38,8 @@ public interface OperationVisitor {
     void visitAddGroupMembers(AddGroupMembers am);
     void visitRemoveGroupMembers(RemoveGroupMembers rm);
     void visitSetProperties(SetProperties sp);
+    default void visitDeleteAclPrincipals(DeleteAclPrincipals s) { throw new UnsupportedOperationException(); }
+    default void visitDeleteAclPaths(DeleteAclPaths s) { throw new UnsupportedOperationException(); }
+    default void visitDeleteAclPrincipalBased(DeleteAclPrincipalBased s) { throw new UnsupportedOperationException(); }
+
 }

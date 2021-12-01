@@ -1,0 +1,6 @@
+# Disable users, with various messages
+disable user A : "This message explains why it's disabled.  Whitespace   is  preserved."
+disable user uB : "Testing escaped double \"quote\" in this string."
+disable user userC : "Testing escaped backslash \\ in this string."
+disable user D : "Testing quoted escaped backslash \"\\\" in this string."
+disable user E : "Testing unescaped single backslash \ in this string."

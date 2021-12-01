@@ -15,25 +15,14 @@
  * limitations under the License.
  */
 
-package org.apache.sling.repoinit.parser.operations;
+package org.apache.sling.repoinit.parser.impl;
 
-import org.jetbrains.annotations.NotNull;
-import org.osgi.annotation.versioning.ProviderType;
+public class WithPathOptions {
+    public final String path;
+    public final boolean forcedPath;
 
-@ProviderType
-public class DeleteServiceUser extends ServiceUserOperation {
-    public DeleteServiceUser(String username) {
-        super(username, null);
-    }
-    
-    @Override
-    public void accept(OperationVisitor v) {
-        v.visitDeleteServiceUser(this);
-    }
-
-    @NotNull
-    @Override
-    public String asRepoInitString() {
-        return String.format("delete service user %s%n", username);
+    public WithPathOptions(String path, boolean forcedPath) {
+        this.path = path;
+        this.forcedPath = forcedPath;
     }
 }

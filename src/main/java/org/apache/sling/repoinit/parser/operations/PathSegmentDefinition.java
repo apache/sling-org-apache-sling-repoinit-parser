@@ -17,31 +17,45 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import java.util.Collections;
 import java.util.List;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /** Defines a segment of a path to be created,
  *  with its name and an optional primary type and optional mixins
  */
+@ProviderType
 public class PathSegmentDefinition {
     private final String segment;
     private final String primaryType;
     private final List<String> mixins;
-    
+    private final boolean isDefaultPrimary;
+
     public PathSegmentDefinition(String segment, String primaryType) {
-        this(segment, primaryType, null);
+        this(segment, primaryType, null, false);
     }
 
     public PathSegmentDefinition(String segment, String primaryType, List<String> mixins) {
+        this(segment, primaryType, mixins, false);
+    }
+
+    public PathSegmentDefinition(String segment, String primaryType, boolean isDefaultPrimary) {
+        this(segment, primaryType, null, isDefaultPrimary);
+    }
+
+    public PathSegmentDefinition(String segment, String primaryType, List<String> mixins, boolean isDefaultPrimary) {
         this.segment = segment;
         this.primaryType = primaryType;
-        this.mixins = mixins;
+        this.mixins = (mixins == null) ? Collections.emptyList() : mixins;
+        this.isDefaultPrimary = isDefaultPrimary;
     }
 
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append(segment);
         boolean hasPrimaryType = primaryType != null;
-        boolean hasMixin = mixins != null && ! mixins.isEmpty();
+        boolean hasMixin = !mixins.isEmpty();
         if (hasPrimaryType || hasMixin) {
             sb.append("(");
             if (hasPrimaryType) {
@@ -69,5 +83,9 @@ public class PathSegmentDefinition {
 
     public List<String> getMixins() {
         return mixins;
+    }
+
+    public boolean isDefaultPrimary() {
+        return isDefaultPrimary;
     }
 }

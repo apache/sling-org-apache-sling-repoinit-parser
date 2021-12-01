@@ -21,6 +21,10 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class RegisterPrivilege extends Operation {
 
     private final String privilegeName;
@@ -54,6 +58,12 @@ public class RegisterPrivilege extends Operation {
     @Override
     protected String getParametersDescription() {
         return this.privilegeName + "," + this.isAbstract + "," + this.declaredAggregateNames;
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("%s%n", toString());
     }
 
     public String toString() {

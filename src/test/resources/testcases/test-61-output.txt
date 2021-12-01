@@ -1,5 +1,5 @@
-DisableServiceUser svcA : This message explains why it's disabled.  Whitespace   is  preserved.
-DisableServiceUser svcB : Testing escaped double "quote" in this string.
-DisableServiceUser svcC : Testing escaped backslash \ in this string.
-DisableServiceUser svcD : Testing quoted escaped backslash "\" in this string.
-DisableServiceUser svcE : Testing unescaped single backslash \ in this string.
+DisableServiceUser svcA (service user) : This message explains why it's disabled.  Whitespace   is  preserved.
+DisableServiceUser svcB (service user) : Testing escaped double "quote" in this string.
+DisableServiceUser svcC (service user) : Testing escaped backslash \ in this string.
+DisableServiceUser svcD (service user) : Testing quoted escaped backslash "\" in this string.
+DisableServiceUser svcE (service user) : Testing unescaped single backslash \ in this string.

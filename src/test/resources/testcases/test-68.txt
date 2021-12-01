@@ -1,4 +1,4 @@
-# SLING-9857 - test "with forced path" option
+# SLING-9857: "with forced path" option
 create user A with path /path/user/A
 create user AF with forced path /path/user/AF
 

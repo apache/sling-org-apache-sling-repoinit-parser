@@ -17,8 +17,11 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+import org.apache.sling.repoinit.parser.impl.WithPathOptions;
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
 
+@ProviderType
 abstract class OperationWithPathOptions extends Operation {
     private final WithPathOptions wpopt;
 
@@ -32,5 +35,16 @@ abstract class OperationWithPathOptions extends Operation {
 
     public boolean isForcedPath() {
         return wpopt.forcedPath;
+    }
+
+    @NotNull
+    String asRepoInitString(@NotNull String type, @NotNull String name) {
+        String path = wpopt.path;
+        if (path == null || path.isEmpty()) {
+            return String.format("create %s %s%n", type, name);
+        } else {
+            String forced = (wpopt.forcedPath) ? "forced " : "";
+            return String.format("create %s %s with %spath %s%n", type, name, forced, path);
+        }
     }
 }

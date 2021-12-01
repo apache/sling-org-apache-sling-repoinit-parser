@@ -1,2 +1,2 @@
-# Test "remove members" statements
+# Remove members from group
 remove user3,user5 from group grpB

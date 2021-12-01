@@ -1,10 +1,10 @@
-# Test the principal-centered ACL syntax with options SLING-6423
-
+# Principal-centered ACL syntax with options (SLING-6423)
 set ACL for user1,u2 (ACLOptions=mergePreserve)
     remove * on /libs,/apps
     allow jcr:read on /content
 end
-# with multiple options
+
+# With multiple options
 set ACL for user1,u2 (ACLOptions=mergePreserve,someOtherOption,someOther123,namespaced:option)
     remove * on /libs,/apps
     allow jcr:read on /content

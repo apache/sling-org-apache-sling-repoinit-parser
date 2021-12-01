@@ -23,12 +23,12 @@
   <parent>
     <groupId>org.apache.sling</groupId>
     <artifactId>sling-bundle-parent</artifactId>
-    <version>40</version>
+    <version>41</version>
     <relativePath />
   </parent>
 
   <artifactId>org.apache.sling.repoinit.parser</artifactId>
-  <version>1.6.5-SNAPSHOT</version>
+  <version>1.6.11-SNAPSHOT</version>
   <name>Apache Sling Repoinit Parser</name>
   <description>Parser for the Repository Initialization language used in Sling</description>
 
@@ -39,6 +39,10 @@
     <tag>HEAD</tag>
   </scm>
   
+  <properties>
+    <project.build.outputTimestamp>2021-06-16T11:57:41Z</project.build.outputTimestamp>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -51,6 +55,7 @@
         <configuration>
           <excludes>
             <exclude>src/test/resources/testcases/**</exclude>
+            <exclude>concatenate-test-scenarios.sh</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -100,6 +105,12 @@
           <artifactId>jackrabbit-jcr-commons</artifactId>
           <version>2.20.0</version>
           <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>18.0.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- testing -->

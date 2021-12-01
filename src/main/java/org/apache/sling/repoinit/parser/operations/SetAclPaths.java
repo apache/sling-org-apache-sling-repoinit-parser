@@ -21,15 +21,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
+
 /** Set ACL statement that groups a set of AclLines
  *  that all refer to the same set of paths.
  */
+@ProviderType
 public class SetAclPaths extends AclGroupBase {
     
     private final List<String> paths;
     
     public SetAclPaths(List<String> paths, List<AclLine> lines) {
-        this(paths,lines,new ArrayList<String>());
+        this(paths,lines,new ArrayList<>());
     }
 
     public SetAclPaths(List<String> paths,List<AclLine> lines, List<String> aclOptions){
@@ -43,7 +47,14 @@ public class SetAclPaths extends AclGroupBase {
         sb.append(super.getParametersDescription());
         return sb.toString(); 
     }
-    
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        String topline = String.format("set ACL on %s%s%n", pathsToString(paths), getAclOptionsString());
+        return asRepoInit(topline, false);
+    }
+
     public List<String> getPaths() {
         return paths;
     }

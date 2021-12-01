@@ -17,6 +17,10 @@
 
 package org.apache.sling.repoinit.parser.test;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.UUID;
+
 import org.apache.sling.repoinit.parser.operations.DisableServiceUser;
 import org.junit.Test;
 
@@ -37,5 +41,22 @@ public class DisableServiceUserTest {
     @Test(expected = IllegalArgumentException.class)
     public void nullReason() {
         new DisableServiceUser(USERNAME, null);
+    }
+
+    @Test
+    public void accessReason() {
+        final String reason = "because " + UUID.randomUUID();
+        assertEquals(reason, new DisableServiceUser(USERNAME, reason).getReason());
+    }
+
+    @Test
+    public void userType() {
+        final String reason = "nothing";
+        final boolean [] values = { false, true };
+        for(boolean value : values) {
+            final DisableServiceUser dsu = new DisableServiceUser(USERNAME, reason);
+            dsu.setServiceUser(value);
+            assertEquals(value, dsu.isServiceUser());
+        }
     }
 }

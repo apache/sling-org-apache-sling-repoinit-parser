@@ -1,4 +1,5 @@
-# Test for repository-level ACL (SLING-7061)
+# Test for repository-level ACL (SLING-7061), requires
+# o.a.s.repoinit.parser 1.2.0, o.a.s.jcr.repoinit 1.1.6
 set repository ACL for user1,user2
     remove *
     allow jcr:read,jcr:lockManagement

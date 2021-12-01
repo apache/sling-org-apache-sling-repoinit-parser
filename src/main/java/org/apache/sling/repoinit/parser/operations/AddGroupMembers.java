@@ -19,6 +19,10 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class AddGroupMembers extends Operation {
     private final String groupname;
     private final List<String> members;
@@ -46,6 +50,12 @@ public class AddGroupMembers extends Operation {
         sb.append(members);
         sb.append(" in group ").append(groupname);
         return sb.toString();
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return String.format("add %s to group %s%n", listToString(members), groupname);
     }
 
     public String getGroupname() {

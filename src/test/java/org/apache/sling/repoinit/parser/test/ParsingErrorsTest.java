@@ -68,8 +68,9 @@ public class ParsingErrorsTest {
             add(new Object[] { "CREATE service user bob, alice, tom21", ParseException.class });
             add(new Object[] { "create SERVICE user bob, alice, tom21", ParseException.class });
             
-            // Disable service user with missing reason
+            // Disable users with missing reason
             add(new Object[] { "disable service user foo", ParseException.class });
+            add(new Object[] { "disable user regularfoo", ParseException.class });
             
             // Quoted strings in disable service user
             add(new Object[] { "disable service user foo", ParseException.class });
@@ -119,6 +120,15 @@ public class ParsingErrorsTest {
             add(new Object[] { "set properties on /pathA/b  \n set {String} to missingPropertyName \n end", ParseException.class });
             add(new Object[] { "set properties on /pathA/b  \n set somepProp{String} withoutTo \n end", ParseException.class });
             add(new Object[] { "set properties on /noPropsFails  \n end", ParseException.class });
+
+            // SLING-10299 - checking that remove ACL is not valid so far
+            add(new Object[] { "remove ACL on /libs", ParseException.class });
+            add(new Object[] { "remove jcr:ACL on /libs", ParseException.class });
+            add(new Object[] { "remove ACL for alice", ParseException.class });
+            add(new Object[] { "remove principal ACL for thePrincipal", ParseException.class });
+
+            // SLING-6219 - delete user does not support lists
+            add(new Object[] { "delete user alice,bob", ParseException.class });
         }};
         return result;
     }

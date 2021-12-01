@@ -1,4 +1,4 @@
-# Test add and remove together statements
+# Add and remove group members
 add user1,user2 to group grpA
 add user3 to group grpB
 add user4,user5 to group grpB

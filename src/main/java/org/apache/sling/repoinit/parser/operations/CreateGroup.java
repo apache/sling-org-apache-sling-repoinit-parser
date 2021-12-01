@@ -17,8 +17,11 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+import org.apache.sling.repoinit.parser.impl.WithPathOptions;
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
 
+@ProviderType
 public class CreateGroup extends OperationWithPathOptions {
     private final String groupname;
 
@@ -55,6 +58,12 @@ public class CreateGroup extends OperationWithPathOptions {
             sb.append(" with " + forced + "path ").append(getPath());
         }
         return sb.toString();
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        return asRepoInitString("group", groupname);
     }
 
     public String getGroupname() {

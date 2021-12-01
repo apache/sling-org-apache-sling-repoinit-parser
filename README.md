@@ -6,14 +6,30 @@
 
 This module is part of the [Apache Sling](https://sling.apache.org) project.
 
-Parser for the [Repository Initialization language](https://sling.apache.org/documentation/bundles/repository-initialization.html) used in Sling.
+It implements the [Repository Initialization language](https://sling.apache.org/documentation/bundles/repository-initialization.html) parser.
 
 To parse repoinit statements use the [RepoInitParser](./src/main/java/org/apache/sling/repoinit/parser/RepoInitParser.java) service.
 
-See the [Sling Website Repository Initialization page](https://sling.apache.org/documentation/bundles/repository-initialization.html) for more information.
+The companion [jcr-repoinit](https://github.com/apache/sling-org-apache-sling-jcr-repoinit) module can execute the resulting `Operations` on a
+JCR content repository.
 
-## Module dependencies
+The JavaCC parser grammar is defined in the [RepoInitGrammar.jjt](./src/main/javacc/RepoInitGrammar.jjt) file, which has links to
+the JavaCC documentation.
+
+## Dependent modules
 
 The [Feature Model Analyser](https://github.com/apache/sling-org-apache-sling-feature-analyser) uses this
-module to validate repoinit statements embedded in feature models. It should be kept up to date with new
-releases of this parser.
+parser to validate repoinit statements embedded in feature models. It should be kept up to date with new
+releases of this module.
+
+The [bnd.bnd](./bnd.bnd) file defines an `org.apache.sling.repoinit.language` OSGi capability which indicates
+the version of the repoinit language that this parser implements. That value should be incremented when the
+grammar changes, so that modules that depend on those changes can require the appropriate version.
+
+## Documenting the language
+
+The [Sling Website Repository Initialization page](https://sling.apache.org/documentation/bundles/repository-initialization.html) describes
+the general repoinit principles and is meant to show examples of _all_ possible language constructs.
+
+The `concatenate-test-scenarios.sh` script found in this folder can be used to update the language examples
+found at the end of that page.

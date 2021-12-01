@@ -17,8 +17,11 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+import org.apache.sling.repoinit.parser.impl.WithPathOptions;
+import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
 
+@ProviderType
 public class CreateUser extends OperationWithPathOptions {
     private final String username;
     private final String passwordEncoding;
@@ -66,6 +69,28 @@ public class CreateUser extends OperationWithPathOptions {
             }
         }
         return sb.toString();
+    }
+
+    @NotNull
+    @Override
+    public String asRepoInitString() {
+        String path = getPath();
+        if (path == null || path.isEmpty()) {
+            return String.format("create user %s%s%n", username, getPwString());
+        } else {
+            String forced = (isForcedPath()) ? "forced " : "";
+            return String.format("create user %s with %spath %s%s%n", username, forced, path, getPwString());
+        }
+    }
+
+    @NotNull
+    private String getPwString() {
+        if (password == null || password.isEmpty()) {
+            return "";
+        } else {
+            String enc = (passwordEncoding != null) ? "{"+passwordEncoding+"} " :  "";
+            return String.format(" with password %s%s", enc, password);
+        }
     }
 
     public String getUsername() {

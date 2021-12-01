@@ -3,6 +3,7 @@
  * See https://javacc.github.io/javacc/ for the most recent docs,
  *   including links to grammar examples
  * See http://www.engr.mun.ca/~theo/JavaCC-FAQ/javacc-faq-moz.htm for a FAQ from 2011
+ * See also http://eriklievaart.com/web/javacc1.html (from 2014) for additional information
  */
  
 options
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import org.apache.sling.repoinit.parser.operations.*;
-import org.apache.sling.repoinit.parser.helpers.WithPathOptions;
+import org.apache.sling.repoinit.parser.impl.WithPathOptions;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
@@ -144,6 +145,9 @@ List<Operation> parse() :
         | setAclPrincipals(result)
         | setAclPrincipalBased(result)
         | setAclRepository(result)
+        | deleteAclPaths(result) 
+        | deleteAclPrincipals(result)
+        | deleteAclPrincipalBased(result)
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
@@ -152,7 +156,7 @@ List<Operation> parse() :
         | deleteGroupStatement(result)
         | createUserStatement(result)
         | deleteUserStatement(result)
-        | disableServiceUserStatement(result)
+        | disableUserStatement(result)
         | addToGroupStatement(result)
         | removeFromGroupStatement(result)
         | setPropertiesStatement(result)
@@ -224,6 +228,17 @@ List<String> namespacedItemsList() :
 {
     t = <NAMESPACED_ITEM> { priv.add(t.image); } 
     ( <COMMA> t = <NAMESPACED_ITEM> { priv.add(t.image); } )* 
+    { return priv; }
+}
+
+List<String> privilegesList() :
+{
+    Token t = null;
+    List<String> priv = new ArrayList<String>();
+}
+{
+    ( t=<NAMESPACED_ITEM> | t=<STRING> ) { priv.add(t.image); }
+    ( <COMMA> ( t=<NAMESPACED_ITEM> | t=<STRING> ) { priv.add(t.image); } )*
     { return priv; }
 }
 
@@ -362,7 +377,7 @@ void userPrivilegesLine(List<AclLine> lines) :
 }
 {
     line = privilegesLineOperation()
-    tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
+    tmp = privilegesList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
     <FOR>
     tmp = principalsList() { line.setProperty(AclLine.PROP_PRINCIPALS, tmp); }
     restrictions = restrictions()  { line.setRestrictions(restrictions); }
@@ -542,6 +557,42 @@ void setAclPrincipalBased(List<Operation> result) :
     }
 }
 
+void deleteAclPaths(List<Operation> result) :
+{
+    List<String> paths;
+} 
+{
+    <DELETE> <ACL> <ON> paths  = pathsList()
+    ( <EOL> | <EOF> )  
+    {
+        result.add(new DeleteAclPaths(paths));
+    }
+}
+
+void deleteAclPrincipals(List<Operation> result) :
+{
+    List <String> principals;
+}
+{
+    <DELETE> <ACL> <FOR> principals = principalsList()
+    ( <EOL> | <EOF> )
+    {
+        result.add(new DeleteAclPrincipals(principals));
+    }
+}
+
+void deleteAclPrincipalBased(List<Operation> result) :
+{
+    List <String> principals;
+}
+{
+    <DELETE> <PRINCIPAL> <ACL> <FOR> principals = principalsList()
+    ( <EOL> | <EOF> )
+    {
+        result.add(new DeleteAclPrincipalBased(principals));
+    }
+}
+
 void registerNamespaceStatement(List<Operation> result) :
 {
     Token prefix = null;
@@ -566,7 +617,7 @@ void registerPrivilegeStatement(List<Operation> result) :
     List<String> aggregates = new ArrayList<String>();
 }
 {
-    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> (privilege = <STRING> | privilege = <NAMESPACED_ITEM>) (<WITH> aggregates = principalsList())?
+    <REGISTER> ((<ABSTRACT>) {isAbstract = true;})? <PRIVILEGE> (privilege = <STRING> | privilege = <NAMESPACED_ITEM>) (<WITH> aggregates = privilegesList())?
     {
         result.add(new RegisterPrivilege(privilege.image, isAbstract, aggregates));
     }
@@ -677,17 +728,20 @@ Token quotedString() :
     }
 }
 
-void disableServiceUserStatement(List<Operation> result) :
+void disableUserStatement(List<Operation> result) :
 {
     Token user = null;
     Token msg = null;
+    Token isServiceUser = null;
 }
 {
-    <DISABLE> <SERVICE> <USER> 
+    <DISABLE> ( isServiceUser = <SERVICE> )? <USER>
     ( user = <STRING> )
     ( <COLON> msg = quotedString() )
     {
-        result.add(new DisableServiceUser(user.image, msg.image));
+        DisableServiceUser dsu = new DisableServiceUser(user.image, msg.image);
+        dsu.setServiceUser(isServiceUser != null);
+        result.add(dsu);
     }
 }
 
