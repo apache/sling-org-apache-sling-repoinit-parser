@@ -66,6 +66,7 @@ public class RegisterPrivilege extends Operation {
         return String.format("%s%n", toString());
     }
 
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("register ");
         if (this.isAbstract) {

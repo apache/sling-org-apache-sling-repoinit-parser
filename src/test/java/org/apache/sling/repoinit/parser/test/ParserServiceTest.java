@@ -17,18 +17,25 @@
 
 package org.apache.sling.repoinit.parser.test;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.List;
 
 import org.apache.sling.repoinit.parser.RepoInitParsingException;
 import org.apache.sling.repoinit.parser.impl.RepoInitParserService;
+import org.apache.sling.repoinit.parser.operations.CreateServiceUser;
+import org.apache.sling.repoinit.parser.operations.Operation;
 import org.junit.Test;
 
 public class ParserServiceTest {
     @Test
     public void noErrors() throws RepoInitParsingException {
         final Reader r = new StringReader("create service user foo");
-        new RepoInitParserService().parse(r);
+        List<Operation> operations = new RepoInitParserService().parse(r);
+        assertEquals(1, operations.size());
+        assertEquals(CreateServiceUser.class, operations.get(0).getClass());
     }
     
     @Test(expected = RepoInitParsingException.class)

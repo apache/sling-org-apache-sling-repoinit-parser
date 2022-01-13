@@ -36,8 +36,7 @@ public class LinePrefixCleaner {
     public String removePrefix(String prefix, String textBlock) {
         final StringBuilder result = new StringBuilder();
         try {
-            final BufferedReader r = new BufferedReader(new StringReader(textBlock));
-            try {
+            try(final BufferedReader r = new BufferedReader(new StringReader(textBlock))) {
                 String line = null;
                 while( (line = r.readLine()) != null) {
                     if(result.length() > 0) {
@@ -49,9 +48,7 @@ public class LinePrefixCleaner {
                         result.append(line);
                     }
                 }
-            } finally {
-                r.close();
-            }
+            } 
         } catch(IOException ioe) {
             throw new RuntimeException("Unexpected IOException", ioe);
         }

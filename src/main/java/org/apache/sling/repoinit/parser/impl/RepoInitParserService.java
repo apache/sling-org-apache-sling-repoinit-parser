@@ -40,15 +40,9 @@ public class RepoInitParserService implements RepoInitParser {
     public List<Operation> parse(final Reader r) throws RepoInitParsingException {
         // in order to avoid parsing problems with trailing comments we add a line feed at the end
         try (final Reader readerWrapper = new AddTailingLinefeedFilterReader(r)) {
-            try {
-                return new RepoInitParserImpl(readerWrapper).parse();
-            } catch (TokenMgrError tme) {
-                throw new RepoInitParsingException(tme.getMessage(), tme);
-            } catch (ParseException pe) {
-                throw new RepoInitParsingException(pe.getMessage(), pe);
-            }
-        } catch ( final IOException ioe ) {
-            throw new RepoInitParsingException(ioe.getMessage(), ioe);
+            return new RepoInitParserImpl(readerWrapper).parse();
+        } catch ( final IOException | TokenMgrError | ParseException e ) {
+            throw new RepoInitParsingException(e.getMessage(), e);
         }
     }
     
