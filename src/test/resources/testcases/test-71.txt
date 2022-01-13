@@ -26,3 +26,11 @@ set properties on authorizable(bob)/nested, authorizable("Test Group")/nested
 end
 add user1,"Test Group 2000",user2 to group "Parent Group"
 remove user1,"Test Group 2000",user2 from group "Parent Group"
+
+# Test other escaped characters 
+create group "Tab	Group"
+create group "Untrimmed Group "
+create group " Really Untrimmed Group "
+create group "Group\With\Backslash"
+create group "Group
+Newline"

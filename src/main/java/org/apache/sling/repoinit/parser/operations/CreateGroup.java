@@ -17,7 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.impl.AuthorizableIdUtil;
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.apache.sling.repoinit.parser.impl.WithPathOptions;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
@@ -64,7 +64,7 @@ public class CreateGroup extends OperationWithPathOptions {
     @NotNull
     @Override
     public String asRepoInitString() {
-        return asRepoInitString("group", AuthorizableIdUtil.forRepoInitString(groupname));
+        return asRepoInitString("group", QuotableStringUtil.forRepoInitString(groupname));
     }
 
     public String getGroupname() {

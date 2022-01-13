@@ -23,7 +23,7 @@ import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
 
-import org.apache.sling.repoinit.parser.impl.AuthorizableIdUtil;
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.apache.sling.repoinit.parser.operations.AclLine.Action;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
@@ -76,7 +76,7 @@ abstract class AclGroupBase extends Operation {
                     onOrFor = (pathStr.isEmpty()) ? "" : " on " + pathStr;
                 } else {
                     onOrFor = " for " + listToString(
-                            AuthorizableIdUtil.forRepoInitString(line.getProperty(AclLine.PROP_PRINCIPALS)));
+                            QuotableStringUtil.forRepoInitString(line.getProperty(AclLine.PROP_PRINCIPALS)));
                 }
                 formatter.format("    %s %s%s%s%s%n", action, privileges, onOrFor,
                         nodetypesToString(line.getProperty(AclLine.PROP_NODETYPES)),

@@ -18,3 +18,9 @@ SetProperties on :authorizable:bob#/nested :authorizable:Test Group#/nested
   PropertyLine stringProp{String}=[{String}hello, you nested again!]
 AddGroupMembers user1 Test Group 2000 user2 in group Parent Group
 RemoveGroupMembers user1 Test Group 2000 user2 in group Parent Group
+CreateGroup Tab	Group
+CreateGroup Untrimmed Group 
+CreateGroup  Really Untrimmed Group 
+CreateGroup Group\With\Backslash
+CreateGroup Group
+Newline

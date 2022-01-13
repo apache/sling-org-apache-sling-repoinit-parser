@@ -17,7 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.impl.AuthorizableIdUtil;
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -74,7 +74,7 @@ public abstract class Operation {
                         String func = s.substring(1, s.indexOf(":",1));
                         String s2 = s.substring(func.length()+2, s.lastIndexOf('#'));
                         if ("authorizable".equals(func)) {
-                            s2 = AuthorizableIdUtil.forRepoInitString(s2);
+                            s2 = QuotableStringUtil.forRepoInitString(s2);
                         }
                         String trailingPath = (s.endsWith("#")) ?  "" : s.substring(s.indexOf("#")+1);
                         return func + "(" + s2 +")" + trailingPath;

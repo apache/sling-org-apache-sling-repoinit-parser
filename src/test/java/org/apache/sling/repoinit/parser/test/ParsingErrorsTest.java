@@ -129,6 +129,11 @@ public class ParsingErrorsTest {
 
             // SLING-6219 - delete user does not support lists
             add(new Object[] { "delete user alice,bob", ParseException.class });
+
+            // SLING-10952 - Support quoted group names
+            add(new Object[] { "create group My Group", ParseException.class });
+            add(new Object[] { "create group My\tGroup", ParseException.class });
+            add(new Object[] { "create group \"My\u200bGroup\"", ParseException.class });
         }};
         return result;
     }
@@ -151,8 +156,9 @@ public class ParsingErrorsTest {
     public void checkResult() throws ParseException, IOException {
         final StringReader r = new StringReader(input);
         boolean noException = false;
+        String parsed = null;
         try {
-            new RepoInitParserImpl(r).parse();
+            parsed = new RepoInitParserImpl(r).parse().toString();
             noException = true;
         } catch(Exception e) {
             assertEquals(getInfo(input, e), expected, e.getClass());
@@ -162,8 +168,8 @@ public class ParsingErrorsTest {
             r.close();
         }
         
-        if(noException && expected != null) {
-            fail("Expected a " + expected.getSimpleName() + " for [" + input + "]");
+        if (noException && expected != null) {
+            fail("Expected a " + expected.getSimpleName() + " for [" + input + "] parsed to [" + parsed + "]");
         }
     }
 }
