@@ -41,7 +41,6 @@ public class SetAclPaths extends AclGroupBase {
         this.paths = Collections.unmodifiableList(paths);
     }
     
-    @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append(paths);

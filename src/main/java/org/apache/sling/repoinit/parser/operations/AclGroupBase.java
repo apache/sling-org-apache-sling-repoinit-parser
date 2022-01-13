@@ -41,7 +41,7 @@ abstract class AclGroupBase extends Operation {
     private final List<String> aclOptions;
     
     protected AclGroupBase(List<AclLine> lines) {
-        this(lines,new ArrayList<>());
+        this(lines,new ArrayList<String>());
     }
     protected AclGroupBase(List<AclLine> lines, List<String> aclOptions) {
         this.lines = Collections.unmodifiableList(lines);
