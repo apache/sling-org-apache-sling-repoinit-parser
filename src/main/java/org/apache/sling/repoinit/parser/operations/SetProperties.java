@@ -94,7 +94,7 @@ public class SetProperties extends Operation {
         return paths;
     }
 
-    public List<PropertyLine> getPropertyLines () {return lines;};
+    public List<PropertyLine> getPropertyLines () {return lines;}
 
 
 }

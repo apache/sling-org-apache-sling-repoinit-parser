@@ -33,7 +33,7 @@ public class SetAclPrincipalBased extends AclGroupBase {
     private final List<String> principals;
 
     public SetAclPrincipalBased(List<String> principals, List<AclLine> lines) {
-        this(principals,lines,new ArrayList<String>());
+        this(principals,lines,new ArrayList<>());
     }
 
     public SetAclPrincipalBased(List<String> principals, List<AclLine> lines, List<String> aclOptions) {
@@ -41,6 +41,7 @@ public class SetAclPrincipalBased extends AclGroupBase {
         this.principals = Collections.unmodifiableList(principals);
     }
 
+    @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append(principals);

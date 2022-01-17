@@ -22,8 +22,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-import javax.sound.sampled.Port;
-
 import org.apache.jackrabbit.util.ISO8601;
 import org.apache.sling.repoinit.parser.impl.ParseException;
 import org.osgi.annotation.versioning.ProviderType;
@@ -38,7 +36,7 @@ public class PropertyLine {
     private boolean isDefault = false;
 
     /** Valid types for these properties */
-    public static enum PropertyType {
+    public enum PropertyType {
         String,
         Long,
         Double,
@@ -100,10 +98,10 @@ public class PropertyLine {
     }
 
         /** @return the name of the property to set */
-    public String getPropertyName() {return name;};
+    public String getPropertyName() {return name;}
 
     /** @return the type of the property to set */
-    public PropertyType getPropertyType() {return propertyType;};
+    public PropertyType getPropertyType() {return propertyType;}
 
     /** @return the list ot values of the property to set */
     public List<Object> getPropertyValues() {

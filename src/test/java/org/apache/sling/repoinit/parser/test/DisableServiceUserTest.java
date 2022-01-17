@@ -30,7 +30,8 @@ public class DisableServiceUserTest {
     
     @Test
     public void nonEmptyReason() {
-        new DisableServiceUser(USERNAME, "some reason");
+        DisableServiceUser disableServiceUser = new DisableServiceUser(USERNAME, "some reason");
+        assertEquals("some reason", disableServiceUser.getReason());
     }
     
     @Test(expected = IllegalArgumentException.class)

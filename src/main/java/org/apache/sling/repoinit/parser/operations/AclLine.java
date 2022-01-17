@@ -41,7 +41,7 @@ public class AclLine {
 
     public enum Action {
         REMOVE, REMOVE_ALL, DENY, ALLOW
-    };
+    }
 
     private final Map<String, List<String>> properties;
     private List<RestrictionClause> restrictions;

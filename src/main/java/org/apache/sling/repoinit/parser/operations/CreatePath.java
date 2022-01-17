@@ -30,7 +30,7 @@ public class CreatePath extends Operation {
     private final String defaultPrimaryType;
     
     public CreatePath(String defaultPrimaryType) {
-        this.pathDef = new ArrayList<PathSegmentDefinition>();
+        this.pathDef = new ArrayList<>();
         this.defaultPrimaryType = defaultPrimaryType;
     }
     
