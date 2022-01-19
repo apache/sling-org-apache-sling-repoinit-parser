@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -56,10 +57,12 @@ public class SetAclPrincipals extends AclGroupBase {
             List<String> paths = line.getProperty(AclLine.PROP_PATHS);
             return paths == null || paths.isEmpty();
         })) {
-            String topline = String.format("set repository ACL for %s%s%n", listToString(principals), getAclOptionsString());
+            String topline = String.format("set repository ACL for %s%s%n",
+                    listToString(QuotableStringUtil.forRepoInitString(principals)), getAclOptionsString());
             return asRepoInit(topline, true);
         } else {
-            String topline = String.format("set ACL for %s%s%n", listToString(principals), getAclOptionsString());
+            String topline = String.format("set ACL for %s%s%n",
+                    listToString(QuotableStringUtil.forRepoInitString(principals)), getAclOptionsString());
             return asRepoInit(topline, true);
         }
     }

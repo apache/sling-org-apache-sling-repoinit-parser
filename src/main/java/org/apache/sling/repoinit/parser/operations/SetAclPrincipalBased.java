@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -52,7 +53,8 @@ public class SetAclPrincipalBased extends AclGroupBase {
     @NotNull
     @Override
     public String asRepoInitString() {
-        String topline = String.format("set principal ACL for %s%s%n", listToString(principals), getAclOptionsString());
+        String topline = String.format("set principal ACL for %s%s%n",
+                listToString(QuotableStringUtil.forRepoInitString(principals)), getAclOptionsString());
         return asRepoInit(topline, true);
     }
 

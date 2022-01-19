@@ -178,8 +178,8 @@ List<String> principalsList() :
     List<String> principals = new ArrayList<String>(); 
 }
 {
-    t = <STRING> { principals.add(t.image); } 
-    ( <COMMA> t = <STRING> { principals.add(t.image); } )* 
+    t = quotableString() { principals.add(t.image); } 
+    ( <COMMA> t = quotableString() { principals.add(t.image); } )* 
     { return principals; }
 }
 
@@ -247,7 +247,7 @@ String usernameList() :
     Token t = null;
 }
 {
-    ( t = <STRING> ) { names.add(t.image); }
+    ( t = quotableString() ) { names.add(t.image); }
     // disable lists for now, not supported downstream
     // ( <COMMA> t = <STRING> { names.add(t.image); }) *
 
@@ -654,7 +654,7 @@ void createGroupStatement(List<Operation> result) :
 }
 {
     <CREATE> <GROUP> 
-    ( group = <STRING> )
+    ( group = quotableString() )
     ( wpopt = withPathStatement() ) ?
 
     {
@@ -668,7 +668,7 @@ void deleteGroupStatement(List<Operation> result) :
 }
 {
     <DELETE> <GROUP> 
-    ( group = <STRING> )
+    ( group = quotableString() )
 
     {
         result.add(new DeleteGroup(group.image));
@@ -754,7 +754,7 @@ void addToGroupStatement(List<Operation> result) :
     <ADD>
     members =  principalsList()
     <TO> <GROUP>
-    group = <STRING>
+    group = quotableString()
 
     {
         result.add(new AddGroupMembers(members, group.image));
@@ -771,11 +771,19 @@ void removeFromGroupStatement(List<Operation> result) :
     <REMOVE>
     members =  principalsList()
     <FROM> <GROUP>
-    group = <STRING>
+    group = quotableString()
 
     {
         result.add(new RemoveGroupMembers(members, group.image));
     }
+}
+
+Token quotableString() :
+{
+    Token t = null;
+}
+{
+    (t = <STRING> | t = quotedString() ) { return t; }
 }
 
 Token propertyValue() :
