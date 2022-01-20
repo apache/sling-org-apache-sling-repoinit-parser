@@ -25,6 +25,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -52,7 +54,12 @@ public class AsRepoInitTest {
     private static Reader rebuildInputScript(Reader input) throws Exception {
         StringBuilder sb = new StringBuilder();
         for (Operation o : new RepoInitParserService().parse(input)) {
-            sb.append(o.asRepoInitString());
+            String repoinitStatement = o.asRepoInitString();
+            assertTrue(
+                    "Operation.asRepoInitString() should always end with an-OS agnostic line separator. Not found for "
+                            + o.toString(),
+                    repoinitStatement.endsWith(System.lineSeparator()));
+            sb.append(repoinitStatement);
         }
         return new StringReader(sb.toString());
     }
