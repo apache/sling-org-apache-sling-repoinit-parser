@@ -30,6 +30,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Supplier;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.sling.repoinit.parser.RepoInitParsingException;
@@ -54,7 +55,7 @@ public class ParserTestCase implements Closeable {
     }
 
     private ParserTestCase(int index) throws IOException {
-        inputFilename = PREFIX + index + ".txt";
+        inputFilename = getFileName(index);
         final InputStream is = getClass().getResourceAsStream(inputFilename);
         if ( is != null ) {
             input = new InputStreamReader(is, "UTF-8");
@@ -71,6 +72,10 @@ public class ParserTestCase implements Closeable {
             return null;
         }
         return result;
+    }
+
+    public static String getFileName(int index) {
+        return PREFIX + index + ".txt";
     }
 
     public void close() {
@@ -114,6 +119,29 @@ public class ParserTestCase implements Closeable {
             }
         }
         if(result.size() < EXPECTED_TEST_COUNT) {
+            fail("Expected at least " + EXPECTED_TEST_COUNT + " test cases but got only " + result.size());
+        }
+        return result;
+    }
+
+    public static Collection<Object[]> buildTestDataSuppliers() throws IOException {
+        final List<Object[]> result = new ArrayList<>();
+        for (int i = 0; i <= MAX_TEST_INDEX; i++) {
+            final int currentIdx = i;
+            Supplier<ParserTestCase> supplier = () -> {
+                try {
+                    return ParserTestCase.build(currentIdx);
+                } catch (IOException e) {
+                    return null;
+                }
+            };
+            try (ParserTestCase tc = supplier.get()) {
+                if(tc != null){
+                    result.add(new Object[] { ParserTestCase.getFileName(i), supplier });
+                }
+            }
+        }
+        if (result.size() < EXPECTED_TEST_COUNT) {
             fail("Expected at least " + EXPECTED_TEST_COUNT + " test cases but got only " + result.size());
         }
         return result;
