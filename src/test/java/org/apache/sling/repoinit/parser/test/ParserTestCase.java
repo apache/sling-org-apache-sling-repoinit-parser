@@ -136,7 +136,7 @@ public class ParserTestCase implements Closeable {
                 }
             };
             try (ParserTestCase tc = supplier.get()) {
-                if(tc != null){
+                if (tc != null) {
                     result.add(new Object[] { ParserTestCase.getFileName(i), supplier });
                 }
             }

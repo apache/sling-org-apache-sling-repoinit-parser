@@ -62,7 +62,7 @@ public class AsRepoInitTest {
 
     @Test
     public void checkResultAsRepoInit() throws Exception {
-        try(ParserTestCase tc = testCaseSupplier.get()){
+        try (ParserTestCase tc = testCaseSupplier.get()) {
             ParserTestCase.validate(rebuildInputScript(tc.input), tc.expected, tc);
         }
     }
@@ -72,9 +72,8 @@ public class AsRepoInitTest {
         try (ParserTestCase tc = testCaseSupplier.get()) {
             for (Operation o : new RepoInitParserService().parse(tc.input)) {
                 String repoinitStatement = o.asRepoInitString();
-                assertTrue(
-                        "Operation.asRepoInitString() should always end with an-OS compatible line separator. Not found for "
-                                + o.toString(),
+                assertTrue("Operation.asRepoInitString() should always end with an-OS " +
+                        "compatible line separator. Not found for " + o.toString(),
                         repoinitStatement.endsWith(System.lineSeparator()));
             }
         }
