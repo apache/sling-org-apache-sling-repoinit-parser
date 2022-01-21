@@ -31,6 +31,14 @@ public abstract class Operation {
     
     protected abstract String getParametersDescription();
 
+    /**
+     * Converts this operation instance to a RepoInit string representation
+     * including the current operation parameters. The representation must be
+     * parsable back into an equivalent operation and must end with a OS-compatible
+     * line separator.
+     * 
+     * @return the repoinit string for the operation
+     */
     @NotNull
     public abstract String asRepoInitString();
 

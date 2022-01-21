@@ -25,10 +25,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.Collection;
+import java.util.function.Supplier;
 
 /** Similar to {@link ParserTest} but uses {@link Operation#asRepoInitString()})
  *  to rebuild the input script after parsing it, to verify that that operation
@@ -37,15 +40,15 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class AsRepoInitTest {
 
-    private final ParserTestCase tc;
+    private final Supplier<ParserTestCase> testCaseSupplier;
 
     @Parameters(name="{0}")
     public static Collection<Object[]> data() throws IOException {
-        return ParserTestCase.buildTestData();
+        return ParserTestCase.buildTestDataSuppliers();
     }
 
-    public AsRepoInitTest(ParserTestCase tc) {
-        this.tc = tc;
+    public AsRepoInitTest(String testName, Supplier<ParserTestCase> testCaseSupplier) {
+        this.testCaseSupplier = testCaseSupplier;
     }
 
     /** Rebuild the input script using {@link Operation#asRepoInitString()}) */
@@ -59,6 +62,20 @@ public class AsRepoInitTest {
 
     @Test
     public void checkResultAsRepoInit() throws Exception {
-        ParserTestCase.validate(rebuildInputScript(tc.input), tc.expected, tc);
+        try (ParserTestCase tc = testCaseSupplier.get()) {
+            ParserTestCase.validate(rebuildInputScript(tc.input), tc.expected, tc);
+        }
+    }
+
+    @Test
+    public void checkRepoInitStatementNewline() throws Exception {
+        try (ParserTestCase tc = testCaseSupplier.get()) {
+            for (Operation o : new RepoInitParserService().parse(tc.input)) {
+                String repoinitStatement = o.asRepoInitString();
+                assertTrue("Operation.asRepoInitString() should always end with an-OS " +
+                        "compatible line separator. Not found for " + o.toString(),
+                        repoinitStatement.endsWith(System.lineSeparator()));
+            }
+        }
     }
 }

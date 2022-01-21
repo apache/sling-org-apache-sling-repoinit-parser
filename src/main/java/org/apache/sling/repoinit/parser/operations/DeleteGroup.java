@@ -47,7 +47,7 @@ public class DeleteGroup extends Operation {
     @NotNull
     @Override
     public String asRepoInitString() {
-        return String.format("delete group %s", QuotableStringUtil.forRepoInitString(groupname));
+        return String.format("delete group %s%n", QuotableStringUtil.forRepoInitString(groupname));
     }
 
     public String getGroupname() {
