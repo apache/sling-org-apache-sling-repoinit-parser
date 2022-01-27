@@ -36,6 +36,7 @@ public class PropertyLine {
     private final PropertyType propertyType;
     private final List<Object> values;
     private boolean isDefault = false;
+    private static final String MULTI_TOKEN = "[]";
 
     /** Valid types for these properties */
     public static enum PropertyType {
@@ -56,9 +57,9 @@ public class PropertyLine {
      */
     public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) throws ParseException {
         this.name = name;
-        boolean forceList = typeString != null && typeString.endsWith("[]");
+        boolean forceList = typeString != null && typeString.endsWith(MULTI_TOKEN);
         if(forceList) {
-            typeString = typeString.substring(0, typeString.length() - 2);
+            typeString = typeString.substring(0, typeString.length() - MULTI_TOKEN.length());
         }
         this.propertyType = typeString == null ? PropertyType.String : parseType(typeString);
         this.values = parseList(this.propertyType, values);
