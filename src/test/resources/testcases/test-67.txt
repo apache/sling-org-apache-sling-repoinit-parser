@@ -29,6 +29,13 @@ set properties on /endkeyword
   set two to endS
 end
 
+set properties on /forcedMultiValue
+  set singleMultiValue{String[]} to "single"
+  set emptyMultiValue{String[]} to
+  set singleLongMultiValue{Long[]} to 1243
+  set emptyLongMultiValue{Long[]} to
+end
+
 set properties on /blankLinesInList
   set one to two
 
