@@ -3,4 +3,4 @@ SetAclPaths on /libs /apps
   AclLine ALLOW {principals=[user1, user2], privileges=[jcr:read]}
   AclLine REMOVE_ALL {principals=[another]}
   AclLine ALLOW {principals=[another], privileges=[x:y]}
-  AclLine REMOVE {principals=[userTestingSpecificRemove], privileges=[jcr:ACL]}
+  AclLine REMOVE DENY {principals=[userTestingSpecificRemove], privileges=[jcr:ACL]}

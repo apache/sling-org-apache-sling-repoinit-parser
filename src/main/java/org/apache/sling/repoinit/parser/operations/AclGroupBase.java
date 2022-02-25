@@ -68,7 +68,7 @@ abstract class AclGroupBase extends Operation {
         try (Formatter formatter = new Formatter()) {
             formatter.format("%s",topLine);
             for (AclLine line : lines) {
-                String action = actionToString(line.getAction());
+                String action = actionToString(line.getAction(), line.isAllow());
                 String privileges = privilegesToString(line.getAction(), line.getProperty(AclLine.PROP_PRIVILEGES));
                 String onOrFor;
                 if (hasPathLines) {
@@ -116,10 +116,14 @@ abstract class AclGroupBase extends Operation {
     }
 
     @NotNull
-    private static String actionToString(@NotNull AclLine.Action action) {
-        if(action.equals(Action.REMOVE_ALL)) {
+    private static String actionToString(@NotNull AclLine.Action action, boolean isAllow) {
+        if (action.equals(Action.REMOVE_ALL)) {
             return Action.REMOVE.toString().toLowerCase();
+        } else if (action.equals(Action.REMOVE)) {
+            String allowStr = (isAllow) ? Action.ALLOW.toString().toLowerCase() : Action.DENY.toString().toLowerCase();
+            return Action.REMOVE.toString().toLowerCase() + " " + allowStr;
+        } else {
+            return action.toString().toLowerCase();
         }
-        return action.toString().toLowerCase();
     }
 }

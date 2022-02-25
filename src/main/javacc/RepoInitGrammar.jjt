@@ -360,13 +360,15 @@ void removeStarLine(List<AclLine> lines) :
 }
 
 AclLine privilegesLineOperation() :
-{}
 {
-    ( 
-        <REMOVE>        { return new AclLine(AclLine.Action.REMOVE); }
-        | ( <ALLOW>     { return new AclLine(AclLine.Action.ALLOW); } )
-        | ( <DENY>      { return new AclLine(AclLine.Action.DENY); } )    
-    ) 
+    boolean isRemove = false;
+    AclLine.Action action = null;
+}
+{
+    (<REMOVE> { isRemove = true; })?
+    
+    ((<ALLOW> { action = AclLine.Action.ALLOW; })
+    | (<DENY> { action = AclLine.Action.DENY; })) { return new AclLine(action, isRemove); } 
 }
 
 void userPrivilegesLine(List<AclLine> lines) :

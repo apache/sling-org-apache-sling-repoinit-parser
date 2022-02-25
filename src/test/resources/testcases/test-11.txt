@@ -10,5 +10,5 @@ set ACL on /libs,/apps
     remove * for another
     allow x:y for another
 
-    remove jcr:ACL for userTestingSpecificRemove
+    remove deny jcr:ACL for userTestingSpecificRemove
 end
