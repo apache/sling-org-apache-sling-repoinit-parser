@@ -20,7 +20,6 @@ package org.apache.sling.repoinit.parser.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,8 +39,8 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class ParsingErrorsTest {
 
-    private String input;
-    private Class<? extends Throwable> expected;
+    private final String input;
+    private final Class<? extends Throwable> expected;
     
     @Parameters
     public static Collection<Object[]> data() {
@@ -173,10 +172,8 @@ public class ParsingErrorsTest {
         try {
             parsed = new RepoInitParserImpl(r).parse().toString();
             noException = true;
-        } catch (Exception e) {
+        } catch (Exception | Error e) {
             assertEquals(getInfo(input, e), expected, e.getClass());
-        } catch (Error err) {
-            assertEquals(getInfo(input, err), expected, err.getClass());
         } finally {
             r.close();
         }
