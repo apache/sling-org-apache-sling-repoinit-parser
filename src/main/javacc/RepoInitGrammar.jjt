@@ -22,7 +22,7 @@ package org.apache.sling.repoinit.parser.impl;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.apache.sling.repoinit.parser.RepoInitParsingException;import org.apache.sling.repoinit.parser.operations.*;
+import org.apache.sling.repoinit.parser.operations.*;
 import org.apache.sling.repoinit.parser.impl.WithPathOptions;
 
 /*
@@ -371,7 +371,7 @@ AclLine privilegesLineOperation(boolean supportsRemoveAction) :
 if (supportsRemoveAction) { 
     return new AclLine(AclLine.Action.REMOVE); 
 } else { 
-    throw new IllegalArgumentException("REMOVE action not supported with 'remove acl' statements.");
+    throw new ParseException("REMOVE action not supported with 'remove acl' statements.");
 }}
         | ( <ALLOW>     { return new AclLine(AclLine.Action.ALLOW); } )
         | ( <DENY>      { return new AclLine(AclLine.Action.DENY); } )    
