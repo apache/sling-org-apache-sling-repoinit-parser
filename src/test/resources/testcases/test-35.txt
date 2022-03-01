@@ -4,7 +4,7 @@
 
 # remove entries by path
 
-remove ACL on /libs,/apps, /, /content/example.com/some-other_path
+remove ACE on /libs,/apps, /, /content/example.com/some-other_path
     allow jcr:read for user1,user2
     allow privilege_without_namespace for user4
     deny jcr:write,something:else,another:one for user2
@@ -14,7 +14,7 @@ end
 
 # remove entries by principal
 
-remove ACL for user1,u2
+remove ACE for user1,u2
     allow jcr:read on /content
     allow jcr:addChildNodes, jcr:modifyProperties on /content restriction(rep:glob)
     deny jcr:read on /etc, /var restriction(rep:ntNames,sling:Folder,nt:unstructured) restriction(rep:itemNames,prop1,prop2)
@@ -22,7 +22,7 @@ end
 
 # remove principal-based entries
 
-remove principal ACL for principal1,principal2
+remove principal ACE for principal1,principal2
     allow jcr:read on /content
     deny jcr:modifyProperties on /apps, /content restriction(rep:itemNames,prop1,prop2)
     allow jcr:addChildNodes on /apps restriction(rep:ntNames,sling:Folder,nt:unstructured)

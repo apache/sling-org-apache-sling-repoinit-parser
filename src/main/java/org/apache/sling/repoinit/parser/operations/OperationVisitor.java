@@ -30,9 +30,9 @@ public interface OperationVisitor {
     void visitSetAclPrincipal(SetAclPrincipals s);
     void visitSetAclPaths(SetAclPaths s);
     void visitSetAclPrincipalBased(SetAclPrincipalBased s);
-    default void visitRemoveAclPrincipal(RemoveAclPrincipals s) { throw new UnsupportedOperationException(); }
-    default void visitRemoveAclPaths(RemoveAclPaths s) { throw new UnsupportedOperationException(); }
-    default void visitRemoveAclPrincipalBased(RemoveAclPrincipalBased s) { throw new UnsupportedOperationException(); }
+    default void visitRemoveAcePrincipal(RemoveAcePrincipals s) { throw new UnsupportedOperationException(); }
+    default void visitRemoveAcePaths(RemoveAcePaths s) { throw new UnsupportedOperationException(); }
+    default void visitRemoveAcePrincipalBased(RemoveAcePrincipalBased s) { throw new UnsupportedOperationException(); }
     void visitCreatePath(CreatePath cp);
     void visitRegisterNamespace(RegisterNamespace rn);
     void visitRegisterNodetypes(RegisterNodetypes b);

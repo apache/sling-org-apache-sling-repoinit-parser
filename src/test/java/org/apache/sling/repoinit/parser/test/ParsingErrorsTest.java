@@ -136,16 +136,16 @@ public class ParsingErrorsTest {
             
             // SLING-11160 - Repoinit does not allow to remove individual ACEs 
             // -> remove-action not supported. only 'allow' and 'deny'
-            add(new Object[] { "remove ACL on /content\n remove jcr:read for alice\n end", ParseException.class});
-            add(new Object[] { "remove ACL on /content\n remove * for alice\n end", ParseException.class});
-            add(new Object[] { "remove ACL for alice\n remove jcr:read on /content\n end", ParseException.class});
-            add(new Object[] { "remove ACL for alice\n remove * on /content\n end", ParseException.class});
-            add(new Object[] { "remove principal ACL for alice\n remove jcr:read on /content\n end", ParseException.class});
-            add(new Object[] { "remove principal ACL for alice\n remove * on /content\n end", ParseException.class});
+            add(new Object[] { "remove ACE on /content\n remove jcr:read for alice\n end", ParseException.class});
+            add(new Object[] { "remove ACE on /content\n remove * for alice\n end", ParseException.class});
+            add(new Object[] { "remove ACE for alice\n remove jcr:read on /content\n end", ParseException.class});
+            add(new Object[] { "remove ACE for alice\n remove * on /content\n end", ParseException.class});
+            add(new Object[] { "remove principal ACE for alice\n remove jcr:read on /content\n end", ParseException.class});
+            add(new Object[] { "remove principal ACE for alice\n remove * on /content\n end", ParseException.class});
             // -> acl-options not supported
-            add(new Object[] {"remove ACL for user1 (ACLOptions=mergePreserve)\n allow jcr:read on /content\n end", ParseException.class});
-            add(new Object[] {"remove principal ACL for user1 (ACLOptions=mergePreserve)\n allow jcr:read on /content\n end", ParseException.class});
-            add(new Object[] {"remove ACL on /content (ACLOptions=mergePreserve)\n allow jcr:read for user1\n end", ParseException.class});
+            add(new Object[] {"remove ACE for user1 (ACLOptions=mergePreserve)\n allow jcr:read on /content\n end", ParseException.class});
+            add(new Object[] {"remove principal ACE for user1 (ACLOptions=mergePreserve)\n allow jcr:read on /content\n end", ParseException.class});
+            add(new Object[] {"remove ACE on /content (ACLOptions=mergePreserve)\n allow jcr:read for user1\n end", ParseException.class});
         }};
         return result;
     }

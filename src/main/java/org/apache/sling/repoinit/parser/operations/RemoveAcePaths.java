@@ -17,7 +17,6 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
-import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -25,22 +24,22 @@ import java.util.Collections;
 import java.util.List;
 
 /** 
- * Remove ACL statement that groups a set of AclLines that all refer to the same set of principals.
+ * Remove ACL statement that groups a set of AclLines that all refer to the same set of paths.
  */
 @ProviderType
-public class RemoveAclPrincipals extends AclGroupBase {
+public class RemoveAcePaths extends AclGroupBase {
     
-    private final List<String> principals;
+    private final List<String> paths;
     
-    public RemoveAclPrincipals(List<String> principals, List<AclLine> lines) {
+    public RemoveAcePaths(List<String> paths, List<AclLine> lines){
         super(lines, Collections.emptyList());
-        this.principals = Collections.unmodifiableList(principals);
+        this.paths = Collections.unmodifiableList(paths);
     }
-
+    
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(principals);
+        sb.append(paths);
         sb.append(super.getParametersDescription());
         return sb.toString(); 
     }
@@ -48,16 +47,16 @@ public class RemoveAclPrincipals extends AclGroupBase {
     @NotNull
     @Override
     public String asRepoInitString() {
-        String topline = String.format("remove ACL for %s%n", listToString(QuotableStringUtil.forRepoInitString(principals)));
-        return asRepoInit(topline, true);
+        String topline = String.format("remove ACE on %s%n", pathsToString(paths));
+        return asRepoInit(topline, false);
     }
 
-    public List<String> getPrincipals() {
-        return principals;
+    public List<String> getPaths() {
+        return paths;
     }
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitRemoveAclPrincipal(this);
+        v.visitRemoveAcePaths(this);
     }
 }

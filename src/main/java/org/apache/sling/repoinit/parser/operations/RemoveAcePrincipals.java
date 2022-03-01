@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,22 +25,22 @@ import java.util.Collections;
 import java.util.List;
 
 /** 
- * Remove ACL statement that groups a set of AclLines that all refer to the same set of paths.
+ * Remove ACL statement that groups a set of AclLines that all refer to the same set of principals.
  */
 @ProviderType
-public class RemoveAclPaths extends AclGroupBase {
+public class RemoveAcePrincipals extends AclGroupBase {
     
-    private final List<String> paths;
+    private final List<String> principals;
     
-    public RemoveAclPaths(List<String> paths, List<AclLine> lines){
+    public RemoveAcePrincipals(List<String> principals, List<AclLine> lines) {
         super(lines, Collections.emptyList());
-        this.paths = Collections.unmodifiableList(paths);
+        this.principals = Collections.unmodifiableList(principals);
     }
-    
+
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
-        sb.append(paths);
+        sb.append(principals);
         sb.append(super.getParametersDescription());
         return sb.toString(); 
     }
@@ -47,16 +48,16 @@ public class RemoveAclPaths extends AclGroupBase {
     @NotNull
     @Override
     public String asRepoInitString() {
-        String topline = String.format("remove ACL on %s%n", pathsToString(paths));
-        return asRepoInit(topline, false);
+        String topline = String.format("remove ACE for %s%n", listToString(QuotableStringUtil.forRepoInitString(principals)));
+        return asRepoInit(topline, true);
     }
 
-    public List<String> getPaths() {
-        return paths;
+    public List<String> getPrincipals() {
+        return principals;
     }
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitRemoveAclPaths(this);
+        v.visitRemoveAcePrincipal(this);
     }
 }

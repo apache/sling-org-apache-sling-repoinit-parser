@@ -28,11 +28,11 @@ import java.util.List;
  * Remove ACL statement that groups a set of AclLines that all refer to the same set of principals.
  */
 @ProviderType
-public class RemoveAclPrincipalBased extends AclGroupBase {
+public class RemoveAcePrincipalBased extends AclGroupBase {
 
     private final List<String> principals;
 
-    public RemoveAclPrincipalBased(List<String> principals, List<AclLine> lines) {
+    public RemoveAcePrincipalBased(List<String> principals, List<AclLine> lines) {
         super(lines, Collections.emptyList());
         this.principals = Collections.unmodifiableList(principals);
     }
@@ -48,7 +48,7 @@ public class RemoveAclPrincipalBased extends AclGroupBase {
     @NotNull
     @Override
     public String asRepoInitString() {
-        String topline = String.format("remove principal ACL for %s%n", listToString(QuotableStringUtil.forRepoInitString(principals)));
+        String topline = String.format("remove principal ACE for %s%n", listToString(QuotableStringUtil.forRepoInitString(principals)));
         return asRepoInit(topline, true);
     }
 
@@ -58,6 +58,6 @@ public class RemoveAclPrincipalBased extends AclGroupBase {
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitRemoveAclPrincipalBased(this);
+        v.visitRemoveAcePrincipalBased(this);
     }
 }

@@ -59,6 +59,7 @@ TOKEN:
 {
     < SET: "set" >
 |   < ACL: "ACL" >
+|   < ACE: "ACE" >
 |   < ON: "on" >
 |   < TO: "to" >
 |   < FROM: "from" >
@@ -148,9 +149,9 @@ List<Operation> parse() :
         | deleteAclPaths(result) 
         | deleteAclPrincipals(result)
         | deleteAclPrincipalBased(result)
-        | removeAclPaths(result) 
-        | removeAclPrincipals(result)
-        | removeAclPrincipalBased(result)        
+        | removeAcePaths(result) 
+        | removeAcePrincipals(result)
+        | removeAcePrincipalBased(result)        
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
@@ -566,52 +567,52 @@ void setAclPrincipalBased(List<Operation> result) :
     }
 }
 
-void removeAclPaths(List<Operation> result) :
+void removeAcePaths(List<Operation> result) :
 {
     List<String> paths;
     List<AclLine> lines = new ArrayList<AclLine>();
 } 
 {
-    <REMOVE> <ACL> <ON> paths  = pathsList()<EOL>
+    <REMOVE> <ACE> <ON> paths  = pathsList()<EOL>
     ( userPrivilegesLine(lines, false) | blankLine() ) +
     <END> 
     ( <EOL> | <EOF> )
     
     {
-        result.add(new RemoveAclPaths(paths, lines));
-    }
+    result.add(new RemoveAcePaths(paths, lines));
+}
 }
 
-void removeAclPrincipals(List<Operation> result) :
+void removeAcePrincipals(List<Operation> result) :
 {
     List <String> principals;
     List<AclLine> lines = new ArrayList<AclLine>();
 }
 {
-    <REMOVE> <ACL> <FOR> principals = principalsList()<EOL>
+    <REMOVE> <ACE> <FOR> principals = principalsList()<EOL>
     ( pathPrivilegesLine(lines, false) | blankLine() ) +
     <END> 
     ( <EOL> | <EOF> )
     
     {
-        result.add(new RemoveAclPrincipals(principals, lines));
-    }
+    result.add(new RemoveAcePrincipals(principals, lines));
+}
 }
 
-void removeAclPrincipalBased(List<Operation> result) :
+void removeAcePrincipalBased(List<Operation> result) :
 {
     List <String> principals;
     List<AclLine> lines = new ArrayList<AclLine>();
 }
 {
-    <REMOVE> <PRINCIPAL> <ACL> <FOR> principals = principalsList()<EOL>
+    <REMOVE> <PRINCIPAL> <ACE> <FOR> principals = principalsList()<EOL>
     ( pathPrivilegesLine(lines, false) | blankLine() ) +
     <END>
     ( <EOL> | <EOF> )
 
     {
-        result.add(new RemoveAclPrincipalBased(principals, lines));
-    }
+    result.add(new RemoveAcePrincipalBased(principals, lines));
+}
 }
 
 void deleteAclPaths(List<Operation> result) :
