@@ -22,7 +22,7 @@ package org.apache.sling.repoinit.parser.impl;
 import java.util.List;
 import java.util.ArrayList;
 
-import org.apache.sling.repoinit.parser.operations.*;
+import org.apache.sling.repoinit.parser.RepoInitParsingException;import org.apache.sling.repoinit.parser.operations.*;
 import org.apache.sling.repoinit.parser.impl.WithPathOptions;
 
 /*
@@ -148,6 +148,9 @@ List<Operation> parse() :
         | deleteAclPaths(result) 
         | deleteAclPrincipals(result)
         | deleteAclPrincipalBased(result)
+        | removeAclPaths(result) 
+        | removeAclPrincipals(result)
+        | removeAclPrincipalBased(result)        
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
@@ -331,7 +334,7 @@ void setAclPaths(List<Operation> result) :
 } 
 {
     <SET> <ACL> <ON> paths  = pathsList() aclOptions=aclOptions() <EOL>
-    ( removeStarLine(lines) | userPrivilegesLine(lines) | blankLine() ) +
+    ( removeStarLine(lines) | userPrivilegesLine(lines, true) | blankLine() ) +
     <END> 
     ( <EOL> | <EOF> )
     
@@ -359,26 +362,30 @@ void removeStarLine(List<AclLine> lines) :
     }
 }
 
-AclLine privilegesLineOperation() :
-{
-    boolean isRemove = false;
-    AclLine.Action action = null;
+AclLine privilegesLineOperation(boolean supportsRemoveAction) :
+{  
 }
 {
-    (<REMOVE> { isRemove = true; })?
-    
-    ((<ALLOW> { action = AclLine.Action.ALLOW; })
-    | (<DENY> { action = AclLine.Action.DENY; })) { return new AclLine(action, isRemove); } 
+    ( 
+        <REMOVE>        { 
+if (supportsRemoveAction) { 
+    return new AclLine(AclLine.Action.REMOVE); 
+} else { 
+    throw new IllegalArgumentException("REMOVE action not supported with 'remove acl' statements.");
+}}
+        | ( <ALLOW>     { return new AclLine(AclLine.Action.ALLOW); } )
+        | ( <DENY>      { return new AclLine(AclLine.Action.DENY); } )    
+    ) 
 }
 
-void userPrivilegesLine(List<AclLine> lines) :
+void userPrivilegesLine(List<AclLine> lines, boolean supportsRemoveAction) :
 {
     AclLine line;
     List<String> tmp;
     List<RestrictionClause> restrictions;
 }
 {
-    line = privilegesLineOperation()
+    line = privilegesLineOperation(supportsRemoveAction)
     tmp = privilegesList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); }
     <FOR>
     tmp = principalsList() { line.setProperty(AclLine.PROP_PRINCIPALS, tmp); }
@@ -452,14 +459,14 @@ List<RestrictionClause> restrictions() :
    }
 }
 
-void pathPrivilegesLine(List<AclLine> lines) : 
+void pathPrivilegesLine(List<AclLine> lines, boolean supportsRemoveAction) : 
 {
     AclLine line;
     List<String> tmp;
     List<RestrictionClause> restrictions;
 }
 {
-    line = privilegesLineOperation()
+    line = privilegesLineOperation(supportsRemoveAction)
     tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_PRIVILEGES, tmp); } 
     <ON> tmp = pathsList() { line.setProperty(AclLine.PROP_PATHS, tmp); }
     ( <NODETYPES> tmp = namespacedItemsList() { line.setProperty(AclLine.PROP_NODETYPES, tmp); }) ?
@@ -510,7 +517,7 @@ void setAclRepository(List<Operation> result) :
                 line = new AclLine(AclLine.Action.REMOVE_ALL);
                 lines.add(line);
             }
-        | ( line = privilegesLineOperation() privileges = namespacedItemsList() )
+        | ( line = privilegesLineOperation(true) privileges = namespacedItemsList() )
             {
                 line.setProperty(AclLine.PROP_PRIVILEGES, privileges);
                 lines.add(line);
@@ -533,7 +540,7 @@ void setAclPrincipals(List<Operation> result) :
 }
 {
     <SET> <ACL> <FOR> principals = principalsList() aclOptions=aclOptions() <EOL>
-    ( removeStarLine(lines) | pathPrivilegesLine(lines) | blankLine() ) +
+    ( removeStarLine(lines) | pathPrivilegesLine(lines, true) | blankLine() ) +
     <END> 
     ( <EOL> | <EOF> )
     
@@ -550,12 +557,60 @@ void setAclPrincipalBased(List<Operation> result) :
 }
 {
     <SET> <PRINCIPAL> <ACL> <FOR> principals = principalsList() aclOptions=aclOptions() <EOL>
-    ( removeStarLine(lines) | pathPrivilegesLine(lines) | blankLine() ) +
+    ( removeStarLine(lines) | pathPrivilegesLine(lines, true) | blankLine() ) +
     <END>
     ( <EOL> | <EOF> )
 
     {
         result.add(new SetAclPrincipalBased(principals, lines, aclOptions));
+    }
+}
+
+void removeAclPaths(List<Operation> result) :
+{
+    List<String> paths;
+    List<AclLine> lines = new ArrayList<AclLine>();
+} 
+{
+    <REMOVE> <ACL> <ON> paths  = pathsList()<EOL>
+    ( userPrivilegesLine(lines, false) | blankLine() ) +
+    <END> 
+    ( <EOL> | <EOF> )
+    
+    {
+        result.add(new RemoveAclPaths(paths, lines));
+    }
+}
+
+void removeAclPrincipals(List<Operation> result) :
+{
+    List <String> principals;
+    List<AclLine> lines = new ArrayList<AclLine>();
+}
+{
+    <REMOVE> <ACL> <FOR> principals = principalsList()<EOL>
+    ( pathPrivilegesLine(lines, false) | blankLine() ) +
+    <END> 
+    ( <EOL> | <EOF> )
+    
+    {
+        result.add(new RemoveAclPrincipals(principals, lines));
+    }
+}
+
+void removeAclPrincipalBased(List<Operation> result) :
+{
+    List <String> principals;
+    List<AclLine> lines = new ArrayList<AclLine>();
+}
+{
+    <REMOVE> <PRINCIPAL> <ACL> <FOR> principals = principalsList()<EOL>
+    ( pathPrivilegesLine(lines, false) | blankLine() ) +
+    <END>
+    ( <EOL> | <EOF> )
+
+    {
+        result.add(new RemoveAclPrincipalBased(principals, lines));
     }
 }
 

@@ -24,7 +24,7 @@ import java.util.TreeMap;
 
 import org.osgi.annotation.versioning.ProviderType;
 
-/** A single "set ACL" line */
+/** A single "set ACL" or "remove ACL" line */
 @ProviderType
 public class AclLine {
 
@@ -45,33 +45,14 @@ public class AclLine {
 
     private final Map<String, List<String>> properties;
     private List<RestrictionClause> restrictions;
-    private boolean isAllow = true;
 
     public AclLine(Action a) {
-        this(a, false);
-    }
-
-    public AclLine(Action a, boolean isRemove) {
-        if (isRemove) {
-            if (!(a == Action.ALLOW || a == Action.DENY)) {
-                throw new IllegalArgumentException("Action.REMOVE can only be use in combination with an additional ALLOW or DENY.");
-            }
-            action = Action.REMOVE;
-        } else {
-            action = a;
-        }
+        action = a;
         properties = new TreeMap<>();
-        if (a == Action.DENY) {
-            isAllow = false;
-        }
     }
 
     public Action getAction() {
         return action;
-    }
-    
-    public boolean isAllow() {
-        return isAllow;
     }
 
     /**
@@ -99,13 +80,8 @@ public class AclLine {
 
     @Override
     public String toString() {
-        if (action.equals(Action.REMOVE)) {
-            String allowStr = isAllow ? Action.ALLOW.toString() : Action.DENY.toString();
-            return getClass().getSimpleName() + " " + action + " " + allowStr + " " + properties
-                    + (restrictions == null || restrictions.isEmpty() ? "" : " restrictions=" + restrictions);
-        } else {
-            return getClass().getSimpleName() + " " + action + " " + properties
-                    + (restrictions == null || restrictions.isEmpty() ? "" : " restrictions=" + restrictions);            
-        }
+        return getClass().getSimpleName() + " " + action + " " + properties
+                + (restrictions == null || restrictions.isEmpty() ? "" : " restrictions=" + restrictions);
+
     }
 }
