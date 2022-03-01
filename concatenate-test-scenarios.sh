@@ -5,7 +5,7 @@
 #
 
 function generate() {
-    find src/test/resources/testcases -name *.txt | grep -v output | sort -V | while read f
+    find src/test/resources/testcases -name '*.txt' | grep -v output | sort -V | while read f
     do
         echo
         echo "# $(basename $f)"
