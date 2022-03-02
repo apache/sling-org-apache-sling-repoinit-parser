@@ -24,7 +24,7 @@ import java.util.TreeMap;
 
 import org.osgi.annotation.versioning.ProviderType;
 
-/** A single "set ACL" line */
+/** A single "set ACL" or "remove ACL" line */
 @ProviderType
 public class AclLine {
 

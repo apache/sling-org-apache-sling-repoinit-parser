@@ -37,6 +37,9 @@ import org.apache.sling.repoinit.parser.operations.OperationVisitor;
 import org.apache.sling.repoinit.parser.operations.RegisterNamespace;
 import org.apache.sling.repoinit.parser.operations.RegisterPrivilege;
 import org.apache.sling.repoinit.parser.operations.DeleteAclPrincipals;
+import org.apache.sling.repoinit.parser.operations.RemoveAcePaths;
+import org.apache.sling.repoinit.parser.operations.RemoveAcePrincipalBased;
+import org.apache.sling.repoinit.parser.operations.RemoveAcePrincipals;
 import org.apache.sling.repoinit.parser.operations.SetAclPaths;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipals;
@@ -116,6 +119,51 @@ class OperationToStringVisitor implements OperationVisitor {
 
     @Override
     public void visitSetAclPrincipalBased(SetAclPrincipalBased s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" for ");
+        for(String p : s.getPrincipals()) {
+            out.print(p);
+            out.print(' ');
+        }
+
+        dumpAclOptions(s.getOptions());
+
+        out.println();
+        dumpAclLines(s.getLines());
+    }
+
+    @Override
+    public void visitRemoveAcePrincipal(RemoveAcePrincipals s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" for ");
+        for(String p : s.getPrincipals()) {
+            out.print(p);
+            out.print(' ');
+        }
+
+        dumpAclOptions(s.getOptions());
+
+        out.println();
+        dumpAclLines(s.getLines());
+    }
+
+    @Override
+    public void visitRemoveAcePaths(RemoveAcePaths s) {
+        out.print(s.getClass().getSimpleName());
+        out.print(" on ");
+        for(String p : s.getPaths()) {
+            out.print(p);
+            out.print(' ');
+        }
+
+        dumpAclOptions(s.getOptions());
+
+        out.println();
+        dumpAclLines(s.getLines());
+    }
+
+    @Override
+    public void visitRemoveAcePrincipalBased(RemoveAcePrincipalBased s) {
         out.print(s.getClass().getSimpleName());
         out.print(" for ");
         for(String p : s.getPrincipals()) {

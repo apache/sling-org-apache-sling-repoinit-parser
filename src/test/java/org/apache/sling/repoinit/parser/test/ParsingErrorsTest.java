@@ -20,7 +20,6 @@ package org.apache.sling.repoinit.parser.test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -40,8 +39,8 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class ParsingErrorsTest {
 
-    private String input;
-    private Class<? extends Throwable> expected;
+    private final String input;
+    private final Class<? extends Throwable> expected;
     
     @Parameters
     public static Collection<Object[]> data() {
@@ -134,6 +133,19 @@ public class ParsingErrorsTest {
             add(new Object[] { "create group My Group", ParseException.class });
             add(new Object[] { "create group My\tGroup", ParseException.class });
             add(new Object[] { "create group \"My\u200bGroup\"", ParseException.class });
+            
+            // SLING-11160 - Repoinit does not allow to remove individual ACEs 
+            // -> remove-action not supported. only 'allow' and 'deny'
+            add(new Object[] { "remove ACE on /content\n remove jcr:read for alice\n end", ParseException.class});
+            add(new Object[] { "remove ACE on /content\n remove * for alice\n end", ParseException.class});
+            add(new Object[] { "remove ACE for alice\n remove jcr:read on /content\n end", ParseException.class});
+            add(new Object[] { "remove ACE for alice\n remove * on /content\n end", ParseException.class});
+            add(new Object[] { "remove principal ACE for alice\n remove jcr:read on /content\n end", ParseException.class});
+            add(new Object[] { "remove principal ACE for alice\n remove * on /content\n end", ParseException.class});
+            // -> acl-options not supported
+            add(new Object[] {"remove ACE for user1 (ACLOptions=mergePreserve)\n allow jcr:read on /content\n end", ParseException.class});
+            add(new Object[] {"remove principal ACE for user1 (ACLOptions=mergePreserve)\n allow jcr:read on /content\n end", ParseException.class});
+            add(new Object[] {"remove ACE on /content (ACLOptions=mergePreserve)\n allow jcr:read for user1\n end", ParseException.class});
         }};
         return result;
     }
@@ -153,17 +165,15 @@ public class ParsingErrorsTest {
     }
 
     @Test
-    public void checkResult() throws ParseException, IOException {
+    public void checkResult() {
         final StringReader r = new StringReader(input);
         boolean noException = false;
         String parsed = null;
         try {
             parsed = new RepoInitParserImpl(r).parse().toString();
             noException = true;
-        } catch(Exception e) {
+        } catch (Exception | Error e) {
             assertEquals(getInfo(input, e), expected, e.getClass());
-        } catch(Error err) {
-            assertEquals(getInfo(input, err), expected, err.getClass());
         } finally {
             r.close();
         }
