@@ -19,6 +19,7 @@ package org.apache.sling.repoinit.parser.operations;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public class CreatePath extends Operation {
     private List<PathSegmentDefinition> pathDef;
     private final String defaultPrimaryType;
-    
+    private List<PropertyLine> lines = Collections.emptyList();
+
     public CreatePath(String defaultPrimaryType) {
         this.pathDef = new ArrayList<>();
         this.defaultPrimaryType = defaultPrimaryType;
@@ -63,7 +65,27 @@ public class CreatePath extends Operation {
                 sb.append(")");
             }
         }
-        return String.format("create path %s%s%n", defaultTypeStr, sb.toString());
+
+        // FIXME: see SLING-10238 for type and quoted values that cannot be generated
+        //        exactly as they were originally defined in repo-init
+        try (Formatter formatter = new Formatter()) {
+            if (lines.isEmpty()) {
+                formatter.format("create path %s%s%n",  defaultTypeStr, sb.toString());
+            } else {
+                formatter.format("create path %s%s with properties%n",  defaultTypeStr, sb.toString());
+                for (PropertyLine line : lines) {
+                    String type = (line.getPropertyType() == null) ? "" : "{" + line.getPropertyType().name() + "}";
+                    String values = SetProperties.valuesToString(line.getPropertyValues(), line.getPropertyType());
+                    if (line.isDefault()) {
+                        formatter.format("default %s%s to %s%n", line.getPropertyName(), type, values);
+                    } else {
+                        formatter.format("set %s%s to %s%n", line.getPropertyName(), type, values);
+                    }
+                }
+                formatter.format("end%n");
+            }
+            return formatter.toString();
+        }
     }
 
     @Override
@@ -103,4 +125,13 @@ public class CreatePath extends Operation {
     public List<PathSegmentDefinition> getDefinitions() {
         return Collections.unmodifiableList(pathDef);
     }
+
+    public void setPropertyLines (@NotNull List<PropertyLine> lines) {
+        this.lines = lines;
+    }
+
+    public List<PropertyLine> getPropertyLines () {
+        return lines;
+    }
+
 }

@@ -75,7 +75,7 @@ public class SetProperties extends Operation {
     }
 
     @NotNull
-    private static String valuesToString(@NotNull List<Object> values, @Nullable PropertyLine.PropertyType type) {
+    static String valuesToString(@NotNull List<Object> values, @Nullable PropertyLine.PropertyType type) {
         List<String> strings = values.stream()
                 .map(o -> {
                     if (type == null || type == PropertyLine.PropertyType.String) {

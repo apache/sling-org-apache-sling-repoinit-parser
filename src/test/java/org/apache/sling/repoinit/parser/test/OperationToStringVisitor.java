@@ -214,8 +214,13 @@ class OperationToStringVisitor implements OperationVisitor {
     @Override
     public void visitCreatePath(CreatePath cp) {
         out.println(cp.toString());
+        List<PropertyLine> propLines = cp.getPropertyLines();
+        for(PropertyLine p : propLines) {
+            out.print("  ");
+            out.println(p);
+        }
     }
-    
+
     @Override
     public void visitRegisterNamespace(RegisterNamespace rn) {
         out.println(rn.toString());
