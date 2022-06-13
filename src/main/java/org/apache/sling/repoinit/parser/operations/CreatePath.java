@@ -81,7 +81,7 @@ public class CreatePath extends Operation {
         // segment only
         final String [] segments = path.split("/");
         
-        if(segments.length > 0){
+        if(segments.length > 0) {
             for(int i=0; i < segments.length; i++) {
                 if (segments[i].length() == 0) {
                     continue;
@@ -100,7 +100,8 @@ public class CreatePath extends Operation {
                 }
                 pathDef.add(new PathSegmentDefinition(segments[i], pt, ms, isDefaultPrimary));
             }
-        }else{
+        } else {
+            // this code is to cover an edge case: SLING-11384 (create root node with resource type)
             String pt = defaultPrimaryType;
             boolean isDefaultPrimary = true;
             List<String> ms = null;

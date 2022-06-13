@@ -24,4 +24,5 @@ create path /one:and/step/two:and/steps
 create path /one@home/step/two@home/steps
 create path /one+tap/step/two+tap/steps
 
+# this is to cover an edge case: SLING-11384 (create root node with resource type)
 create path /(sling:redirect)
