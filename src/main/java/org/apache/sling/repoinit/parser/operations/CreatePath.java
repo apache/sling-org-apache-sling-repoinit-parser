@@ -80,23 +80,41 @@ public class CreatePath extends Operation {
         // the specified primary type applies to the last
         // segment only
         final String [] segments = path.split("/");
-        for(int i=0; i < segments.length; i++) {
-            if(segments[i].length() == 0) {
-                continue;
+        
+        if(segments.length > 0) {
+            for(int i=0; i < segments.length; i++) {
+                if (segments[i].length() == 0) {
+                    continue;
+                }
+                String pt = defaultPrimaryType;
+                boolean isDefaultPrimary = true;
+                List<String> ms = null;
+                if (i == segments.length - 1) {
+                    if (primaryType != null) {
+                        pt = primaryType;
+                        isDefaultPrimary = false;
+                    }
+                    if (mixins != null && !mixins.isEmpty()) {
+                        ms = mixins;
+                    }
+                }
+                pathDef.add(new PathSegmentDefinition(segments[i], pt, ms, isDefaultPrimary));
             }
+        } else {
+            // this code is to cover an edge case: SLING-11384 (create root node with resource type)
             String pt = defaultPrimaryType;
             boolean isDefaultPrimary = true;
             List<String> ms = null;
-            if(i == segments.length -1) {
-                if (primaryType != null) {
-                    pt = primaryType;
-                    isDefaultPrimary = false;
-                }
-                if (mixins != null && ! mixins.isEmpty()) {
-                    ms = mixins;
-                }
+          
+            if (primaryType != null) {
+                pt = primaryType;
+                isDefaultPrimary = false;
             }
-            pathDef.add(new PathSegmentDefinition(segments[i], pt, ms, isDefaultPrimary));
+            if (mixins != null && !mixins.isEmpty()) {
+                ms = mixins;
+            }
+            
+            pathDef.add(new PathSegmentDefinition("", pt, ms, isDefaultPrimary));
         }
     }
     
