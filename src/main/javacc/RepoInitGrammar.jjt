@@ -153,6 +153,7 @@ List<Operation> parse() :
         | removeAcePrincipals(result)
         | removeAcePrincipalBased(result)        
         | createPathStatement(result)
+        | deletePathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
         | registerPrivilegeStatement(result)
@@ -325,6 +326,18 @@ void createPathStatement(List<Operation> result) :
     (<EOL> | <EOF>)
     
     { if(cp != null) result.add(cp); }
+}
+
+void deletePathStatement(List<Operation> result) :
+{
+    final Token t1;
+}
+{
+    <DELETE> <PATH>
+    ( t1 = <PATH_STRING> )
+    (<EOL> | <EOF>)
+
+    { result.add(new DeletePath(t1.image)); }
 }
 
 void setAclPaths(List<Operation> result) :

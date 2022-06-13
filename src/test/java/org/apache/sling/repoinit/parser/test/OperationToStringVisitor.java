@@ -29,6 +29,7 @@ import org.apache.sling.repoinit.parser.operations.CreateUser;
 import org.apache.sling.repoinit.parser.operations.DeleteAclPaths;
 import org.apache.sling.repoinit.parser.operations.DeleteAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.DeleteGroup;
+import org.apache.sling.repoinit.parser.operations.DeletePath;
 import org.apache.sling.repoinit.parser.operations.DeleteServiceUser;
 import org.apache.sling.repoinit.parser.operations.DeleteUser;
 import org.apache.sling.repoinit.parser.operations.DisableServiceUser;
@@ -214,6 +215,11 @@ class OperationToStringVisitor implements OperationVisitor {
     @Override
     public void visitCreatePath(CreatePath cp) {
         out.println(cp.toString());
+    }
+
+    @Override
+    public void visitDeletePath(DeletePath dp) {
+        out.println(dp.toString());
     }
     
     @Override
