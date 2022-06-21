@@ -151,7 +151,7 @@ List<Operation> parse() :
         | deleteAclPrincipalBased(result)
         | removeAcePaths(result) 
         | removeAcePrincipals(result)
-        | removeAcePrincipalBased(result)        
+        | removeAcePrincipalBased(result)
         | createPathStatement(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
@@ -304,6 +304,7 @@ void createPathStatement(List<Operation> result) :
     Token t1 = null;
     Token t2 = null;
     List<String> t3 = null;
+    List<PropertyLine> lines = new ArrayList<PropertyLine>();
 }
 {
     <CREATE> <PATH> 
@@ -321,7 +322,13 @@ void createPathStatement(List<Operation> result) :
             t3 = null;
         }
     ) +
-    
+    ( <WITH> <PROPERTIES> <EOL>
+      ( propertyLine(lines) | blankLine() ) +
+      {
+        cp.setPropertyLines(lines);
+      }
+      <END>
+    )?
     (<EOL> | <EOF>)
     
     { if(cp != null) result.add(cp); }
