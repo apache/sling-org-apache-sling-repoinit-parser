@@ -107,7 +107,7 @@ TOKEN:
 |   < NAMESPACED_ITEM: (["a"-"z"] | ["A"-"Z"])+ ":" (["a"-"z"] | ["A"-"Z"])+ >
 |   < PATH_STRING: "/" (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["@"] | [":"] | ["+"] | ["/"]) * >
 |   < PATH_REPOSITORY: ":repository" >
-|   < STRING: (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["/"] | [":"] | ["*"]) + >
+|   < STRING: (["a"-"z"] | ["A"-"Z"] | ["0"-"9"] | ["-"] | ["_"] | ["."] | ["/"] | [":"] | ["*"] | "\\#") + >
 |   < EOL: "\n" >
 }
 
@@ -665,8 +665,8 @@ void registerNamespaceStatement(List<Operation> result) :
 }
 {
     <REGISTER> <NAMESPACE> 
-    <LPAREN> prefix = <STRING> <RPAREN> 
-    uri = <STRING> 
+    <LPAREN> prefix = <STRING> <RPAREN>
+    uri = <STRING>
 
     {
         result.add(new RegisterNamespace(prefix.image, uri.image)); 

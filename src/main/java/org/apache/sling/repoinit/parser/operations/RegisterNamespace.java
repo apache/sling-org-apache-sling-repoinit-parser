@@ -39,7 +39,7 @@ public class RegisterNamespace extends Operation {
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append("(").append(prefix == null ? "" : prefix).append(") ");
-        sb.append(uri);
+        sb.append(uri.replaceAll("\\\\#", "#"));
         return sb.toString();
     }
 
