@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -39,7 +40,7 @@ public class RegisterNamespace extends Operation {
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append("(").append(prefix == null ? "" : prefix).append(") ");
-        sb.append(uri.replaceAll("\\\\#", "#"));
+        sb.append(QuotableStringUtil.forRepoInitString(uri));
         return sb.toString();
     }
 

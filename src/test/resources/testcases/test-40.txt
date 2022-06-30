@@ -3,4 +3,4 @@
 # and o.a.s.jcr.repoinit 1.0.2
 register namespace (foo) uri:some-uri/V/1.0
 register namespace ( prefix_with-other.things ) andSimpleURI
-register namespace (foo2) "uri:some-uri/V/1.1/test\\#"
+register namespace (foo2) "uri:some-uri/V/1.1/test#"
