@@ -28,7 +28,7 @@ public class RegisterNamespace extends Operation {
     
     public RegisterNamespace(String prefix, String uri) {
         this.prefix = prefix;
-        this.uri = uri;
+        this.uri = cleanupQuotedString(uri);
     }
     
     @Override
@@ -46,8 +46,9 @@ public class RegisterNamespace extends Operation {
 
     @NotNull
     @Override
-    public String asRepoInitString() {
-        return String.format("register namespace ( %s ) %s%n", prefix, uri);
+    public String asRepoInitString()
+    {
+        return String.format("register namespace ( %s ) %s%n", prefix, QuotableStringUtil.forRepoInitString(uri));
     }
 
     @Override

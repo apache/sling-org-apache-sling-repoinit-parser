@@ -24,8 +24,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class QuotableStringUtil {
 
-    private static final Pattern REQUIRES_QUOTES = Pattern.compile("[\\s|\\\\]");
-
+    private static final Pattern REQUIRES_NO_QUOTES = Pattern.compile("[a-zA-Z0-9-_\\./:*@]+");
     private QuotableStringUtil() {
         // hidden
     }
@@ -39,8 +38,8 @@ public class QuotableStringUtil {
      */
     @NotNull
     public static final String forRepoInitString(@NotNull String string) {
-        return REQUIRES_QUOTES.matcher(string).find() ? "\"" + string + "\""
-                : string;
+        return REQUIRES_NO_QUOTES.matcher(string).matches() ? string :
+            "\"" + string + "\"";
     }
 
     /**
