@@ -1,3 +1,3 @@
 RegisterNamespace (foo) uri:some-uri/V/1.0
 RegisterNamespace (prefix_with-other.things) andSimpleURI
-RegisterNamespace (foo2) "uri:some-uri/V/1.1/test#"
+RegisterNamespace (foo2) uri:some-uri/V/1.1/test#

@@ -40,7 +40,7 @@ public class RegisterNamespace extends Operation {
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
         sb.append("(").append(prefix == null ? "" : prefix).append(") ");
-        sb.append(QuotableStringUtil.forRepoInitString(uri));
+        sb.append(uri);
         return sb.toString();
     }
 
