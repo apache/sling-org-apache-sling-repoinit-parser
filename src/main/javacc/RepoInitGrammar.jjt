@@ -666,7 +666,7 @@ void registerNamespaceStatement(List<Operation> result) :
 {
     <REGISTER> <NAMESPACE> 
     <LPAREN> prefix = <STRING> <RPAREN> 
-    uri = <STRING> 
+    uri = quotableString()
 
     {
         result.add(new RegisterNamespace(prefix.image, uri.image)); 
