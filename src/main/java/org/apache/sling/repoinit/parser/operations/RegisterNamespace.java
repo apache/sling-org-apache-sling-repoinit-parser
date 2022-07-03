@@ -17,6 +17,7 @@
 
 package org.apache.sling.repoinit.parser.operations;
 
+import org.apache.sling.repoinit.parser.impl.QuotableStringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -27,7 +28,7 @@ public class RegisterNamespace extends Operation {
     
     public RegisterNamespace(String prefix, String uri) {
         this.prefix = prefix;
-        this.uri = uri;
+        this.uri = cleanupQuotedString(uri);
     }
     
     @Override
@@ -45,8 +46,9 @@ public class RegisterNamespace extends Operation {
 
     @NotNull
     @Override
-    public String asRepoInitString() {
-        return String.format("register namespace ( %s ) %s%n", prefix, uri);
+    public String asRepoInitString()
+    {
+        return String.format("register namespace ( %s ) %s%n", prefix, QuotableStringUtil.forRepoInitString(uri));
     }
 
     @Override

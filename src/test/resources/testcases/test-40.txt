@@ -1,5 +1,8 @@
 # Register namespaces, requires
 # o.a.s.repoinit.parser 1.0.4
 # and o.a.s.jcr.repoinit 1.0.2
+# Quoted Namespaces requires
+# o.a.s.repoinit.parser 1.6.16
 register namespace (foo) uri:some-uri/V/1.0
 register namespace ( prefix_with-other.things ) andSimpleURI
+register namespace (foo2) "uri:some-uri/V/1.1/test#"
