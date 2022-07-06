@@ -15,8 +15,6 @@
  * limitations under the License.
  ******************************************************************************/
 
- // DO NOT use version 5.x here, once a major change is
- // needed skip directly to 6.x (SLING-10139)
-@org.osgi.annotation.versioning.Version("4.10.0")
+@org.osgi.annotation.versioning.Version("6.0.0")
 package org.apache.sling.repoinit.parser.operations;
 

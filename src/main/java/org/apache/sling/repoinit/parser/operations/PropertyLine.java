@@ -53,7 +53,7 @@ public class PropertyLine {
      *  @param isDefault true if this line is a "default" as opposed to a "set" instruction
      *  @throws ParseException if the line cannot be parsed.
      */
-    public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) throws ParseException {
+    public PropertyLine(String name, String typeString, List<String> values, boolean isDefault) throws Exception { // NOSONAR
         this.name = name;
         boolean forceList = typeString != null && typeString.endsWith(MULTI_TOKEN);
         if(forceList) {

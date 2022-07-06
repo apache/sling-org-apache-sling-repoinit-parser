@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.sling.repoinit.parser.impl;
+package org.apache.sling.repoinit.parser.operations;
 
 public class WithPathOptions {
     public final String path;
