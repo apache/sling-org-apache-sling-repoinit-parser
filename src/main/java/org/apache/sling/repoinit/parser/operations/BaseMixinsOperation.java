@@ -19,7 +19,10 @@ package org.apache.sling.repoinit.parser.operations;
 
 
 import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseMixinsOperation extends Operation {
     private final List<String> paths;
@@ -30,10 +33,32 @@ public abstract class BaseMixinsOperation extends Operation {
         this.paths = paths != null ? paths : Collections.emptyList();
     }
 
+    protected String getParametersDescription(String operator) {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(listToString(getMixins()));
+        sb.append(" ").append(operator).append(" ");
+        sb.append(pathsToString(getPaths()));
+        return sb.toString();
+    }
+
+    @NotNull
+    protected String asRepoInitString(String action, String operator) {
+        try (Formatter formatter = new Formatter()) {
+            formatter.format("%s mixin %s %s %s%n",
+                    action,
+                    listToString(getMixins()),
+                    operator,
+                    pathsToString(getPaths()));
+            return formatter.toString();
+        }
+    }
+
     public List<String> getPaths() {
         return paths;
     }
 
-    public List<String> getMixins () {return mixins;}
+    public List<String> getMixins () {
+        return mixins;
+    }
 
 }

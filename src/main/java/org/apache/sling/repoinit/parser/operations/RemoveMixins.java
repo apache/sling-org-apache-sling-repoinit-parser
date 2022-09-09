@@ -18,7 +18,6 @@
 package org.apache.sling.repoinit.parser.operations;
 
 
-import java.util.Formatter;
 import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
 public class RemoveMixins extends BaseMixinsOperation {
+
+    private static final String FROM = "from";
 
     public RemoveMixins(List<String> mixins, List<String> paths) {
         super(mixins, paths);
@@ -38,19 +39,13 @@ public class RemoveMixins extends BaseMixinsOperation {
 
     @Override
     protected String getParametersDescription() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(listToString(getMixins()));
-        sb.append(" from ").append(pathsToString(getPaths()));
-        return sb.toString();
+        return getParametersDescription(FROM);
     }
 
     @NotNull
     @Override
     public String asRepoInitString() {
-        try (Formatter formatter = new Formatter()) {
-            formatter.format("remove mixin %s from %s%n", listToString(getMixins()), pathsToString(getPaths()));
-            return formatter.toString();
-        }
+        return asRepoInitString("remove", FROM);
     }
 
 }
