@@ -25,13 +25,10 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
-public class RemoveMixins extends Operation {
-    private final List<String> paths;
-    private final List<String> mixins;
+public class RemoveMixins extends BaseMixinsOperation {
 
     public RemoveMixins(List<String> mixins, List<String> paths) {
-        this.mixins = mixins;
-        this.paths = paths;
+        super(mixins, paths);
     }
 
     @Override
@@ -42,31 +39,18 @@ public class RemoveMixins extends Operation {
     @Override
     protected String getParametersDescription() {
         final StringBuilder sb = new StringBuilder();
-        if (mixins != null) {
-            sb.append(String.join(",", mixins));
-        }
-        if (paths != null) {
-            sb.append(" from ").append(String.join(",", paths));
-        }
+        sb.append(listToString(getMixins()));
+        sb.append(" from ").append(pathsToString(getPaths()));
         return sb.toString();
     }
 
     @NotNull
     @Override
     public String asRepoInitString() {
-        // FIXME: see SLING-10238 for type and quoted values that cannot be generated
-        //        exactly as they were originally defined in repo-init
         try (Formatter formatter = new Formatter()) {
-            formatter.format("remove mixin %s from %s%n", listToString(mixins), pathsToString(paths));
+            formatter.format("remove mixin %s from %s%n", listToString(getMixins()), pathsToString(getPaths()));
             return formatter.toString();
         }
     }
-
-    public List<String> getPaths() {
-        return paths;
-    }
-
-    public List<String> getMixins () {return mixins;}
-
 
 }
