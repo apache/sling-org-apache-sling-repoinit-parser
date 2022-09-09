@@ -44,7 +44,9 @@ import org.apache.sling.repoinit.parser.operations.SetAclPaths;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipalBased;
 import org.apache.sling.repoinit.parser.operations.SetAclPrincipals;
 import org.apache.sling.repoinit.parser.operations.AddGroupMembers;
+import org.apache.sling.repoinit.parser.operations.AddMixins;
 import org.apache.sling.repoinit.parser.operations.RemoveGroupMembers;
+import org.apache.sling.repoinit.parser.operations.RemoveMixins;
 import org.apache.sling.repoinit.parser.operations.SetProperties;
 import org.apache.sling.repoinit.parser.operations.PropertyLine;
 
@@ -307,4 +309,15 @@ class OperationToStringVisitor implements OperationVisitor {
             out.println(p);
         }
     }
+
+    @Override
+    public void visitAddMixins(AddMixins am) {
+        out.println(am.toString());
+    }
+
+    @Override
+    public void visitRemoveMixins(RemoveMixins rm) {
+        out.println(rm.toString());
+    }
+
 }

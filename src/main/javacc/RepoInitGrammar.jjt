@@ -152,6 +152,8 @@ List<Operation> parse() :
         | removeAcePrincipals(result)
         | removeAcePrincipalBased(result)
         | createPathStatement(result)
+        | addMixins(result)
+        | removeMixins(result)
         | registerNamespaceStatement(result)
         | registerNodetypesStatement(result)
         | registerPrivilegeStatement(result)
@@ -331,6 +333,38 @@ void createPathStatement(List<Operation> result) :
     (<EOL> | <EOF>)
     
     { if(cp != null) result.add(cp); }
+}
+
+void addMixins(List<Operation> result) :
+{
+    List<String> mixins = null;
+    List<String> paths = null;
+}
+{
+    <ADD> <MIXIN>
+    mixins = namespacedItemsList()
+    <TO>
+    paths = pathsList()
+
+    {
+        result.add(new AddMixins(mixins, paths));
+    }
+}
+
+void removeMixins(List<Operation> result) :
+{
+    List<String> mixins = null;
+    List<String> paths = null;
+}
+{
+    <REMOVE> <MIXIN>
+    mixins = namespacedItemsList()
+    <FROM>
+    paths = pathsList()
+
+    {
+        result.add(new RemoveMixins(mixins, paths));
+    }
 }
 
 void setAclPaths(List<Operation> result) :
