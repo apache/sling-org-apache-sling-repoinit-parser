@@ -45,4 +45,7 @@ public interface OperationVisitor {
     default void visitDeleteAclPaths(DeleteAclPaths s) { throw new UnsupportedOperationException(); }
     default void visitDeleteAclPrincipalBased(DeleteAclPrincipalBased s) { throw new UnsupportedOperationException(); }
 
+    default void visitAddMixins(AddMixins s) { throw new UnsupportedOperationException(); }
+    default void visitRemoveMixins(RemoveMixins s) { throw new UnsupportedOperationException(); }
+
 }

@@ -1,0 +1,6 @@
+AddMixins mix:one to /thePath1
+AddMixins mix:one,mix:two to /thePath1,/thePath2
+AddMixins mix:three,mix:four to /thePath3,/thePath4
+RemoveMixins mix:one from /thePath1
+RemoveMixins mix:one,mix:two from /thePath1,/thePath2
+RemoveMixins mix:three,mix:four from /thePath3,/thePath4
