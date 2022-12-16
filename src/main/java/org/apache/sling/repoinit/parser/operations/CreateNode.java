@@ -25,18 +25,13 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
-/**
- * @deprecate Use {@link CreateNode} instead.
- *
- */
 @ProviderType
-@Deprecated
-public class CreatePath extends Operation {
+public class CreateNode extends Operation {
     private List<PathSegmentDefinition> pathDef;
     private final String defaultPrimaryType;
     private List<PropertyLine> lines = Collections.emptyList();
 
-    public CreatePath(String defaultPrimaryType) {
+    public CreateNode(String defaultPrimaryType) {
         this.pathDef = new ArrayList<>();
         this.defaultPrimaryType = defaultPrimaryType;
     }
@@ -95,7 +90,7 @@ public class CreatePath extends Operation {
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitCreatePath(this);
+        v.visitCreateNode(this);
     }
 
     public void addSegment(String path, String primaryType) {

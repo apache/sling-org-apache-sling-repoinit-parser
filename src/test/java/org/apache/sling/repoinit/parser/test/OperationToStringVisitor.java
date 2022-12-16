@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.sling.repoinit.parser.operations.AclLine;
 import org.apache.sling.repoinit.parser.operations.CreateGroup;
+import org.apache.sling.repoinit.parser.operations.CreateNode;
 import org.apache.sling.repoinit.parser.operations.CreatePath;
 import org.apache.sling.repoinit.parser.operations.CreateServiceUser;
 import org.apache.sling.repoinit.parser.operations.CreateUser;
@@ -217,6 +218,16 @@ class OperationToStringVisitor implements OperationVisitor {
     public void visitCreatePath(CreatePath cp) {
         out.println(cp.toString());
         List<PropertyLine> propLines = cp.getPropertyLines();
+        for(PropertyLine p : propLines) {
+            out.print("  ");
+            out.println(p);
+        }
+    }
+
+    @Override
+    public void visitCreateNode(CreateNode cn) {
+        out.println(cn.toString());
+        List<PropertyLine> propLines = cn.getPropertyLines();
         for(PropertyLine p : propLines) {
             out.print("  ");
             out.println(p);

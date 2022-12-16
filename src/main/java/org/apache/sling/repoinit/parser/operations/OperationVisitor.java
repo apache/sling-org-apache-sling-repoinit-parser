@@ -34,6 +34,7 @@ public interface OperationVisitor {
     default void visitRemoveAcePaths(RemoveAcePaths s) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePrincipalBased(RemoveAcePrincipalBased s) { throw new UnsupportedOperationException(); }
     void visitCreatePath(CreatePath cp);
+    void visitCreateNode(CreateNode cn);
     void visitRegisterNamespace(RegisterNamespace rn);
     void visitRegisterNodetypes(RegisterNodetypes b);
     void visitRegisterPrivilege(RegisterPrivilege rp);
@@ -44,7 +45,6 @@ public interface OperationVisitor {
     default void visitDeleteAclPrincipals(DeleteAclPrincipals s) { throw new UnsupportedOperationException(); }
     default void visitDeleteAclPaths(DeleteAclPaths s) { throw new UnsupportedOperationException(); }
     default void visitDeleteAclPrincipalBased(DeleteAclPrincipalBased s) { throw new UnsupportedOperationException(); }
-
     default void visitAddMixins(AddMixins s) { throw new UnsupportedOperationException(); }
     default void visitRemoveMixins(RemoveMixins s) { throw new UnsupportedOperationException(); }
 
