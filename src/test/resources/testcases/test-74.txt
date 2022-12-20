@@ -1,0 +1,55 @@
+# Set principal-based access control (see SLING-8602), requires
+# o.a.s.repoinit.parser 1.2.8 and
+# o.a.s.jcr.repoinit 1.1.14
+# precondition for o.a.s.jcr.repoinit: 
+# repository needs to support 'o.a.j.api.security.authorization.PrincipalAccessControlList'
+# Also, this only works for users selected by the Jackrabbit/Oak FilterProvider, see
+# https://jackrabbit.apache.org/oak/docs/security/authorization/principalbased.html#configuration
+# mostly a copy of test-33 but with "ensure" prefix instead of "set"
+
+ensure principal ACL for principal1,principal2
+    remove * on /libs,/apps
+    allow jcr:read on /content
+
+    deny jcr:write on /apps
+
+    # Optional nodetypes clause
+    deny jcr:lockManagement on /apps, /content nodetypes sling:Folder, nt:unstructured
+    # nodetypes clause with restriction clause
+    deny jcr:modifyProperties on /apps, /content nodetypes sling:Folder, nt:unstructured restriction(rep:itemNames,prop1,prop2)
+    remove jcr:understand,some:other on /apps
+
+    # multi value restriction
+    allow jcr:addChildNodes on /apps restriction(rep:ntNames,sling:Folder,nt:unstructured)
+
+    # multiple restrictions
+    allow jcr:modifyProperties on /apps restriction(rep:ntNames,sling:Folder,nt:unstructured) restriction(rep:itemNames,prop1,prop2)
+
+    # restrictions with glob patterns
+    allow jcr:addChildNodes on /apps,/content restriction(rep:glob,/cat,/cat/,cat)
+    allow jcr:addChildNodes on /apps,/content restriction(rep:glob,cat/,*,*cat)
+    allow jcr:addChildNodes on /apps,/content restriction(rep:glob,/cat/*,*/cat,*cat/*)
+
+    allow jcr:something on / restriction(rep:glob)
+end
+
+# Principal-based ACL syntax with options (SLING-6423)
+ensure principal ACL for principal1,principal2 (ACLOptions=mergePreserve)
+    remove * on /libs,/apps
+    allow jcr:read on /content
+end
+
+# With multiple options
+ensure principal ACL for principal1,principal2 (ACLOptions=mergePreserve,someOtherOption,someOther123,namespaced:option)
+    remove * on /libs,/apps
+    allow jcr:read on /content
+end
+
+# repository level
+ensure principal ACL for principal1,principal2
+    allow jcr:namespaceManagement on :repository 
+end
+
+ensure principal ACL for principal1
+    allow jcr:all on :repository,/content
+end

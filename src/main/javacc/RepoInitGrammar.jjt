@@ -68,6 +68,7 @@ TOKEN:
 |   < FOR: "for" >
 |   < CREATE: "create" >
 |   < DELETE: "delete" >
+|   < ENSURE: "ensure" >
 |   < DISABLE: "disable" >
 |   < SERVICE: "service" >
 |   < ADD: "add" >
@@ -144,6 +145,7 @@ List<Operation> parse() :
         | setAclPaths(result) 
         | setAclPrincipals(result)
         | setAclPrincipalBased(result)
+        | ensureAclPrincipalBased(result)
         | setAclRepository(result)
         | deleteAclPaths(result) 
         | deleteAclPrincipals(result)
@@ -604,6 +606,23 @@ void setAclPrincipalBased(List<Operation> result) :
 
     {
         result.add(new SetAclPrincipalBased(principals, lines, aclOptions));
+    }
+}
+
+void ensureAclPrincipalBased(List<Operation> result) :
+{
+    List <String> principals;
+    List<AclLine> lines = new ArrayList<AclLine>();
+    List<String> aclOptions;
+}
+{
+    <ENSURE> <PRINCIPAL> <ACL> <FOR> principals = principalsList() aclOptions=aclOptions() <EOL>
+    ( removeStarLine(lines) | pathPrivilegesLine(lines, true) | blankLine() ) +
+    <END>
+    ( <EOL> | <EOF> )
+
+    {
+        result.add(new EnsureAclPrincipalBased(principals, lines, aclOptions));
     }
 }
 

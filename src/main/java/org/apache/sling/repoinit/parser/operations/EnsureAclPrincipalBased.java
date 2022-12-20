@@ -27,19 +27,19 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /** Set ACL statement that groups a set of AclLines
  *  that all refer to the same set of principals.
- *  @deprecated Use {@link EnsureAclPrincipalBased} instead with stricter semantics
+ *  Fails in case the principal ACLs cannot be applied for some reason.
+ *  @see SetAclPrincipalBased
  */
-@Deprecated
 @ProviderType
-public class SetAclPrincipalBased extends AclGroupBase {
+public class EnsureAclPrincipalBased extends AclGroupBase {
 
     private final List<String> principals;
 
-    public SetAclPrincipalBased(List<String> principals, List<AclLine> lines) {
+    public EnsureAclPrincipalBased(List<String> principals, List<AclLine> lines) {
         this(principals,lines,new ArrayList<>());
     }
 
-    public SetAclPrincipalBased(List<String> principals, List<AclLine> lines, List<String> aclOptions) {
+    public EnsureAclPrincipalBased(List<String> principals, List<AclLine> lines, List<String> aclOptions) {
         super(lines,aclOptions);
         this.principals = Collections.unmodifiableList(principals);
     }
@@ -55,7 +55,7 @@ public class SetAclPrincipalBased extends AclGroupBase {
     @NotNull
     @Override
     public String asRepoInitString() {
-        String topline = String.format("set principal ACL for %s%s%n",
+        String topline = String.format("ensure principal ACL for %s%s%n",
                 listToString(QuotableStringUtil.forRepoInitString(principals)), getAclOptionsString());
         return asRepoInit(topline, true);
     }
@@ -66,6 +66,6 @@ public class SetAclPrincipalBased extends AclGroupBase {
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitSetAclPrincipalBased(this);
+        v.visitEnsureAclPrincipalBased(this);
     }
 }
