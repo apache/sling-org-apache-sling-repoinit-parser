@@ -69,11 +69,13 @@ TOKEN:
 |   < CREATE: "create" >
 |   < DELETE: "delete" >
 |   < DISABLE: "disable" >
+|   < ENSURE: "ensure" >
 |   < SERVICE: "service" >
 |   < ADD: "add" >
 |   < MIXIN: "mixin" >
 |   < PATH: "path" >
 |   < NODE: "node" >
+|   < NODES: "nodes" >
 |   < END: "end" >
 |   < REPOSITORY: "repository" >
 |   < PRINCIPAL: "principal" >
@@ -336,10 +338,10 @@ void createPathStatement(List<Operation> result) :
     { if(cp != null) result.add(cp); }
 }
 
-// same as createPath but with stricter semantics of also changing types of existing nodes
-void createNodeStatement(List<Operation> result) :
+// similar to createPath but with stricter semantics of also changing types of existing nodes
+void ensureNodesStatement(List<Operation> result) :
 {
-    CreateNode cn = null;
+    EnsureNodes en = null;
     String defaultPrimaryType = null;
     Token t1 = null;
     Token t2 = null;
@@ -347,17 +349,17 @@ void createNodeStatement(List<Operation> result) :
     List<PropertyLine> lines = new ArrayList<PropertyLine>();
 }
 {
-    <CREATE> <NODE> 
+    <ENSURE> <NODES> 
     ( <LPAREN> t1 = <NAMESPACED_ITEM> <RPAREN> { defaultPrimaryType = t1.image; } ) ?
     
     ( t1 = <PATH_STRING> ( <LPAREN> t2 = <NAMESPACED_ITEM> <RPAREN> ) ?
                          ( <LPAREN> <MIXIN> t3 = namespacedItemsList() <RPAREN>) ?
                          ( <LPAREN> t2 = <NAMESPACED_ITEM> <MIXIN> t3 = namespacedItemsList() <RPAREN>) ?
         {
-            if(cn == null) {
-                cn = new CreateNode(defaultPrimaryType);
+            if(en == null) {
+                en = new EnsureNodes(defaultPrimaryType);
             } 
-            cn.addSegment(t1.image, t2 == null ? null : t2.image, t3);
+            en.addSegment(t1.image, t2 == null ? null : t2.image, t3);
             t2 = null;
             t3 = null;
         }
@@ -365,13 +367,13 @@ void createNodeStatement(List<Operation> result) :
     ( <WITH> <PROPERTIES> <EOL>
       ( propertyLine(lines) | blankLine() ) +
       {
-        cn.setPropertyLines(lines);
+        en.setPropertyLines(lines);
       }
       <END>
     )?
     (<EOL> | <EOF>)
     
-    { if(cn != null) result.add(cn); }
+    { if(en != null) result.add(en); }
 }
 
 void addMixins(List<Operation> result) :

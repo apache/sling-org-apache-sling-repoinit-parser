@@ -34,7 +34,7 @@ public interface OperationVisitor {
     default void visitRemoveAcePaths(RemoveAcePaths s) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePrincipalBased(RemoveAcePrincipalBased s) { throw new UnsupportedOperationException(); }
     void visitCreatePath(CreatePath cp);
-    void visitCreateNode(CreateNode cn);
+    void visitCreateNode(EnsureNodes cn);
     void visitRegisterNamespace(RegisterNamespace rn);
     void visitRegisterNodetypes(RegisterNodetypes b);
     void visitRegisterPrivilege(RegisterPrivilege rp);
