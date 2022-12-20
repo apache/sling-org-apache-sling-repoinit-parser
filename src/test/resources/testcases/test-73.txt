@@ -1,0 +1,35 @@
+# Various "ensure nodes" tests
+
+# Nodetypes:
+# A nodetype in brackets right after "ensure nodes", like
+# sling:Folder below, sets the default type for all path
+# segments of this statement.
+# A nodetype in brackets at the end of a path segment, like
+# nt:unstructured below, applies just to that path segment.
+# If no specific nodetype is set, the repository uses its
+# default based on node type definitions.
+
+ensure nodes (sling:Folder) /var/discovery(nt:unstructured)/somefolder
+
+# more tests and examples
+ensure nodes /one/two/three
+ensure nodes /three/four(nt:folk)/five(nt:jazz)/six
+ensure nodes (nt:x) /seven/eight/nine
+ensure nodes /one(mixin nt:art)/step(mixin nt:dance)/two/steps
+ensure nodes (nt:foxtrot) /one/step(mixin nt:dance)/two/steps
+ensure nodes /one/step(mixin nt:dance,nt:art)/two/steps
+ensure nodes /one/step(nt:foxtrot mixin nt:dance)/two/steps
+ensure nodes /one/step(nt:foxtrot mixin nt:dance,nt:art)/two/steps
+ensure nodes /one:and/step/two:and/steps
+ensure nodes /one@home/step/two@home/steps
+ensure nodes /one+tap/step/two+tap/steps
+
+# this is to cover an edge case: SLING-11384 (create root node with primary type)
+ensure nodes /(nt:x)
+
+# SLING-10740 - Repoinit ensure nodes statement with properties
+ensure nodes (sling:Folder) /var/discovery(nt:unstructured)/somefolder2 with properties
+  set sling:ResourceType{String} to /x/y/z
+  set cq:allowedTemplates to /d/e/f/*, m/n/*
+  default someInteger{Long} to 42
+end

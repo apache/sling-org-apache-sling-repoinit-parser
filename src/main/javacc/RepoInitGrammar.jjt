@@ -155,6 +155,7 @@ List<Operation> parse() :
         | removeAcePrincipals(result)
         | removeAcePrincipalBased(result)
         | createPathStatement(result)
+        | ensureNodesStatement(result)
         | addMixins(result)
         | removeMixins(result)
         | registerNamespaceStatement(result)
