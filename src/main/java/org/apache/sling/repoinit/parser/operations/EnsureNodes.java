@@ -90,7 +90,7 @@ public class EnsureNodes extends Operation {
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitCreateNode(this);
+        v.visitEnsureNodes(this);
     }
 
     public void addSegment(String path, String primaryType) {

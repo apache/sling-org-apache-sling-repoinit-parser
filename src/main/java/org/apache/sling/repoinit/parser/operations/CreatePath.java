@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @deprecate Use {@link EnsureNodes} instead.
+ * @deprecated Use {@link EnsureNodes} instead.
  *
  */
 @ProviderType

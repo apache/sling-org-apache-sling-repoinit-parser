@@ -225,7 +225,7 @@ class OperationToStringVisitor implements OperationVisitor {
     }
 
     @Override
-    public void visitCreateNode(EnsureNodes cn) {
+    public void visitEnsureNodes(EnsureNodes cn) {
         out.println(cn.toString());
         List<PropertyLine> propLines = cn.getPropertyLines();
         for(PropertyLine p : propLines) {
