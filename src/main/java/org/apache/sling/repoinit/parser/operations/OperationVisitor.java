@@ -29,14 +29,23 @@ public interface OperationVisitor {
     void visitDeleteServiceUser(DeleteServiceUser s);
     void visitSetAclPrincipal(SetAclPrincipals s);
     void visitSetAclPaths(SetAclPaths s);
+    /**
+     * From deprecated statement
+     * @deprecated new statement calls {@link #visitEnsureAclPrincipalBased(EnsureAclPrincipalBased)}
+     */
     @Deprecated
     void visitSetAclPrincipalBased(SetAclPrincipalBased s);
     default void visitEnsureAclPrincipalBased(EnsureAclPrincipalBased ensureAclPrincipalBased) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePrincipal(RemoveAcePrincipals s) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePaths(RemoveAcePaths s) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePrincipalBased(RemoveAcePrincipalBased s) { throw new UnsupportedOperationException(); }
+    /**
+     * From deprecated statement
+     * @deprecated new statement calls {@link #visitEnsureNodes(EnsureNodes)}
+     */
+    @Deprecated
     void visitCreatePath(CreatePath cp);
-    void visitEnsureNodes(EnsureNodes cn);
+    default void visitEnsureNodes(EnsureNodes en) { throw new UnsupportedOperationException(); }
     void visitRegisterNamespace(RegisterNamespace rn);
     void visitRegisterNodetypes(RegisterNodetypes b);
     void visitRegisterPrivilege(RegisterPrivilege rp);
