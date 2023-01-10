@@ -68,7 +68,6 @@ TOKEN:
 |   < FOR: "for" >
 |   < CREATE: "create" >
 |   < DELETE: "delete" >
-|   < ENSURE: "ensure" >
 |   < DISABLE: "disable" >
 |   < ENSURE: "ensure" >
 |   < SERVICE: "service" >
