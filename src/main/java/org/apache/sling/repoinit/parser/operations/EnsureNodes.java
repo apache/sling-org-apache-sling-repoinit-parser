@@ -25,18 +25,13 @@ import java.util.List;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
-/**
- * @deprecated Use {@link EnsureNodes} instead.
- *
- */
 @ProviderType
-@Deprecated
-public class CreatePath extends Operation {
+public class EnsureNodes extends Operation {
     private List<PathSegmentDefinition> pathDef;
     private final String defaultPrimaryType;
     private List<PropertyLine> lines = Collections.emptyList();
 
-    public CreatePath(String defaultPrimaryType) {
+    public EnsureNodes(String defaultPrimaryType) {
         this.pathDef = new ArrayList<>();
         this.defaultPrimaryType = defaultPrimaryType;
     }
@@ -75,9 +70,9 @@ public class CreatePath extends Operation {
         //        exactly as they were originally defined in repo-init
         try (Formatter formatter = new Formatter()) {
             if (lines.isEmpty()) {
-                formatter.format("create path %s%s%n",  defaultTypeStr, sb.toString());
+                formatter.format("ensure nodes %s%s%n",  defaultTypeStr, sb.toString());
             } else {
-                formatter.format("create path %s%s with properties%n",  defaultTypeStr, sb.toString());
+                formatter.format("ensure nodes %s%s with properties%n",  defaultTypeStr, sb.toString());
                 for (PropertyLine line : lines) {
                     String type = (line.getPropertyType() == null) ? "" : "{" + line.getPropertyType().name() + "}";
                     String values = SetProperties.valuesToString(line.getPropertyValues(), line.getPropertyType());
@@ -95,7 +90,7 @@ public class CreatePath extends Operation {
 
     @Override
     public void accept(OperationVisitor v) {
-        v.visitCreatePath(this);
+        v.visitEnsureNodes(this);
     }
 
     public void addSegment(String path, String primaryType) {

@@ -70,10 +70,13 @@ TOKEN:
 |   < DELETE: "delete" >
 |   < ENSURE: "ensure" >
 |   < DISABLE: "disable" >
+|   < ENSURE: "ensure" >
 |   < SERVICE: "service" >
 |   < ADD: "add" >
 |   < MIXIN: "mixin" >
 |   < PATH: "path" >
+|   < NODE: "node" >
+|   < NODES: "nodes" >
 |   < END: "end" >
 |   < REPOSITORY: "repository" >
 |   < PRINCIPAL: "principal" >
@@ -154,6 +157,7 @@ List<Operation> parse() :
         | removeAcePrincipals(result)
         | removeAcePrincipalBased(result)
         | createPathStatement(result)
+        | ensureNodesStatement(result)
         | addMixins(result)
         | removeMixins(result)
         | registerNamespaceStatement(result)
@@ -335,6 +339,44 @@ void createPathStatement(List<Operation> result) :
     (<EOL> | <EOF>)
     
     { if(cp != null) result.add(cp); }
+}
+
+// similar to createPath but with stricter semantics of also changing types of existing nodes
+void ensureNodesStatement(List<Operation> result) :
+{
+    EnsureNodes en = null;
+    String defaultPrimaryType = null;
+    Token t1 = null;
+    Token t2 = null;
+    List<String> t3 = null;
+    List<PropertyLine> lines = new ArrayList<PropertyLine>();
+}
+{
+    <ENSURE> <NODES> 
+    ( <LPAREN> t1 = <NAMESPACED_ITEM> <RPAREN> { defaultPrimaryType = t1.image; } ) ?
+    
+    ( t1 = <PATH_STRING> ( <LPAREN> t2 = <NAMESPACED_ITEM> <RPAREN> ) ?
+                         ( <LPAREN> <MIXIN> t3 = namespacedItemsList() <RPAREN>) ?
+                         ( <LPAREN> t2 = <NAMESPACED_ITEM> <MIXIN> t3 = namespacedItemsList() <RPAREN>) ?
+        {
+            if(en == null) {
+                en = new EnsureNodes(defaultPrimaryType);
+            } 
+            en.addSegment(t1.image, t2 == null ? null : t2.image, t3);
+            t2 = null;
+            t3 = null;
+        }
+    ) +
+    ( <WITH> <PROPERTIES> <EOL>
+      ( propertyLine(lines) | blankLine() ) +
+      {
+        en.setPropertyLines(lines);
+      }
+      <END>
+    )?
+    (<EOL> | <EOF>)
+    
+    { if(en != null) result.add(en); }
 }
 
 void addMixins(List<Operation> result) :
