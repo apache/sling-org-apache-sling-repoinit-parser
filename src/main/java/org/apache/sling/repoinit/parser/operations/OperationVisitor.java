@@ -29,7 +29,9 @@ public interface OperationVisitor {
     void visitDeleteServiceUser(DeleteServiceUser s);
     void visitSetAclPrincipal(SetAclPrincipals s);
     void visitSetAclPaths(SetAclPaths s);
+    @Deprecated
     void visitSetAclPrincipalBased(SetAclPrincipalBased s);
+    default void visitEnsureAclPrincipalBased(EnsureAclPrincipalBased ensureAclPrincipalBased) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePrincipal(RemoveAcePrincipals s) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePaths(RemoveAcePaths s) { throw new UnsupportedOperationException(); }
     default void visitRemoveAcePrincipalBased(RemoveAcePrincipalBased s) { throw new UnsupportedOperationException(); }
