@@ -5,9 +5,8 @@
 # repository needs to support 'o.a.j.api.security.authorization.PrincipalAccessControlList'
 # Also, this only works for users selected by the Jackrabbit/Oak FilterProvider, see
 # https://jackrabbit.apache.org/oak/docs/security/authorization/principalbased.html#configuration
-# mostly a copy of test-33 but with "ensure" prefix instead of "set"
-
-ensure principal ACL for principal1,principal2
+# Deprecated: Use "ensure principal ACL" instead as "set principal ACL" is not failing if it cannot be applied
+set principal ACL for principal1,principal2
     remove * on /libs,/apps
     allow jcr:read on /content
 
@@ -34,22 +33,22 @@ ensure principal ACL for principal1,principal2
 end
 
 # Principal-based ACL syntax with options (SLING-6423)
-ensure principal ACL for principal1,principal2 (ACLOptions=mergePreserve)
+set principal ACL for principal1,principal2 (ACLOptions=mergePreserve)
     remove * on /libs,/apps
     allow jcr:read on /content
 end
 
 # With multiple options
-ensure principal ACL for principal1,principal2 (ACLOptions=mergePreserve,someOtherOption,someOther123,namespaced:option)
+set principal ACL for principal1,principal2 (ACLOptions=mergePreserve,someOtherOption,someOther123,namespaced:option)
     remove * on /libs,/apps
     allow jcr:read on /content
 end
 
 # repository level
-ensure principal ACL for principal1,principal2
+set principal ACL for principal1,principal2
     allow jcr:namespaceManagement on :repository 
 end
 
-ensure principal ACL for principal1
+set principal ACL for principal1
     allow jcr:all on :repository,/content
 end
