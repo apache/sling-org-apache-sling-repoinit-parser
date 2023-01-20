@@ -42,7 +42,7 @@ public class ParsingErrorsTest {
     private final String input;
     private final Class<? extends Throwable> expected;
     
-    @Parameters
+    @Parameters(name="{0}")
     public static Collection<Object[]> data() {
         @SuppressWarnings("serial")
         final List<Object []> result = new ArrayList<Object []>() {{
