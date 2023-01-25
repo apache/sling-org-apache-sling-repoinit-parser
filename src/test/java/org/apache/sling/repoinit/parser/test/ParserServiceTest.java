@@ -18,6 +18,7 @@
 package org.apache.sling.repoinit.parser.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -27,20 +28,38 @@ import org.apache.sling.repoinit.parser.RepoInitParsingException;
 import org.apache.sling.repoinit.parser.impl.RepoInitParserService;
 import org.apache.sling.repoinit.parser.operations.CreateServiceUser;
 import org.apache.sling.repoinit.parser.operations.Operation;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ParserServiceTest {
+    private RepoInitParserService service;
+
+    @Before
+    public void setUp() {
+        service = new RepoInitParserService();
+    }
+
     @Test
     public void noErrors() throws RepoInitParsingException {
         final Reader r = new StringReader("create service user foo");
-        List<Operation> operations = new RepoInitParserService().parse(r);
+        List<Operation> operations = service.parse(r);
         assertEquals(1, operations.size());
         assertEquals(CreateServiceUser.class, operations.get(0).getClass());
     }
-    
-    @Test(expected = RepoInitParsingException.class)
+
+    @Test
     public void syntaxError() throws RepoInitParsingException {
         final Reader r = new StringReader("not a valid statement");
-        new RepoInitParserService().parse(r);
+        RepoInitParsingException exception = assertThrows(RepoInitParsingException.class, () -> service.parse(r));
+        assertEquals(1, exception.getLine());
+        assertEquals(1, exception.getColumn());
+    }
+
+    @Test
+    public void syntaxErrorInSecondLine() throws RepoInitParsingException {
+        final Reader r = new StringReader("create service user foo\n  not a valid statement");
+        RepoInitParsingException exception = assertThrows(RepoInitParsingException.class, () -> service.parse(r));
+        assertEquals(2, exception.getLine());
+        assertEquals(3, exception.getColumn());
     }
 }

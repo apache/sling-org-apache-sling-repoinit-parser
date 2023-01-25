@@ -41,9 +41,11 @@ public class RepoInitParserService implements RepoInitParser {
         // in order to avoid parsing problems with trailing comments we add a line feed at the end
         try (final Reader readerWrapper = new AddTailingLinefeedFilterReader(r)) {
             return new RepoInitParserImpl(readerWrapper).parse();
-        } catch ( final IOException | TokenMgrError | ParseException e ) {
-            throw new RepoInitParsingException(e.getMessage(), e);
-        }
+        } catch (ParseException e) {
+            throw new RepoInitParsingException(e, e.currentToken.next.beginLine, e.currentToken.next.beginColumn);
+        } catch (final IOException | TokenMgrError e ) {
+            throw new RepoInitParsingException(e);
+        } 
     }
     
     private static final class AddTailingLinefeedFilterReader extends FilterReader {

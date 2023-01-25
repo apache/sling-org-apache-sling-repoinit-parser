@@ -18,10 +18,44 @@
  */
 package org.apache.sling.repoinit.parser;
 
+import org.osgi.annotation.versioning.ProviderType;
+
+@ProviderType
 public class RepoInitParsingException extends Exception {
     private static final long serialVersionUID = 1L;
 
+    private final int line;
+    private final int column;
+
     public RepoInitParsingException(String reason, Throwable cause) {
         super(reason, cause);
+        this.line = -1;
+        this.column = -1;
+    }
+
+    public RepoInitParsingException(Throwable cause) {
+        this(cause, -1, -1);
+    }
+    
+    public RepoInitParsingException(Throwable cause, int line, int column) {
+        super(cause);
+        this.line = line;
+        this.column = column;
+    }
+
+    /**
+     * 
+     * @return the line where the issue occurred or -1 if not known
+     */
+    public int getLine() {
+        return line;
+    }
+    
+    /**
+     * 
+     * @return the column where the issue occurred or -1 if not known
+     */
+    public int getColumn() {
+        return column;
     }
 }
