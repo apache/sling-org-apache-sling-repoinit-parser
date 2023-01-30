@@ -1,6 +1,6 @@
 # Various "ensure nodes" tests (SLING-11736)
 # requires
-# o.a.s.repoinit.parser 1.8.2 and
+# o.a.s.repoinit.parser 1.9.0 and
 # o.a.s.jcr.repoinit 1.1.44
 
 # Nodetypes:

@@ -1,5 +1,5 @@
 # Set principal-based access control (see SLING-8602 and SLING-10281), requires
-# o.a.s.repoinit.parser 1.8.2 and
+# o.a.s.repoinit.parser 1.9.0 and
 # o.a.s.jcr.repoinit 1.1.44
 # precondition for o.a.s.jcr.repoinit: 
 # repository needs to support 'o.a.j.api.security.authorization.PrincipalAccessControlList'
