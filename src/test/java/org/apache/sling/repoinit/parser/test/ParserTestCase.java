@@ -100,14 +100,18 @@ public class ParserTestCase implements Closeable {
             }
             sw.flush();
             String actual = sw.toString().trim();
-    
-            // normalize line endings to ensure tests run on windows as well
-            actual = actual.replaceAll("\r\n", "\n");
-    
-            assertEquals(expected, actual);
+
+            assertEquals(normalizeLineEndings(expected), normalizeLineEndings(actual));
         } finally {
             toClose.close();
         }
+    }
+
+    /**
+     * Normalize line endings to ensure tests run on windows as well
+     */
+    private static String normalizeLineEndings(String s) {
+        return s.replaceAll("\r\n", "\n");
     }
 
     public static Collection<Object[]> buildTestData() throws IOException {
