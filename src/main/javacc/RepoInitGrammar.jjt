@@ -971,15 +971,16 @@ void propertyLine(List<PropertyLine> lines) :
     List<String> values;
     Token t = null;
     boolean isDefault = false;
+    boolean isMulti = false;
 }
 {
     (t = <SET> | t = <SETDEF> {isDefault = true;} )
     ( name = <STRING> | name = <NAMESPACED_ITEM>)
-    ( <LCURLY> ( type = <STRING> ) <RCURLY> | <LCURLY> ( type = <STRING> ) <MULTI> <RCURLY> )?
+    ( <LCURLY> ( type = <STRING> ) <RCURLY> | <LCURLY> ( type = <STRING> ) <MULTI> <RCURLY> {isMulti = true;} )?
     <TO> ( values = propertyValuesList() )
     <EOL>
     {
-        lines.add(new PropertyLine(name.image, type == null ? null : type.image, values, isDefault));
+        lines.add(new PropertyLine(name.image, type == null ? null : type.image + (isMulti ? "[]" : ""), values, isDefault));
     }
 }
 

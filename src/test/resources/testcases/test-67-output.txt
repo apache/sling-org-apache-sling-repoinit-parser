@@ -20,10 +20,10 @@ SetProperties on /endkeyword
   PropertyLine endS{String}=[{String}one]
   PropertyLine two{String}=[{String}endS]
 SetProperties on /forcedMultiValue
-  PropertyLine singleMultiValue{String}=[{String}single]
-  PropertyLine emptyMultiValue{String}=[]
-  PropertyLine singleLongMultiValue{Long}=[{Long}1243]
-  PropertyLine emptyLongMultiValue{Long}=[]
+  PropertyLine singleMultiValue{String[]}=[{String}single]
+  PropertyLine emptyMultiValue{String[]}=[]
+  PropertyLine singleLongMultiValue{Long[]}=[{Long}1243]
+  PropertyLine emptyLongMultiValue{Long[]}=[]
 SetProperties on /blankLinesInList
   PropertyLine one{String}=[{String}two]
   PropertyLine two{String}=[{String}four]

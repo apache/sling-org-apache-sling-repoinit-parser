@@ -61,7 +61,8 @@ public class SetProperties extends Operation {
         try (Formatter formatter = new Formatter()) {
             formatter.format("set properties on %s%n", pathsToString(paths));
             for (PropertyLine line : lines) {
-                String type = (line.getPropertyType() == null) ? "" : "{" + line.getPropertyType().name() + "}";
+                String typeMultiple = line.isMultiple() ? "[]" : "";
+                String type = (line.getPropertyType() == null) ? "" : "{" + line.getPropertyType().name() + typeMultiple + "}";
                 String values = valuesToString(line.getPropertyValues(), line.getPropertyType());
                 if (line.isDefault()) {
                     formatter.format("default %s%s to %s%n", line.getPropertyName(), type, values);
