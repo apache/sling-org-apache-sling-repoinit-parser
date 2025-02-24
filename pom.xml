@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
@@ -18,106 +18,31 @@
   under the License.
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.apache.sling</groupId>
-    <artifactId>sling-bundle-parent</artifactId>
-    <version>62</version>
-    <relativePath />
-  </parent>
+    <parent>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>sling-bundle-parent</artifactId>
+        <version>62</version>
+        <relativePath />
+    </parent>
 
-  <artifactId>org.apache.sling.repoinit.parser</artifactId>
-  <version>1.9.1-SNAPSHOT</version>
-  <name>Apache Sling Repoinit Parser</name>
-  <description>Parser for the Repository Initialization language used in Sling</description>
+    <artifactId>org.apache.sling.repoinit.parser</artifactId>
+    <version>1.9.1-SNAPSHOT</version>
+    <name>Apache Sling Repoinit Parser</name>
+    <description>Parser for the Repository Initialization language used in Sling</description>
 
-  <scm>
-    <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</connection>
-    <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</developerConnection>
-    <url>https://github.com/apache/sling-org-apache-sling-repoinit-parser.git</url>
-    <tag>HEAD</tag>
-  </scm>
-  
-  <properties>
-    <sling.java.version>8</sling.java.version>
-    <project.build.outputTimestamp>2023-01-25T18:49:50Z</project.build.outputTimestamp>
-  </properties>
+    <scm>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</connection>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/apache/sling-org-apache-sling-repoinit-parser.git</url>
+    </scm>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>biz.aQute.bnd</groupId>
-        <artifactId>bnd-baseline-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.rat</groupId>
-        <artifactId>apache-rat-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/test/resources/testcases/**</exclude>
-            <exclude>concatenate-test-scenarios.sh</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>javacc-maven-plugin</artifactId>
-        <version>2.5</version>
-        <executions>
-          <execution>
-            <id>calculator</id>
-            <configuration>
-              <sourceDirectory>${basedir}/src/main/javacc</sourceDirectory>
-            </configuration>
-            <goals>
-              <goal>jjtree-javacc</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <excludePackageNames>
-                        org.apache.sling.repoinit.parser.impl
-                    </excludePackageNames>
-                </configuration>
-            </plugin>
-    </plugins>
-    <pluginManagement>
-        <plugins>
-            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-            <plugin>
-                <groupId>org.eclipse.m2e</groupId>
-                <artifactId>lifecycle-mapping</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <lifecycleMappingMetadata>
-                        <pluginExecutions>
-                            <pluginExecution>
-                                <pluginExecutionFilter>
-                                    <groupId>org.codehaus.mojo</groupId>
-                                    <artifactId>
-                                        javacc-maven-plugin
-                                    </artifactId>
-                                    <versionRange>[2.5,)</versionRange>
-                                    <goals>
-                                        <goal>jjtree-javacc</goal>
-                                    </goals>
-                                </pluginExecutionFilter>
-                                <action>
-                                    <ignore />
-                                </action>
-                            </pluginExecution>
-                        </pluginExecutions>
-                    </lifecycleMappingMetadata>
-                </configuration>
-            </plugin>
-        </plugins>
-    </pluginManagement>
-  </build>
+    <properties>
+        <sling.java.version>8</sling.java.version>
+        <project.build.outputTimestamp>2023-01-25T18:49:50Z</project.build.outputTimestamp>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -136,10 +61,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-          <groupId>org.apache.jackrabbit</groupId>
-          <artifactId>jackrabbit-jcr-commons</artifactId>
-          <version>2.20.0</version>
-          <scope>compile</scope>
+            <groupId>org.apache.jackrabbit</groupId>
+            <artifactId>jackrabbit-jcr-commons</artifactId>
+            <version>2.20.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
@@ -160,4 +85,75 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>javacc-maven-plugin</artifactId>
+                                        <versionRange>[2.5,)</versionRange>
+                                        <goals>
+                                            <goal>jjtree-javacc</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore />
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>biz.aQute.bnd</groupId>
+                <artifactId>bnd-baseline-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>src/test/resources/testcases/**</exclude>
+                        <exclude>concatenate-test-scenarios.sh</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>javacc-maven-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>calculator</id>
+                        <goals>
+                            <goal>jjtree-javacc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${basedir}/src/main/javacc</sourceDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <excludePackageNames>org.apache.sling.repoinit.parser.impl</excludePackageNames>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
