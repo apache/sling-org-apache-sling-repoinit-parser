@@ -17,6 +17,7 @@
 package org.apache.sling.repoinit.parser.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -65,4 +66,12 @@ public class PropertyLineTest {
         final PropertyLine p = new PropertyLine("someName", "String", Arrays.asList(notAnIsoDate), false);
         assertEquals(notAnIsoDate[0], p.getPropertyValues().get(0));
     }
+
+    @Test
+    public void testMultiPropertyType() throws Exception {
+        final PropertyLine p = new PropertyLine("someName", "String[]", null, false);
+        assertEquals(PropertyLine.PropertyType.String, p.getPropertyType());
+        assertTrue(p.isMultiple());
+    }
+
 }

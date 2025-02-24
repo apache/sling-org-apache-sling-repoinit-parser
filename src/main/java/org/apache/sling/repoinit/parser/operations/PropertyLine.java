@@ -34,6 +34,7 @@ public class PropertyLine {
     private final PropertyType propertyType;
     private final List<Object> values;
     private boolean isDefault = false;
+    private boolean isMultiple = false;
     private static final String MULTI_TOKEN = "[]";
 
     /** Valid types for these properties */
@@ -58,6 +59,7 @@ public class PropertyLine {
         boolean forceList = typeString != null && typeString.endsWith(MULTI_TOKEN);
         if(forceList) {
             typeString = typeString.substring(0, typeString.length() - MULTI_TOKEN.length());
+            isMultiple = true;
         }
         this.propertyType = typeString == null ? PropertyType.String : parseType(typeString);
         this.values = parseList(this.propertyType, values);
@@ -119,6 +121,11 @@ public class PropertyLine {
      */
     public boolean isDefault() { return isDefault; }
 
+    /**
+     * @return true if property type is explicitly defined as multiple.
+     */
+    public boolean isMultiple() { return isMultiple; }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
@@ -131,6 +138,9 @@ public class PropertyLine {
         sb.append(name);
         sb.append("{");
         sb.append(propertyType.toString());
+        if (isMultiple) {
+            sb.append(MULTI_TOKEN);
+        }
         sb.append("}=[");
 
         String sep = "";
