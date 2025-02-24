@@ -38,5 +38,4 @@ public interface RepoInitParser {
      * @throws RepoInitParsingException on parsing errors
      */
     List<Operation> parse(Reader reader) throws RepoInitParsingException;
-
 }

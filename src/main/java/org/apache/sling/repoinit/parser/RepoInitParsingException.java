@@ -36,7 +36,7 @@ public class RepoInitParsingException extends Exception {
     public RepoInitParsingException(Throwable cause) {
         this(cause, -1, -1);
     }
-    
+
     public RepoInitParsingException(Throwable cause, int line, int column) {
         super(cause);
         this.line = line;
@@ -44,15 +44,15 @@ public class RepoInitParsingException extends Exception {
     }
 
     /**
-     * 
+     *
      * @return the line where the issue occurred or -1 if not known
      */
     public int getLine() {
         return line;
     }
-    
+
     /**
-     * 
+     *
      * @return the column where the issue occurred or -1 if not known
      */
     public int getColumn() {

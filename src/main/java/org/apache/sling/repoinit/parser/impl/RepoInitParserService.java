@@ -30,10 +30,9 @@ import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 
 /** ACL definitions parser service */
-@Component(service=RepoInitParser.class,
-    property = {
-            Constants.SERVICE_VENDOR + "=The Apache Software Foundation"
-    })
+@Component(
+        service = RepoInitParser.class,
+        property = {Constants.SERVICE_VENDOR + "=The Apache Software Foundation"})
 public class RepoInitParserService implements RepoInitParser {
 
     @Override
@@ -43,11 +42,11 @@ public class RepoInitParserService implements RepoInitParser {
             return new RepoInitParserImpl(readerWrapper).parse();
         } catch (ParseException e) {
             throw new RepoInitParsingException(e, e.currentToken.next.beginLine, e.currentToken.next.beginColumn);
-        } catch (final IOException | TokenMgrError e ) {
+        } catch (final IOException | TokenMgrError e) {
             throw new RepoInitParsingException(e);
-        } 
+        }
     }
-    
+
     private static final class AddTailingLinefeedFilterReader extends FilterReader {
 
         private boolean alreadyAddedNewline;
@@ -67,6 +66,5 @@ public class RepoInitParserService implements RepoInitParser {
                 return result;
             }
         }
-        
     }
 }
