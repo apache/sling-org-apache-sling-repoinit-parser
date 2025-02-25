@@ -28,20 +28,20 @@
     </parent>
 
     <artifactId>org.apache.sling.repoinit.parser</artifactId>
-    <version>1.9.2</version>
+    <version>1.9.3-SNAPSHOT</version>
     <name>Apache Sling Repoinit Parser</name>
     <description>Parser for the Repository Initialization language used in Sling</description>
 
     <scm>
         <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</connection>
         <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-repoinit-parser.git</developerConnection>
-        <tag>org.apache.sling.repoinit.parser-1.9.2</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/apache/sling-org-apache-sling-repoinit-parser.git</url>
     </scm>
 
     <properties>
         <sling.java.version>8</sling.java.version>
-        <project.build.outputTimestamp>2025-02-25T08:11:58Z</project.build.outputTimestamp>
+        <project.build.outputTimestamp>2025-02-25T08:12:15Z</project.build.outputTimestamp>
     </properties>
 
     <dependencies>
